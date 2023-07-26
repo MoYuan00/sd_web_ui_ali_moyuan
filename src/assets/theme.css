@@ -1,0 +1,8 @@
+.theme_1 {
+    --color-primary: rgb(255, 6, 45);
+    --color-secondary: rgb(59, 59, 59);
+    --color-backgrund: rgb(33, 33, 33);
+
+    --color-backgrund-transpent-top: rgba(255, 255, 255, .5);
+}
+
