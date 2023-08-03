@@ -24,7 +24,15 @@ window.$axios = requests
 // app.config.globalProperties.$axios = requests;  //配置axios的全局引用
 
 
+
+
 app.use(router)
+
+// @element-plus/icons-vue
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 // ---
 app.use(ElementPlus)

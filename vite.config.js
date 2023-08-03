@@ -29,7 +29,7 @@ export default defineConfig({
     
   },
   server:{  
-    open: 'index.html',
+    open: '/',
     host: '0.0.0.0'
   }
 })

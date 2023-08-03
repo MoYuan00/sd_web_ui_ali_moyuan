@@ -1,25 +1,22 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+body{
+  background-color: var(--color-backgrund);
+  background: url('../assets/png/bg-map.png') center;
+  background-position: center;
+  background-size: 110%;/*按比例缩放*/
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+#app{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100vh;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
 
 /* @media (min-width: 1024px) {
   body {

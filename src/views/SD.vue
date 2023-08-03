@@ -4,10 +4,13 @@ import ImageView from '../components/ImageView.vue'
 </script>
 
 <template>
-  <div >
+  <el-row style="height: 100vh;">
     <PromotInput></PromotInput>
+    <!-- <div>
+      <input type='file'  webkitdirectory>
+    </div> -->
     <!-- <ImageView></ImageView> -->
-  </div>
+  </el-row>
 </template>
 
 <style>
@@ -19,3 +22,9 @@ import ImageView from '../components/ImageView.vue'
   }
 } */
 </style>
+
+<script>
+
+
+
+</script>

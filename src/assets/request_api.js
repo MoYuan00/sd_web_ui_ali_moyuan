@@ -23,5 +23,25 @@ api.txt2imgFiles =
         return window.$axios.get('infinite_image_browsing/files', { "folder_path": folder_path })
     }
 
+api.img2img = 
+    function(scale_value, step, upscaler_name) {
+        let data = {
+            
+        }
+        
+    }
+
+
+
 export default api
+
+
+/*
+阿里API
+请保存或发送 AccessKey 至对应用户。当前窗口关闭后，无法再次查询 Secret。如果您遗失这个 AccessKey，可以创建新的来替代。
+AccessKey ID
+LTAI5tP6BVS32ReEBojGRwMf
+AccessKey Secret
+iUZ9udccL1q5nJgkr2gBJNGrtu0BrN
+*/
 
