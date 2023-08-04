@@ -1,6 +1,6 @@
 
 <template >
-    <div v-if="images && images.length > 0" id="imageView" style="width: 100%;">
+    <div class="ImageView" v-if="images && images.length > 0" id="imageView" style="width: 100%;">
         <!-- component -->
         <viewer style="width: 100%; height: 100%;" :images="props.images">
             <!-- <div class="normal">
@@ -88,6 +88,16 @@ onMounted(() => {
     }
 
 
+    $('.ImageView').on("scroll",function(e) {
+        console.log(e)
+        console.log('mousewheel')
+    })
+    $('.ImageView').scroll(function(e) {
+        console.log(e)
+        console.log('mousewheel')
+    })
+
+
 })
 
 watch(kIndex, async function (newVal, oldVal) {
@@ -101,6 +111,8 @@ watch(()=>props.images, async function (newVal, oldVal) {
     },
     { deep: true,flush: 'post' }
 )
+
+
 
 
 </script>

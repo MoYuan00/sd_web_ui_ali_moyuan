@@ -1,4 +1,5 @@
 import requests from "./requests";
+// import ali_Client from "./ali-translate-api";
 
 const api = {}
 
@@ -31,7 +32,9 @@ api.img2img =
         
     }
 
-
+// api.translate_text = (text) =>{
+//     ali_Client.PostTransloate(text)
+// }
 
 export default api
 

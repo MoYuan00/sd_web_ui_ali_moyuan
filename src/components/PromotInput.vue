@@ -10,15 +10,22 @@
                     <textarea v-model="promt_input" style="width: 100%; height: 200px;"> </textarea>
                     <div style="position: absolute; bottom: 20px; right: 20px;">
                         <button class="submit" @click="onSubmit"
-                            style="height: 60px; width: 130px; background-color: var(--color-primary); border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
+                            style="height: 45px; width: 130px; background-color: var(--color-primary); border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
                             随机生成
+                        </button>
+                    </div>
+                    <div style="position: absolute; bottom: 20px; left: 20px;">
+                        <button class="submit" @click="onSubmit"
+                            style="height: 45px; width: 130px; background-color: gray; border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
+                            风格选择
                         </button>
                     </div>
                     <div style="position: absolute; bottom: 30px; right: 230px; font-size: 18px; font-weight: bold;">
                         输⼊想要的天猫超级符号创意
                     </div>
                     <!-- ParamsPlane按钮 -->
-                    <div class="cursor-pointer params-plane-button" @click="ParamsPlaneIsShow = !ParamsPlaneIsShow" style="position: absolute; color: white; bottom: 5px; right: -70px;">
+                    <div class="cursor-pointer params-plane-button" @click="ParamsPlaneIsShow = !ParamsPlaneIsShow"
+                        style="position: absolute; color: white; bottom: 5px; right: -70px;">
                         <div
                             style="border-radius: 30px; background-color: rgba(200, 200, 200, .5); padding: 10px; line-height: 0;">
                             <el-icon :size="30">
@@ -27,12 +34,13 @@
                         </div>
                     </div>
                 </div>
-
             </el-row>
         </el-col>
+
     </el-row>
 
-    <ParamsPlane :txt2img_data="txt2img_data" :loras="loras" :is_show="ParamsPlaneIsShow"></ParamsPlane>
+    <ParamsPlane :txt2img_data="txt2img_data" :loras="loras" :is_show="ParamsPlaneIsShow & 1"></ParamsPlane>
+    <ImageHistoryPlane :historyImages="genImageInfoList"></ImageHistoryPlane>
     <div style="position: absolute;">
         <div>
             <el-progress v-if="genState" :percentage="genPercentage" />
@@ -41,10 +49,11 @@
 </template>
 
 <script>
-import { ref, watch, computed,onMounted } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import api from '../assets/request_api.js'
 import sd_config from '../assets/sd.config.js'
 import ParamsPlane from './ParamsPlane.vue'
+import ImageHistoryPlane from './ImageHistoryPlane.vue'
 import $ from 'jquery'
 </script>
 
@@ -59,11 +68,13 @@ console.log(window.vue);
 const genState = ref(false); // 是否正在生成
 const genPercentage = ref(0); // 是否正在生成
 const genImageList = ref([]); // 生成的图片列表
+const genImageInfoList = ref([]); // 生成的图片列表 - 包括详细信息
 
 const loras = ref([]); // lora列表
 const image_base64 = ref('123')
 
 const ParamsPlaneIsShow = ref(true)
+window.ParamsPlaneIsShow = ParamsPlaneIsShow
 
 const promt_input = ref('masterpiece, best quality, 8k, cinematic light, ultra high res, chibi, 1girl, child, pink hair, multicolored hair, long hair, solo, dress, star hair ornament, horns, blue hair, star \, (symbol\), bangs, gradient hair, artist name, gradient, smile, closed mouth, full body, pink background, gradient background')
 const txt2img_data = ref({
@@ -73,7 +84,7 @@ const txt2img_data = ref({
     "seed": -1,
     "batch_size": 1,
     "n_iter": 1,
-    "steps": 10,
+    "steps": 20,
     "cfg_scale": 7,
     "width": 512,
     "height": 512,
@@ -122,7 +133,7 @@ const getUsedLorasString = computed(() => {
         if (weightSum > 100) {
             weight = weight * (100 / weightSum);
         }
-        weight = (weight  / 100 ).toFixed(2);
+        weight = (weight / 100).toFixed(2);
         if (weight > 0) {
             loraStr = loraStr + "<lora:" + item.name + ":" + (weight);
             loraStr += ">";
@@ -141,6 +152,7 @@ let onSubmit = function () {
         image_base64.value = response.images[response.images.length - 1]; // 更新数据
         response.images.forEach(element => {
             genImageList.value.unshift(element)
+            genImageInfoList.value.unshift({ image: element, parmas: txt2img_data.value, imageType: 'base64' })
         });
         genState.value = false;
     }).catch(function (err) {
@@ -187,7 +199,7 @@ let getTxt2imgFiles = function () {
 }
 getTxt2imgFiles();
 
-onMounted(()=>{
+onMounted(() => {
     $("textarea").click(() => {
         console.log('textarea click');
         return false;
@@ -202,9 +214,9 @@ onMounted(()=>{
         ParamsPlaneIsShow.value = false
     })
 
-    $('.params-plane-button').click(()=>{
+    $('.params-plane-button').click(() => {
         console.log('.params-plane-button click');
-        ParamsPlaneIsShow.value = true
+        // ParamsPlaneIsShow.value =  (Number)(ParamsPlaneIsShow.value) + 1
         return false;
     })
 
@@ -247,7 +259,6 @@ div.params {
     right: 0px;
     top: 0px;
     height: 100%;
-    overflow-y: auto;
 }
 
 
