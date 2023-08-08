@@ -15,13 +15,20 @@
             <div class="normal">
                 <img src="../assets/png/3.png">
             </div> -->
-            <div class="normal" v-for="(src, i) in images" >
+            <div class="normal" v-for="(src, i) in images">
                 <img :src="'data:image/png;base64,' + src">
+                <div class="cursor-pointer" style="display: inline; position: absolute; bottom: 15px; right: 30px; background-color: #333d; margin: 0; padding: 8px; line-height: 0; border-radius: 30px;">
+                    <a :href="'data:image/png;base64,' + src" download="下载名称">
+                        <el-icon color="#fffd" :size="25">
+                            <Download />
+                        </el-icon>
+                    </a>
+                </div>
             </div>
         </viewer>
 
         <div style="position: absolute; top: 50%; width: 100%;">
-            <div  style="position: relative; top: -35px;">
+            <div style="position: relative; top: -35px;">
                 <div class="cursor-pointer" style="display: inline-block; position: absolute; left: 10%;">
                     <el-icon :size="100" @click="kIndex = kIndex < 1 ? 0 : kIndex - 1" color="rgba(255, 255, 255, 0.8)">
                         <ArrowLeftBold />
@@ -88,11 +95,11 @@ onMounted(() => {
     }
 
 
-    $('.ImageView').on("scroll",function(e) {
+    $('.ImageView').on("scroll", function (e) {
         console.log(e)
         console.log('mousewheel')
     })
-    $('.ImageView').scroll(function(e) {
+    $('.ImageView').scroll(function (e) {
         console.log(e)
         console.log('mousewheel')
     })
@@ -102,14 +109,14 @@ onMounted(() => {
 
 watch(kIndex, async function (newVal, oldVal) {
     reflushImages();
-    }
+}
 )
 
-watch(()=>props.images, async function (newVal, oldVal) {
+watch(() => props.images, async function (newVal, oldVal) {
     console.log('watch ()=>props.images');
     reflushImages();
-    },
-    { deep: true,flush: 'post' }
+},
+    { deep: true, flush: 'post' }
 )
 
 
@@ -145,6 +152,4 @@ watch(()=>props.images, async function (newVal, oldVal) {
     object-fit: cover;
     border-radius: 25px;
 }
-
-
 </style>

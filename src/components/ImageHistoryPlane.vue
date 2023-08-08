@@ -4,10 +4,12 @@
         <space style="height: 50px; display: block;"></space>
         <div style="text-align: left;">历史画面</div>
         <div class="plane">
-            <div class="historyImage" v-for="imageInfo of historyImages">
-                <img v-if="imageInfo.imageType == 'base64'" :src="'data:image/png;base64,' + imageInfo.image" />
-                <img v-else :src="'data:image/png;base64,' + imageInfo.image" />
-            </div>
+            <viewer style="width: 100%; height: 100%;" :images="props.historyImages">
+                <div class="historyImage" v-for="imageInfo of historyImages">
+                    <img v-if="imageInfo.imageType == 'base64'" :src="'data:image/png;base64,' + imageInfo.image" />
+                    <img v-else :src="'data:image/png;base64,' + imageInfo.image" />
+                </div>
+            </viewer>
         </div>
         <div style="text-align: center;">
             <div class="button">

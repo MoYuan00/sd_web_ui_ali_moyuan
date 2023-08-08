@@ -35,8 +35,13 @@
                     </div>
                 </div>
             </el-row>
-        </el-col>
+            <div style="text-align: center; color: #fff;">
+                启用形状控制
+                <el-switch v-model="isUseControlNet" />
+                <ControlNet></ControlNet>
+            </div>
 
+        </el-col>
     </el-row>
 
     <ParamsPlane :txt2img_data="txt2img_data" :loras="loras" :is_show="ParamsPlaneIsShow & 1"></ParamsPlane>
@@ -54,12 +59,14 @@ import api from '../assets/request_api.js'
 import sd_config from '../assets/sd.config.js'
 import ParamsPlane from './ParamsPlane.vue'
 import ImageHistoryPlane from './ImageHistoryPlane.vue'
+import ControlNet from './ControlNet.vue'
 import $ from 'jquery'
 </script>
 
 <script setup>
 import UploadFile from './UploadFile.vue'
 import ImageView from './ImageView.vue'
+import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
 
 console.log("执行script PromoInput");
 console.log(window.vue);
@@ -93,7 +100,20 @@ const txt2img_data = ref({
     "sampler_index": "Euler",
     "save_images": true, // 生成后保持
     // "send_images": true, 
+    "alwayson_scripts": {
+        "controlnet": {
+            "args": [
+                {
+                    "input_image": "",
+                    // "model": "control_v11p_sd15_canny [d14c016b]"
+                    "model": "control_v11p_sd15_lineart [43d4be0d]",
+                }
+            ]
+        }
+    }
 })
+
+const isUseControlNet = ref(false)
 
 const lora_mult_weight = ref({
     "开关": [{ 'name': '启用?', 'value': 1 }],
@@ -142,15 +162,37 @@ const getUsedLorasString = computed(() => {
     return loraStr
 })
 
+// // 第一种方法
+// function downloadImg(src) {
+//     var url = src;
+//     var a = document.createElement('a');
+//     var event = new MouseEvent('click')
+//     a.download = 'imgName'
+//     a.href = url;
+//     a.dispatchEvent(event);
+// }
 
 
 let onSubmit = function () {
     console.log('点击onSubmit');
     genState.value = true;
     txt2img_data.value.prompt = promt_input.value + getUsedLorasString.value
+    if (isUseControlNet.value) {
+        txt2img_data.value.alwayson_scripts.controlnet.args[0].input_image = ControlNetImg_Base64.value
+    } else {
+        txt2img_data.value.alwayson_scripts.controlnet.args[0].input_image = ''
+    }
+
     api.txt2img(txt2img_data.value).then((response) => {
         image_base64.value = response.images[response.images.length - 1]; // 更新数据
+        let count = 0
+        let length = response.images.length;
         response.images.forEach(element => {
+            // 如果生成多个图片会第一张返回多个图片的预览，如果开启control会额外返回一个image
+            count++;
+            if (txt2img_data.value.batch_size > 1 && count == 1) return;
+            if (isUseControlNet.value && count == length) return;
+
             genImageList.value.unshift(element)
             genImageInfoList.value.unshift({ image: element, parmas: txt2img_data.value, imageType: 'base64' })
         });
