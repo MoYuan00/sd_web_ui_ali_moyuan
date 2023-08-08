@@ -15,6 +15,7 @@
     "element-plus": "^2.3.8",
     "jquery": "^3.7.0",
     "lodash": "^4.17.21",
+    "piexifjs": "^1.0.4",
     "v-viewer": "^3.0.11",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2"
