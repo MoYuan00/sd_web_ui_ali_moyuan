@@ -68,7 +68,7 @@ import UploadFile from './UploadFile.vue'
 import ImageView from './ImageView.vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
 import { FlushHistoryImages } from '@/assets/GlobalStatus'
-import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts  } from '@/assets/ImgParams'
+import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts,isUseControlNet  } from '@/assets/ImgParams'
 import utils from '@/assets/utils'
 
 console.log("执行script PromoInput");
@@ -84,7 +84,7 @@ const ParamsPlaneIsShow = ref(true)
 window.ParamsPlaneIsShow = ParamsPlaneIsShow
 
 
-const isUseControlNet = ref(false)
+
 
 // const lora_mult_weight = ref({
 //     "开关": [{ 'name': '启用?', 'value': 1 }],

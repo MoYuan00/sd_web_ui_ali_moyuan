@@ -23,7 +23,22 @@ export const txt2img_data = ref({
     "sampler_index": "Euler",
     "save_images": true, // 生成后保持
     // "send_images": true, 
-    "alwayson_scripts": { }
+    "alwayson_scripts": { },
+
+
+    // 高清修复
+    "enable_hr": true,
+    "denoising_strength": 0.3,
+    "firstphase_width": 0,
+    "firstphase_height": 0,
+    "hr_scale": 2,
+    "hr_upscaler": "4x-UltraSharp",
+    "hr_second_pass_steps": 20,
+    // "hr_resize_x": 1024,
+    // "hr_resize_y": 1024,
+    // "hr_sampler_name": "4x-UltraSharp",
+    // "hr_prompt": "",
+    // "hr_negative_prompt": ""
 })
 
 export const txt2img_alwayson_scripts = ref({
@@ -42,7 +57,7 @@ export const loras = ref([]); // lora列表
 
 
 // controlnet 参数
-
+export const isUseControlNet = ref(false)
 
 // 控制图片
 export const VerticalRotate = ref(1)
@@ -66,6 +81,7 @@ export function GetImgData() {
     let json = {
         init: 'Vue js',
         controlnet: {
+            isUseControlNet: isUseControlNet.value,
             VerticalRotate: VerticalRotate.value,
             HorizontalRotate: HorizontalRotate.value,
             imageShowSize: imageShowSize.value,
@@ -121,6 +137,7 @@ export function DeCodeCustomInfo(ImgData) {
 
     let seed = ImgData.seed
 
+    isUseControlNet.value = custom_info.controlnet.isUseControlNet
     VerticalRotate.value = custom_info.controlnet.VerticalRotate
     HorizontalRotate.value = custom_info.controlnet.HorizontalRotate
     imageShowSize.value = custom_info.controlnet.imageShowSize
