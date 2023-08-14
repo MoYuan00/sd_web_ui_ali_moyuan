@@ -56,7 +56,7 @@ export const txt2img_alwayson_scripts = ref({
 export const loras = ref([]); // lora列表
 
 
-// controlnet 参数
+//  -------------------------- controlnet 参数
 export const isUseControlNet = ref(false)
 
 // 控制图片
@@ -67,6 +67,8 @@ export const HorizontalRotate = ref(0)
 export const imageShowSize = ref(1)
 export const VerticalPosition = ref(0.5)
 export const HorizontalPosition = ref(0.5)
+
+// -----------------------  参数还原
 
 export function GetImgData() {
     // lora记录weight和name映射关系

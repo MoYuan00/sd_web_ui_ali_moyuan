@@ -78,6 +78,15 @@
                 </span>
             </div>
         </div>
+        <div>
+            <span>高清修复:</span>
+            <div>
+                <el-switch v-model="txt2img_data.enable_hr" active-text="开启" inactive-text="关闭" />
+                <span style="padding-left: 20px; color: white;">
+                    {{ txt2img_data.enable_hr }}
+                </span>
+            </div>
+        </div>
     </div>
 </template>
 
