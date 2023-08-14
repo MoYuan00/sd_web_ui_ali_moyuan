@@ -68,6 +68,16 @@
             <span>step(步数)</span>
             <el-slider v-model="txt2img_data.steps" show-input size="small" :max="150" />
         </div>
+        <div>
+            <span>Seed:</span>
+
+            <div>
+                <el-switch v-model="seedIsRandom" active-text="随机" inactive-text="固定" />
+                <span style="padding-left: 20px; color: white;">
+                    {{ txt2img_data.seed }}
+                </span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -75,21 +85,23 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 const props = defineProps({
-    'txt2img_data' : {
+    'txt2img_data': {
         type: Object,
         default: {}
     },
-     'loras': {
+    'loras': {
         type: Array,
         default: []
-     },
-     'is_show': {
+    },
+    'is_show': {
         type: Boolean,
         default: true
     }
 })
 
 const isShow = ref(props.is_show)
+const seedIsRandom = ref(false)
+
 
 const getUsedLorasString = computed(() => {
 
@@ -118,6 +130,20 @@ const getUsedLorasString = computed(() => {
     return loraStr
 })
 
+let seedCache = "-1"
+watch(seedIsRandom, (newVal, oldVal)=>{
+    if(newVal) {
+        seedCache = props.txt2img_data.seed
+        props.txt2img_data.seed = "-1"
+    } else {
+        props.txt2img_data.seed = seedCache
+    }
+})
+
+watch(()=>props.txt2img_data, ()=>{
+    seedIsRandom.value = false
+})
+
 onMounted(() => {
 
     $(".params").click(() => {
@@ -130,3 +156,13 @@ onMounted(() => {
 })
 
 </script>
+
+<style scoped>
+
+:deep().el-switch__label{
+    color: white !important;
+}
+:deep().el-switch__label.is-active {
+    color: var(--el-color-primary) !important;
+}
+</style>

@@ -17,8 +17,8 @@
             </div> -->
             <div class="normal" v-for="(src, i) in images">
                 <img :src="'data:image/png;base64,' + src">
-                <div class="cursor-pointer" style="display: inline; position: absolute; bottom: 15px; right: 30px; background-color: #333d; margin: 0; padding: 8px; line-height: 0; border-radius: 30px;">
-                    <a :href="'data:image/png;base64,' + src" download="下载名称">
+                <div class="cursor-pointer"   style="display: inline; position: absolute; bottom: 15px; right: 30px; background-color: #333d; margin: 0; padding: 8px; line-height: 0; border-radius: 30px;">
+                    <a :href="'data:image/png;base64,' + src" download="AI creative engine">
                         <el-icon color="#fffd" :size="25">
                             <Download />
                         </el-icon>

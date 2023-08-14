@@ -3,8 +3,9 @@ import _ from "lodash"
 
 // axios.defaults.withCredentials = true// Cookie跨域
 
+const baseURL = 'http://30.13.115.79:7860/'
 const instance = axios.create({
-    baseURL: 'http://30.13.115.79:7860/',
+    baseURL: baseURL,
     timeout: 1000,
     headers: {
         'X-Custom-Header': 'foobar',
@@ -18,17 +19,35 @@ const instance = axios.create({
 });
 
 
+
+function getURL(path) {
+    return baseURL + path;
+}
+
 // 处理请求参数
+// const coverFormData = (obj) => {
+//     let data = Object.keys(obj.data).map(item => {
+//         let value = obj.data[item];
+//         if (_.isArray(value) || _.isObject(value)) {
+//             value = JSON.stringify(value)
+//         }
+//         return encodeURIComponent(item) + '=' + encodeURIComponent(value);
+//     }).join('&');
+
+//     return { data: data, url: obj.url };
+// }
+
+
 const coverFormData = (obj) => {
-    let data = Object.keys(obj.data).map(item => {
-        let value = obj.data[item];
+    let data = Object.keys(obj).map(item => {
+        let value = obj[item];
         if (_.isArray(value) || _.isObject(value)) {
             value = JSON.stringify(value)
         }
         return encodeURIComponent(item) + '=' + encodeURIComponent(value);
     }).join('&');
 
-    return { data: data, url: obj.url };
+    return data;
 }
 
 function post(url, data) {
@@ -77,8 +96,34 @@ function get(url, data) {
 
 }
 
+function getBlob(url, data) {
+    // const { data, url } = coverFormData(obj);
+    console.log("get " + url);
+    return new Promise((resolve, reject) => {
+        instance.get(url, {params: data,  responseType:'blob'})
+            .then(res => {
+                // obj.success ? obj.success(res) : null
+                console.group("get response " + url);
+                console.log(res.data);
+                console.groupEnd();
+                resolve(res.data);
+            })
+            .catch(error => {
+                // obj.error ? obj.error(error) : null;
+                console.group("post response error " + url);
+                console.error(error);
+                console.groupEnd();
+                reject(error);
+            })
+    })
+
+}
+
 let requests = {}
 requests.post = post
 requests.get = get
+requests.getURL = getURL
+requests.getBlob = getBlob
+requests.coverFormData = coverFormData
 
 export default requests

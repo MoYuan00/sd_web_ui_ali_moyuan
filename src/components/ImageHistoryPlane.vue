@@ -4,10 +4,39 @@
         <space style="height: 50px; display: block;"></space>
         <div style="text-align: left;">历史画面</div>
         <div class="plane">
-            <viewer style="width: 100%; height: 100%;" :images="props.historyImages">
-                <div class="historyImage" v-for="imageInfo of historyImages">
+            <viewer style="width: 100%; height: 100%;" :images="HistoryGenImageInfoList">
+                <!-- <div class="historyImage" v-for="imageInfo of historyImages">
                     <img v-if="imageInfo.imageType == 'base64'" :src="'data:image/png;base64,' + imageInfo.image" />
                     <img v-else :src="'data:image/png;base64,' + imageInfo.image" />
+                </div> -->
+
+                <div class="historyImage" v-if="HistoryGenImageInfoList && HistoryGenImageInfoList.length > 0"
+                    v-for="imageInfo of HistoryGenImageInfoList">
+                    <img :src="api.image_file_url(imageInfo.fullpath)" loading="lazy" />
+
+                    <el-tooltip class="box-item" effect="dark" content="下载" placement="top-start">
+                        <div class="cursor-pointer"
+                            style="display: inline; position: absolute; bottom: 10px; right: 40px; background-color: #333d; padding: 5px; line-height: 0; border-radius: 30px;">
+                            <div @click="onDownloadImg(api.image_file_url(imageInfo.fullpath))">
+                                <el-icon color="#fffd" :size="15">
+                                    <Download />
+                                </el-icon>
+                            </div>
+                        </div>
+                    </el-tooltip>
+
+
+
+
+                    <!-- <img :src="imageInfo.fullpath" /> -->
+                    <el-tooltip class="box-item" effect="dark" content="点击还原参数" placement="top-start">
+                        <div class="cursor-pointer" @click="OnReduce(imageInfo.fullpath)"
+                            style="position: absolute; bottom: 10px; right: 10px; border-radius: 20px; background-color: #333d; line-height: 0; padding: 5px;">
+                            <el-icon color="#fffd" size="15">
+                                <Promotion />
+                            </el-icon>
+                        </div>
+                    </el-tooltip>
                 </div>
             </viewer>
         </div>
@@ -21,6 +50,9 @@
 
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
+import { FlushHistoryImages, HistoryGenImageInfoList } from '@/assets/GlobalStatus'
+import { DecodeImgData, DeCodeCustomInfo } from '@/assets/ImgParams'
+import api from './../assets/request_api'
 import $ from 'jquery'
 const props = defineProps({
     'historyImages': {
@@ -49,27 +81,41 @@ const props = defineProps({
     }
 })
 
-const imageList = computed(()=>{
-    let images = []
-    for(let imgInfo of props.historyImages) {
-        if(imgInfo.imageType == 'base64') {
-            images.shift('data:image/png;base64,' + imgInfo.image );
-        }
-    }
-    return images
-})
 
 const isShow = ref(props.is_show)
 
+// 点击还原参数
+function OnReduce(imagefullpath) {
+    console.log(' OnReduce ' + imagefullpath)
+    api.image_info(imagefullpath).then(data => {
+        console.log(data)
+        let str = DecodeImgData(data)
+        console.log(str)
+        DeCodeCustomInfo(str)
+    })
+
+}
+
+function onDownloadImg(url) {
+    api.downloadImage(url, 'download');
+}
+
 onMounted(() => {
+
+    $("a").click((event) => {
+        console.log('a click');
+        // event.stopPropagation();
+        // return false;
+    })
 
     $(".imageHistory").click(() => {
         console.log('.imageHistory click');
-        // event.stopPropagation(); // 阻止事件冒泡
-        return false;
+        event.stopPropagation(); // 阻止事件冒泡，不会阻止默认行为
+        // return false; // 会阻止默认行为，比如a标签跳转
+        // event.stopPropagation();
     })
 
-
+    FlushHistoryImages()
 })
 
 </script>
@@ -130,7 +176,7 @@ div.imageHistory {
     display: inline-block;
     margin-right: 15px;
     margin-bottom: 15px;
-
+    position: relative;
 }
 
 .historyImage img {
@@ -155,4 +201,5 @@ div.imageHistory {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.5);
     color: rgba(255, 255, 255, 1);
-}</style>
+}
+</style>

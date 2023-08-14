@@ -5,36 +5,67 @@ const api = {}
 
 api.txt2img =
     function (json) {
-        return window.$axios.post('sdapi/v1/txt2img', json);
+        return requests.post('sdapi/v1/txt2img', json);
     }
 
 api.progress =
     function () {
-        return window.$axios.get('sdapi/v1/progress');
+        return requests.get('sdapi/v1/progress');
     }
 
 api.loras =
     function () {
-        return window.$axios.get('sdapi/v1/loras');
+        return requests.get('sdapi/v1/loras');
     }
 
+
+// ---------------------------- 文件浏览
 
 api.txt2imgFiles =
-    function (folder_path) {
-        return window.$axios.get('infinite_image_browsing/files', { "folder_path": folder_path })
+    function () {
+        let path = 'E:\\StableDiffusioin\\sd-webui-aki-v4.2-test\\outputs\\txt2img-images';
+        return requests.get('infinite_image_browsing/files', { "folder_path": path })
+    }
+// 预览小图
+api.image_thumbnail =
+    function (filePath) {
+        return requests.get('infinite_image_browsing/image-thumbnail', { "path": filePath, size: '512x512' })
+    }
+// 获取完整图片
+api.image_file =
+    function (filePath) {
+        return requests.get('infinite_image_browsing/file', { "path": filePath, size: '512x512' })
     }
 
-api.img2img = 
-    function(scale_value, step, upscaler_name) {
-        let data = {
-            
-        }
-        
+api.image_file_url =
+    function (filePath) {
+        return requests.getURL('infinite_image_browsing/file?')
+            + requests.coverFormData({ "path": filePath, size: '512x512', t: new Date().getTime() });
+    }
+
+// 获取图片中的tEXT信息
+
+api.image_info =
+    function (filePath) {
+        return requests.get('infinite_image_browsing/image_geninfo', { "path": filePath })
+
     }
 
 // api.translate_text = (text) =>{
 //     ali_Client.PostTransloate(text)
 // }
+
+api.downloadImage = (imageUrl, name) => {
+    requests.getBlob(imageUrl).then((data) => {
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', name + '.png');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    });
+};
 
 export default api
 

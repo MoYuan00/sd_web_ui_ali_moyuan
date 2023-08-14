@@ -67,6 +67,9 @@ import $ from 'jquery'
 import UploadFile from './UploadFile.vue'
 import ImageView from './ImageView.vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
+import { FlushHistoryImages } from '@/assets/GlobalStatus'
+import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts  } from '@/assets/ImgParams'
+import utils from '@/assets/utils'
 
 console.log("执行script PromoInput");
 console.log(window.vue);
@@ -77,63 +80,31 @@ const genPercentage = ref(0); // 是否正在生成
 const genImageList = ref([]); // 生成的图片列表
 const genImageInfoList = ref([]); // 生成的图片列表 - 包括详细信息
 
-const loras = ref([]); // lora列表
-const image_base64 = ref('123')
-
 const ParamsPlaneIsShow = ref(true)
 window.ParamsPlaneIsShow = ParamsPlaneIsShow
 
-const promt_input = ref('masterpiece, best quality, 8k, cinematic light, ultra high res, chibi, 1girl, child, pink hair, multicolored hair, long hair, solo, dress, star hair ornament, horns, blue hair, star \, (symbol\), bangs, gradient hair, artist name, gradient, smile, closed mouth, full body, pink background, gradient background')
-const txt2img_data = ref({
-    "denoising_strength": 0,
-    "prompt": 'masterpiece, best quality, 8k, cinematic light, ultra high res, chibi, 1girl, child, pink hair, multicolored hair, long hair, solo, dress, star hair ornament, horns, blue hair, star \, (symbol\), bangs, gradient hair, artist name, gradient, smile, closed mouth, full body, pink background, gradient background',
-    "negative_prompt": "",
-    "seed": -1,
-    "batch_size": 1,
-    "n_iter": 1,
-    "steps": 20,
-    "cfg_scale": 7,
-    "width": 512,
-    "height": 512,
-    "restore_faces": false,
-    "tiling": false,
-    "sampler_index": "Euler",
-    "save_images": true, // 生成后保持
-    // "send_images": true, 
-    "alwayson_scripts": {
-        "controlnet": {
-            "args": [
-                {
-                    "input_image": "",
-                    // "model": "control_v11p_sd15_canny [d14c016b]"
-                    "model": "control_v11p_sd15_lineart [43d4be0d]",
-                }
-            ]
-        }
-    }
-})
 
 const isUseControlNet = ref(false)
 
-const lora_mult_weight = ref({
-    "开关": [{ 'name': '启用?', 'value': 1 }],
-    "服装": [{ 'name': '服装细节1', 'value': 0.1 }, // 2
-    { 'name': '服装细节2', 'value': 0.1 }, // 3
-    { 'name': '服装细节3', 'value': 0.1 }], // 4
-    "服装姿势": [{ 'name': '背景1', 'value': 0.1 }, // 5
-    { 'name': '背景2', 'value': 0.1 }, // 6
-    { 'name': '躯干/动作1', 'value': 0.1 }, // 7
-    { 'name': '躯干动作', 'value': 0.1 }], // 8
-    "服装": [{ 'name': '面部/躯干1', 'value': 0.1 }, // 9
-    { 'name': '面部/躯干2', 'value': 0.1 }, // 10
-    { 'name': '面部/装饰1', 'value': 0.1 }, // 11
-    { '面部/装饰2': 0.1 }], // 12
-    "上色风格": [{ 'name': '背景-风格1', 'value': 0.1 }, // 13
-    { 'name': '背景-风格2', 'value': 0.1 }, // 14
-    { 'name': '背景-风格3', 'value': 0.1 }, // 15
-    { 'name': '背景-风格4', 'value': 0.1 }, // 16
-    { 'name': '上色风格', 'value': 0.1 }], // 17
-})
+// const lora_mult_weight = ref({
+//     "开关": [{ 'name': '启用?', 'value': 1 }],
+//     "服装": [{ 'name': '服装细节1', 'value': 0.1 }, // 2
+//     { 'name': '服装细节2', 'value': 0.1 }, // 3
+//     { 'name': '服装细节3', 'value': 0.1 }], // 4
+//     "服装姿势": [{ 'name': '背景1', 'value': 0.1 }, // 5
+//     { 'name': '背景2', 'value': 0.1 }, // 6
+//     { 'name': '躯干/动作1', 'value': 0.1 }, // 7
+//     { 'name': '躯干动作', 'value': 0.1 }], // 8
+//     "服装": [{ 'name': '面部/躯干1', 'value': 0.1 }, // 9
+//     { 'name': '面部/躯干2', 'value': 0.1 }, // 10
+//     { 'name': '面部/装饰1', 'value': 0.1 }, // 11
+//     { '面部/装饰2': 0.1 }], // 12
+//     "上色风格": [{ 'name': '背景-风格1', 'value': 0.1 }, // 13
+//     { 'name': '背景-风格2', 'value': 0.1 }, // 14
+//     { 'name': '背景-风格3', 'value': 0.1 }, // 15
+//     { 'name': '背景-风格4', 'value': 0.1 }, // 16
+//     { 'name': '上色风格', 'value': 0.1 }], // 17
+// })
 
 const getUsedLorasString = computed(() => {
 
@@ -176,25 +147,33 @@ const getUsedLorasString = computed(() => {
 let onSubmit = function () {
     console.log('点击onSubmit');
     genState.value = true;
-    txt2img_data.value.prompt = promt_input.value + getUsedLorasString.value
+    let data = utils.deepClone(txt2img_data.value)
+    data.prompt = promt_input.value + getUsedLorasString.value
     if (isUseControlNet.value) {
-        txt2img_data.value.alwayson_scripts.controlnet.args[0].input_image = ControlNetImg_Base64.value
+        txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ControlNetImg_Base64.value
     } else {
-        txt2img_data.value.alwayson_scripts.controlnet.args[0].input_image = ''
+        txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ''
     }
+    data.alwayson_scripts = txt2img_alwayson_scripts.value
+    
+    // 图片信息
+    data.custom_info_str = GetImgData()
 
-    api.txt2img(txt2img_data.value).then((response) => {
-        image_base64.value = response.images[response.images.length - 1]; // 更新数据
+    api.txt2img(data).then((response) => {
         let count = 0
         let length = response.images.length;
+        genImageList.value.splice(0, genImageList.value.length)
+        genImageInfoList.value.splice(0, genImageInfoList.value.length)
+
         response.images.forEach(element => {
             // 如果生成多个图片会第一张返回多个图片的预览，如果开启control会额外返回一个image
             count++;
-            if (txt2img_data.value.batch_size > 1 && count == 1) return;
+            if (data.batch_size > 1 && count == 1) return;
             if (isUseControlNet.value && count == length) return;
 
             genImageList.value.unshift(element)
-            genImageInfoList.value.unshift({ image: element, parmas: txt2img_data.value, imageType: 'base64' })
+            genImageInfoList.value.unshift({ image: element, parmas: data, imageType: 'base64' })
+            FlushHistoryImages()
         });
         genState.value = false;
     }).catch(function (err) {
@@ -216,7 +195,7 @@ let onSubmit = function () {
         }, 1000, 1000)
 
         // while (genState.value) {
-
+            
         // }
     }
 
@@ -231,15 +210,6 @@ let getLoras = function () {
     })
 }
 getLoras();
-
-
-let getTxt2imgFiles = function () {
-    api.txt2imgFiles(sd_config.sd_output_root_path_txt2img).then((response) => {
-        // loras.value = response;
-    }).catch(function (err) {
-    })
-}
-getTxt2imgFiles();
 
 onMounted(() => {
     $("textarea").click(() => {

@@ -8,8 +8,7 @@
         </p>
 
         <div style="width: 200px; display: inline-block; color: white;">
-
-            <div>
+            <div style="display: inline-block;">
                 <span>水平旋转</span>
                 <el-slider v-model="HorizontalRotate" :step="RotateHorizontalStep" :min="RotateHorizontalMin"
                     :max="RotateHorizontalMax" />
@@ -33,19 +32,15 @@
                 <el-slider v-model="HorizontalPosition" :step="0.02" :min="0" :max="1" />
             </div>
         </div>
-        <div>
-            <div style="color: white; display: inline-block;">
-                <img :src="currentImgUrl" style="max-height: 512px;" >
-            </div>
+        <div style="display: inline-block;">
             <canvas id="canvas" height="512" width="512" style="background-color: #fff2;">
             </canvas>
             <!-- <img :src="selectedFile" style="max-height: 512px;" /> -->
-            <div style="color: white; display: inline-block;">
+            <!-- <div style="color: white; display: inline-block;">
                 <img :src="ControlNetImg_Base64" />
                 <a download="下载名称" :href="ControlNetImg_Base64">下载</a>
-            </div>
+            </div> -->
         </div>
-
     </div>
 </template>
 
@@ -54,11 +49,10 @@
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
+import { VerticalRotate,HorizontalRotate,imageShowSize,VerticalPosition,HorizontalPosition   } from '@/assets/ImgParams'
 const selectedFile = ref('')
 
 // 控制图片
-const VerticalRotate = ref(1)
-const HorizontalRotate = ref(0)
 
 const RotateVerticalStep = 1
 const RotateVerticalMin = 1
@@ -67,11 +61,6 @@ const RotateVerticalMax = 4
 const RotateHorizontalStep = 5
 const RotateHorizontalMin = 0
 const RotateHorizontalMax = 15
-
-// 控制画板
-const imageShowSize = ref(1)
-const VerticalPosition = ref(0.5)
-const HorizontalPosition = ref(0.5)
 
 
 const currentImgUrl = computed(() => {
