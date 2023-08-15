@@ -20,3 +20,10 @@ export function FlushHistoryImages() {
 }
 
 window.HistoryGenImageInfoList = HistoryGenImageInfoList
+
+
+
+
+// 状态
+export const genState = ref(false); // 是否正在生成
+export const genPercentage = ref(0); // 生成进度 0 ~ 1

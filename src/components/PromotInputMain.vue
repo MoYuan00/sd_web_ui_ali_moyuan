@@ -3,26 +3,19 @@
     <el-row justify="center" align="middle" style="width: 100%; height: 100%;">
         <el-col :span="24">
             <el-row>
-                <div class="input">
+                <div class="input" v-loading="genState" element-loading-text="正在生成...">
                     <textarea v-model="promt_input" style="width: 100%; height: 200px;"> </textarea>
-                    <div style="position: absolute; bottom: 20px; right: 20px;">
+                    <div style="position: absolute; bottom: 10px; right: 5px;">
                         <button class="submit" @click="onSubmit"
                             style="height: 45px; width: 130px; background-color: #33d; border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
                             随机生成
                         </button>
                     </div>
-                    <div style="position: absolute; bottom: 20px; left: 20px;">
-                        <button class="submit" @click="onSubmit"
-                            style="height: 45px; width: 130px; background-color: gray; border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
-                            风格选择
-                        </button>
-                    </div>
                     <!-- ParamsPlane按钮 -->
                     <div class="cursor-pointer params-plane-button" @click="ParamsPlaneIsShow = !ParamsPlaneIsShow"
-                        style="position: absolute; color: white; bottom: 5px; right: -70px;">
-                        <div
-                            style="border-radius: 30px; background-color: rgba(200, 200, 200, .5); padding: 10px; line-height: 0;">
-                            <el-icon :size="30">
+                        style="position: absolute; bottom: 10px; left: 5px;">
+                        <div style="border-radius: 30px; background-color: #3333; padding: 10px; line-height: 0;">
+                            <el-icon :size="30" color="#3338">
                                 <Expand />
                             </el-icon>
                         </div>
@@ -32,15 +25,11 @@
         </el-col>
     </el-row>
 
-    <div style="position: absolute;">
-        <div>
-            <el-progress v-if="genState" :percentage="genPercentage" />
-        </div>
-    </div>
+    
 </template>
 
 <script>
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted, defineEmits } from 'vue'
 import api from '../assets/request_api.js'
 import sd_config from '../assets/sd.config.js'
 import ParamsPlane from './ParamsPlane.vue'
@@ -52,17 +41,16 @@ import $ from 'jquery'
 <script setup>
 import UploadFile from './UploadFile.vue'
 import ImageView from './ImageView.vue'
-import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
-import { FlushHistoryImages } from '@/assets/GlobalStatus'
-import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts,isUseControlNet  } from '@/assets/ImgParams'
+import { ControlNetImg_Base64, FlushHistoryImages,genState, genPercentage  } from '@/assets/GlobalStatus.js'
+import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts, isUseControlNet } from '@/assets/ImgParams'
 import utils from '@/assets/utils'
+
+const emit = defineEmits(['on-gen-img'])
 
 console.log("执行script PromoInput");
 console.log(window.vue);
 
 
-const genState = ref(false); // 是否正在生成
-const genPercentage = ref(0); // 是否正在生成
 const genImageList = ref([]); // 生成的图片列表
 const genImageInfoList = ref([]); // 生成的图片列表 - 包括详细信息
 
@@ -98,8 +86,10 @@ const getUsedLorasString = computed(() => {
 
 
 let onSubmit = function () {
-    console.log('点击onSubmit');
+    emit('on-gen-img')
+
     genState.value = true;
+
     let data = utils.deepClone(txt2img_data.value)
     data.prompt = promt_input.value + getUsedLorasString.value
     if (isUseControlNet.value) {
@@ -108,7 +98,7 @@ let onSubmit = function () {
         txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ''
     }
     data.alwayson_scripts = txt2img_alwayson_scripts.value
-    
+
     // 图片信息
     data.custom_info_str = GetImgData()
 
@@ -136,7 +126,7 @@ let onSubmit = function () {
     function queryProgress() {
         let t = setInterval(function () {
             api.progress().then((response) => {
-                genPercentage.value = response.progress * 100;
+                genPercentage.value = (response.progress * 100).toFixed(1);
                 if (!genState.value) {
                     clearInterval(t);
                 }

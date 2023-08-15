@@ -40,6 +40,7 @@
                 <img id="canvas-event" :src="ControlNetImg_Base64" style="max-height: 300px;" draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
+            <slot></slot>
         </div>
     </div>
 </template>
