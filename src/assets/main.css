@@ -1,13 +1,14 @@
 @import './base.css';
 
 body{
-  background-color: var(--color-backgrund);
+  /* background-color: var(--color-backgrund);
   background: url('../assets/png/bg-map.png') center;
   background-position: center;
-  background-size: 110%;/*按比例缩放*/
+  background-size: 110%;按比例缩放 */
+
   margin: 0px;
   padding: 0px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 #app{

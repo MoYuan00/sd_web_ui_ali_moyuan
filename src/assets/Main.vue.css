@@ -1,0 +1,13 @@
+.icon-button {
+    display: inline-block;
+    background-color: #0003;
+    border-radius: 20px;
+    line-height: 0;
+    padding: 6px;
+
+    margin: 5px;
+}
+
+.icon-button:hover{
+    cursor: pointer;
+}
