@@ -15,9 +15,18 @@ body {
   font-size: 15px;
   text-rendering: optimizeLegibility;
 }
-
+.pointer:hover {
+  cursor: pointer;
+}
 .cursor-pointer:hover {
   cursor: pointer;
+}
+
+.clear-after{
+  float:left;
+  content:""; 
+display: block; 
+clear: both;
 }
 
 

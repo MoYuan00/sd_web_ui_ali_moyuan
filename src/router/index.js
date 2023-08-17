@@ -7,8 +7,12 @@ const router = createRouter({
       path: '/',
       name: 'sd-home',
       component: () => import('../views/Main.vue')
-      // component: HomeView
     },
+    {
+      path: '/view',
+      name: 'sd-view',
+      component: () => import('../views/ImgViewAndEdit.vue')
+    }
     // {
     //   path: '/',
     //   name: 'sd-home',
@@ -27,3 +31,5 @@ const router = createRouter({
 })
 
 export default router
+
+window.router = router

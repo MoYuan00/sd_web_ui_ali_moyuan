@@ -41,7 +41,7 @@ import $ from 'jquery'
 <script setup>
 import UploadFile from './UploadFile.vue'
 import ImageView from './ImageView.vue'
-import { ControlNetImg_Base64, FlushHistoryImages,genState, genPercentage  } from '@/assets/GlobalStatus.js'
+import { ControlNetImg_Base64, FlushHistoryImages,genState, genPercentage, processTxt2ImgResponse  } from '@/assets/GlobalStatus.js'
 import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts, isUseControlNet } from '@/assets/ImgParams'
 import utils from '@/assets/utils'
 
@@ -116,8 +116,11 @@ let onSubmit = function () {
 
             genImageList.value.unshift(element)
             genImageInfoList.value.unshift({ image: element, parmas: data, imageType: 'base64' })
-            FlushHistoryImages()
         });
+        processTxt2ImgResponse(response)
+        FlushHistoryImages()
+        console.log('window.router')
+        window.router.push({ name:'sd-view'})
         genState.value = false;
     }).catch(function (err) {
         genState.value = false;

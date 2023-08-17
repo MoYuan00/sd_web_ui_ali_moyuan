@@ -159,6 +159,8 @@ let onSubmit = function () {
     // 图片信息
     data.custom_info_str = GetImgData()
 
+
+
     api.txt2img(data).then((response) => {
         let count = 0
         let length = response.images.length;
@@ -173,9 +175,11 @@ let onSubmit = function () {
 
             genImageList.value.unshift(element)
             genImageInfoList.value.unshift({ image: element, parmas: data, imageType: 'base64' })
-            FlushHistoryImages()
         });
+        FlushHistoryImages()
         genState.value = false;
+        console.log( window.router);
+       
     }).catch(function (err) {
         genState.value = false;
     })

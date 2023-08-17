@@ -40,6 +40,13 @@
                 <img id="canvas-event" :src="ControlNetImg_Base64" style="max-height: 300px;" draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
+            <div style="position: absolute; right: 5px; top: 0px; z-index: 1000;">
+                <el-tooltip class="box-item" effect="dark" content="在画布上鼠标左键拖拽位置，右键拖拽切换视角，滚轮缩放" placement="top">
+                    <el-icon class="pointer" >
+                        <InfoFilled />
+                    </el-icon>
+                </el-tooltip>
+            </div>
             <slot></slot>
         </div>
     </div>
