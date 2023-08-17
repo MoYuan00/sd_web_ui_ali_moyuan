@@ -6,7 +6,7 @@
                 <div class="input" v-loading="genState" element-loading-text="正在生成...">
                     <textarea v-model="promt_input" style="width: 100%; height: 200px;"> </textarea>
                     <div style="position: absolute; bottom: 10px; right: 5px;">
-                        <button class="submit" @click="onSubmit"
+                        <button  class="submit pointer" @click="onSubmit"
                             style="height: 45px; width: 130px; background-color: #33d; border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
                             随机生成
                         </button>
@@ -24,8 +24,6 @@
             </el-row>
         </el-col>
     </el-row>
-
-    
 </template>
 
 <script>
@@ -41,7 +39,7 @@ import $ from 'jquery'
 <script setup>
 import UploadFile from './UploadFile.vue'
 import ImageView from './ImageView.vue'
-import { ControlNetImg_Base64, FlushHistoryImages,genState, genPercentage, processTxt2ImgResponse  } from '@/assets/GlobalStatus.js'
+import { ControlNetImg_Base64, FlushHistoryImages, genState, genPercentage, processTxt2ImgResponse, ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts, isUseControlNet } from '@/assets/ImgParams'
 import utils from '@/assets/utils'
 
@@ -54,8 +52,7 @@ console.log(window.vue);
 const genImageList = ref([]); // 生成的图片列表
 const genImageInfoList = ref([]); // 生成的图片列表 - 包括详细信息
 
-const ParamsPlaneIsShow = ref(true)
-window.ParamsPlaneIsShow = ParamsPlaneIsShow
+
 
 const getUsedLorasString = computed(() => {
 
@@ -120,7 +117,7 @@ let onSubmit = function () {
         processTxt2ImgResponse(response)
         FlushHistoryImages()
         console.log('window.router')
-        window.router.push({ name:'sd-view'})
+        window.router.push({ name: 'sd-view' })
         genState.value = false;
     }).catch(function (err) {
         genState.value = false;
@@ -146,13 +143,7 @@ let onSubmit = function () {
 }
 
 
-let getLoras = function () {
-    api.loras().then((response) => {
-        loras.value = response;
-    }).catch(function (err) {
-    })
-}
-getLoras();
+
 
 onMounted(() => {
     $("textarea").click(() => {

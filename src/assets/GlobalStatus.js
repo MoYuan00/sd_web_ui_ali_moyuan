@@ -65,3 +65,15 @@ export function processTxt2ImgResponse(data) {
 // 状态
 export const genState = ref(false); // 是否正在生成
 export const genPercentage = ref(0.0); // 生成进度 0 ~ 1
+
+
+
+
+
+
+
+
+
+// params plane
+export const ParamsPlaneIsShow = ref(true)
+
