@@ -3,6 +3,7 @@
 import PromotInputMain from '../components/PromotInputMain.vue'
 import ControlNet from '../components/ControlNet.vue'
 import ImageView from '../components/ImageView.vue'
+import WaterFlow from '../components/WaterFlow.vue'
 import '../assets/Main.vue.css'
 </script>
 
@@ -51,84 +52,7 @@ import '../assets/Main.vue.css'
                 </h1>
             </div>
 
-            <div style="width: 100%;">
-                <!-- 瀑布流 -->
-                <div class="box-wrapper-0">
-                    <div class="box-wrapper">
-                        <div class="box-col">
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1022/576">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/512/512">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1024/768">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="box-col">
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/512/522">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1034/576">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1024/763">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-col">
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1024/761">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/512/511">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1024/576">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="box-col">
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/768/512">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/768/960">
-                                </div>
-                            </div>
-                            <div class="box-item">
-                                <div>
-                                    <img src="https://picsum.photos/1024/428">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            <WaterFlow></WaterFlow>
         </el-col>
     </el-row>
 </template>

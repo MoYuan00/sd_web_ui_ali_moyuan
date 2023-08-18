@@ -62,7 +62,7 @@ clear: both;
 }
 
 .box-item > div {
-  
+  min-height: 80px;
 }
 
 .box-col img {

@@ -12,6 +12,11 @@ const router = createRouter({
       path: '/view',
       name: 'sd-view',
       component: () => import('../views/ImgViewAndEdit.vue')
+    },
+    {
+      path: '/history',
+      name: 'sd-history',
+      component: () => import('../views/HistoryView.vue')
     }
     // {
     //   path: '/',
