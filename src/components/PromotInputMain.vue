@@ -12,7 +12,7 @@
                         </button>
                     </div>
                     <!-- ParamsPlane按钮 -->
-                    <div class="cursor-pointer params-plane-button" @click="ParamsPlaneIsShow = !ParamsPlaneIsShow"
+                    <div class="cursor-pointer params-plane-button"
                         style="position: absolute; bottom: 10px; left: 5px;">
                         <div style="border-radius: 30px; background-color: #3333; padding: 10px; line-height: 0;">
                             <el-icon :size="30" color="#3338">
@@ -162,6 +162,8 @@ onMounted(() => {
 
     $('.params-plane-button').click(() => {
         console.log('.params-plane-button click');
+        let t = !ParamsPlaneIsShow.value;
+        ParamsPlaneIsShow.value = t
         // ParamsPlaneIsShow.value =  (Number)(ParamsPlaneIsShow.value) + 1
         return false;
     })

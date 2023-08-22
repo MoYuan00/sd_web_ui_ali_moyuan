@@ -85,7 +85,7 @@
 
 <script setup>
 import { ref, watch, computed, onMounted, reactive } from 'vue'
-import { FlushHistoryImages, HistoryGenImageInfoList } from '@/assets/GlobalStatus.js'
+import { FlushHistoryImages, HistoryGenImageInfoList, CurrentGenImageList } from '@/assets/GlobalStatus.js'
 import { DecodeImgData, DeCodeCustomInfo } from '@/assets/ImgParams'
 import api from './../assets/request_api'
 
@@ -127,6 +127,7 @@ FlushHistoryImages(() => {
 // 点击还原参数
 function OnReduce(imagefullpath) {
     console.log(' OnReduce ' + imagefullpath)
+    let imgName = imagefullpath.substring(imagefullpath.lastIndexOf('\\') + 1)
     api.image_info(imagefullpath).then(data => {
         console.log(data)
         let str = DecodeImgData(data)
@@ -134,6 +135,11 @@ function OnReduce(imagefullpath) {
         DeCodeCustomInfo(str)
     })
 
+    // 跳转
+    // 将图片设置为要编辑的图片
+    CurrentGenImageList.value.splice(0, CurrentGenImageList.value.length)
+    CurrentGenImageList.value.push({img: api.image_file_url(imagefullpath), name: imgName, type: 'url'})
+    window.router.push({ name: 'sd-view' })
 }
 
 

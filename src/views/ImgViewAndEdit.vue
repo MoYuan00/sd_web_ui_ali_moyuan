@@ -9,19 +9,7 @@ import '../assets/Main.vue.css'
 <template>
     <div style="position: fixed; top: 100px; left: 0; bottom: 0; right: 0;">
         <div style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-            <div style="text-align: center; position: relative; bottom: 50px; width: 500px; margin: auto;">
-                <div style="display: inline-block;">
-                    <div class="pointer"
-                        style="display: inline-block; margin-right: 10px; background-color: #1113; border-radius: 20px; padding: 5px 18px; font-weight: bold;">
-                        风格调整
-                    </div>
-                    <div class="pointer"
-                        style="display: inline-block; background-color: #1113; border-radius: 20px; padding: 5px 18px; font-weight: bold;">
-                        参数调整
-                    </div>
-                </div>
-
-            </div>
+            
             <div
                 style="flex-direction: column; display: flex; flex: 1 1 0%; position: relative; width: 100%; height: 100%;">
                 <div style=" display: flex; margin: auto; width: 100%; height: 100%; position: relative;">
@@ -56,7 +44,10 @@ import '../assets/Main.vue.css'
                     style="width: 700px; border-radius: 25px; background-color: #ccc; padding: 5px 5px 5px 25px; position: relative; margin: auto; display: flex;">
                     <div v-for="src in CurrentGenImageList">
                         <div style="line-height: 0; margin: 5px; display: inline-block; display: flex;">
-                            <img style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
+                            <img v-if="src.type == 'url'"
+                                style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
+                                :src="src.img">
+                            <img v-else style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
                                 :src="'data:image/png;base64,' + src.img">
                         </div>
                     </div>

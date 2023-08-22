@@ -18,6 +18,9 @@ api.loras =
         return requests.get('sdapi/v1/loras');
     }
 
+api.reflush_loras = function () {
+    return requests.post('sdapi/v1/refresh-loras');
+}
 
 // ---------------------------- 文件浏览
 

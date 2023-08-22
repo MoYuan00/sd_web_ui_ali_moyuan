@@ -72,7 +72,7 @@ const RotateHorizontalMax = 15
 
 
 const currentImgUrl = computed(() => {
-    let imgName = HorizontalRotate.value + '_' + ('' + VerticalRotate.value).padStart(4, '0');
+    let imgName = 1 + '_' + ('' + VerticalRotate.value).padStart(4, '0');
 
     return '/src/assets/wireframe/' + HorizontalRotate.value + '/' + imgName + '.png'
 })

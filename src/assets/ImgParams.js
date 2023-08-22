@@ -5,7 +5,7 @@ import utils from './utils'
 
 
 // 提示词
-export const promt_input = ref('masterpiece, best quality, 8k, cinematic light, ultra high res, chibi, 1girl, child, pink hair, multicolored hair, long hair, solo, dress, star hair ornament, horns, blue hair, star \, (symbol\), bangs, gradient hair, artist name, gradient, smile, closed mouth, full body, pink background, gradient background')
+export const promt_input = ref('good render, tmall logo, tmall circular,')
 
 export const txt2img_data = ref({
     "denoising_strength": 0,
@@ -57,7 +57,7 @@ export const loras = ref([]); // lora列表
 
 
 //  -------------------------- controlnet 参数
-export const isUseControlNet = ref(false)
+export const isUseControlNet = ref(true)
 
 // 控制图片
 export const VerticalRotate = ref(1)
@@ -66,7 +66,7 @@ export const HorizontalRotate = ref(0)
 VerticalRotate.update = (newVal) =>{
     let step = 1;
     let min = 1;
-    let max = 4;
+    let max = 17;
     newVal = Math.floor(newVal / step) * step
     newVal = newVal < min ? min : newVal;
     newVal = newVal > max ? max : newVal;
@@ -76,7 +76,7 @@ VerticalRotate.update = (newVal) =>{
 HorizontalRotate.update = (newVal) =>{
     let step = 5;
     let min = 0;
-    let max = 15;
+    let max = 175;
     let stepVal = Math.floor(newVal / step) * step
     // console.log('HorizontalRotate newval:' + newVal + ' stepVal:' + stepVal + ' floor:' + Math.floor(newVal / step));
     stepVal = newVal < min ? min : stepVal;
@@ -85,13 +85,13 @@ HorizontalRotate.update = (newVal) =>{
 }
 
 // 控制画板
-export const imageShowSize = ref(1)
+export const imageShowSize = ref(0.3)
 export const VerticalPosition = ref(0.5)
 export const HorizontalPosition = ref(0.5)
 
 imageShowSize.update = (newVal) => {
     newVal = newVal < 0.2 ? 0.2 : newVal;
-    newVal = newVal > 4 ? 4 : newVal;
+    newVal = newVal > 2 ? 2 : newVal;
     imageShowSize.value = newVal;
 }
 

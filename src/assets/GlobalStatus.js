@@ -34,7 +34,12 @@ export const CurrentSelectedImgURL = computed(()=>{
     if(CurrentGenImageList.value.length == 0) {
         return 'https://picsum.photos/1022/571';
     }
-    return 'data:image/png;base64,' + CurrentGenImageList.value[selectedCurrentImgIndex.value].img
+    let imgInfo = CurrentGenImageList.value[selectedCurrentImgIndex.value]
+    let img = CurrentGenImageList.value[selectedCurrentImgIndex.value].img
+    if(imgInfo.type == 'url') {
+        return img;
+    }
+    return 'data:image/png;base64, ' + img;
 })
 
 function parseImg(imgs, imgNames) {

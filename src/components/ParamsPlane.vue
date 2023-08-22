@@ -1,31 +1,32 @@
 <!-- 参数面板 -->
 <template>
-    <div class="params" v-show="is_show">
+    <div class="params" v-show="ParamsPlaneIsShow" style="background-color: #111a; color: #333f;
+            border-radius: 40px 0px 0px; padding: 30px 30px; ">
         <div style="text-align: left;">画面大小</div>
         <space style="height: 10px; display: block;"></space>
         <div>
-            <div
-                style="padding: 8px 15px; margin: 0px 20px 20px 0px; background-color: #fff3; border-radius: 10px; display: inline-block;">
+            <div :class="{'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1}"
+                @click="OnSizePickerClick(1, {'width': 512, 'height': 512})">
                 1:1
             </div>
-            <div
-                style="padding: 8px 15px; margin: 0px 20px 20px 0px;  background-color: #fff3; border-radius: 10px; display: inline-block;">
+            <div :class="{'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2}" 
+                @click="OnSizePickerClick(2, {'width': 768, 'height': 512})">
                 3:2
             </div>
-            <div
-                style="padding: 8px 15px; margin: 0px 20px 20px 0px;  background-color: #fff3; border-radius: 10px; display: inline-block;">
+            <div :class="{'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3}" 
+                @click="OnSizePickerClick(3, {'width': 768, 'height': 960})">
                 4:5
             </div>
-            <div
-                style="padding: 8px 15px; margin: 0px 20px 20px 0px;  background-color: #fff3; border-radius: 10px; display: inline-block;">
+            <div :class="{'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4}" 
+                @click="OnSizePickerClick(4, {'width': 1024, 'height': 576})">
                 16:9
             </div>
-            <div
-                style="padding: 8px 15px; margin: 0px 20px 20px 0px;  background-color: #fff3; border-radius: 10px; display: inline-block;">
+            <div :class="{'size-picker': sizePickerSelectedIdx != 5, 'size-picker-selected': sizePickerSelectedIdx ==5}"  
+                @click="OnSizePickerClick(5, {'width': 1024, 'height': 428})">
                 21:9
             </div>
-            <div
-                style="padding: 8px 15px; margin: 0px 20px 0px 0px;  background-color: #fff3; border-radius: 10px; display: inline-block;">
+            <div :class="{'size-picker': sizePickerSelectedIdx != 6, 'size-picker-selected': sizePickerSelectedIdx == 6}" 
+                @click="OnSizePickerClick(6, txt2img_data)">
                 自定义
                 <div>
                     <input style="width: 50px;  border: 0px; padding: 1px;" v-model="txt2img_data.width" />
@@ -120,17 +121,15 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 import { loras, txt2img_data } from '@/assets/ImgParams.js'
+import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
 
-const props = defineProps({
-    'is_show': {
-        type: Boolean,
-        default: true
-    }
-})
-
-const isShow = ref(props.is_show)
 const seedIsRandom = ref(false)
+
+let refushLoras = function() {
+    api.reflush_loras()
+}
+refushLoras()
 
 let getLoras = function () {
     api.loras().then((response) => {
@@ -139,6 +138,8 @@ let getLoras = function () {
     })
 }
 getLoras();
+
+
 
 const getUsedLorasString = computed(() => {
 
@@ -192,6 +193,18 @@ onMounted(() => {
 
 })
 
+
+
+// 选择面板
+
+let sizePickerSelectedIdx = ref(6)
+function OnSizePickerClick(idx, value) {
+    sizePickerSelectedIdx.value = idx
+    console.log('OnSizePickerClick');
+    txt2img_data.value.width = value.width;
+    txt2img_data.value.height = value.height;
+}
+
 </script>
 
 <style scoped>
@@ -201,4 +214,33 @@ onMounted(() => {
 
 :deep().el-switch__label.is-active {
     color: var(--el-color-primary) !important;
-}</style>
+}
+
+
+
+.size-picker {
+    padding: 8px 15px;
+    margin: 0px 20px 20px 0px;
+    background-color: #fff3;
+    border-radius: 10px;
+    display: inline-block;
+}
+.size-picker:hover{
+    padding: 8px 15px;
+    margin: 0px 20px 20px 0px;
+    background-color: #fff8;
+    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.size-picker-selected {
+    cursor: pointer;
+    padding: 8px 15px;
+    margin: 0px 20px 20px 0px;
+    background-color: #fffd;
+    border-radius: 10px;
+    display: inline-block;
+}
+</style>
