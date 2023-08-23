@@ -107,9 +107,9 @@
             <div>
                 <span>高清修复:</span>
                 <div>
-                    <el-switch v-model="txt2img_data.enable_hr" active-text="开启" inactive-text="关闭" />
+                    <el-switch v-model="enable_hr" active-text="开启" inactive-text="关闭" />
                     <span style="padding-left: 20px; color: white;">
-                        {{ txt2img_data.enable_hr }}
+                        {{ enable_hr }}
                     </span>
                 </div>
             </div>
@@ -120,7 +120,7 @@
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
-import { loras, txt2img_data } from '@/assets/ImgParams.js'
+import { loras, txt2img_data,enable_hr } from '@/assets/ImgParams.js'
 import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
 

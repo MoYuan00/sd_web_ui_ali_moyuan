@@ -31,6 +31,16 @@ import '../assets/Main.vue.css'
                                     </a>
                                 </div>
 
+                                <!-- 放大按钮 -->
+                                <div class="cursor-pointer"
+                                    style="display: inline; position: absolute; bottom: 15px; right: 80px; background-color: #333d; margin: 0; padding: 8px; line-height: 0; border-radius: 30px;">
+                                    <div @click="onSubmit(true)">
+                                        <el-icon color="#fffd" :size="25">
+                                            <Search />
+                                        </el-icon>
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>
@@ -101,7 +111,9 @@ img.center {
 </style>
 
 <script step>
-import { genPercentage, genState, CurrentGenImageList, CurrentSelectedImgURL } from '@/assets/GlobalStatus.js'
+import { genPercentage, genState} from '@/assets/GlobalStatus.js'
+import { onSubmit } from '@/assets/GenImage.js'
+import {CurrentGenImageList, CurrentSelectedImgURL } from '@/assets/CurrentImg.js'
 
 
 

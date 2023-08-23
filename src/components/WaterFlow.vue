@@ -85,10 +85,10 @@
 
 <script setup>
 import { ref, watch, computed, onMounted, reactive } from 'vue'
-import { FlushHistoryImages, HistoryGenImageInfoList, CurrentGenImageList } from '@/assets/GlobalStatus.js'
+import { FlushHistoryImages, HistoryGenImageInfoList } from '@/assets/GlobalStatus.js'
 import { DecodeImgData, DeCodeCustomInfo } from '@/assets/ImgParams'
 import api from './../assets/request_api'
-
+import { processTxt2ImgResponse } from '@/assets/CurrentImg'
 
 let waterFlowData = reactive([[{ fullpath: '' }]])
 window.waterFlowData = waterFlowData
