@@ -45,10 +45,10 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
       
       <RouterView />
       <!-- plane -->
-      <div style="position: absolute; top: 200px; right: 0px; width: 400px; ">
+      <div style="position: absolute; top: 200px; right: 0px; width: 400px; z-index: 2001;">
         <ParamsPlane></ParamsPlane>
       </div>
-      <div style="position: absolute; top: 200px; left: 0px; width: 400px; ">
+      <div style="position: absolute; top: 200px; left: 0px; width: 400px; z-index: 2001;">
         <ParamsPlaneLeft></ParamsPlaneLeft>
       </div>
     </main>

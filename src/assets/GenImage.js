@@ -31,7 +31,7 @@ const getUsedLorasString = () => {
     return loraStr
 }
 
-export const onSubmit = function (enable_hr) {
+export const onSubmit = function (enable_hr, callback) {
 
     genState.value = true;
 
@@ -54,6 +54,7 @@ export const onSubmit = function (enable_hr) {
         console.log('window.router')
         window.router.push({ name: 'sd-view' })
         genState.value = false;
+        if(callback) callback()
     }).catch(function (err) {
         genState.value = false;
     })

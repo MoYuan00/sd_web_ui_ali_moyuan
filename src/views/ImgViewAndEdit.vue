@@ -1,11 +1,3 @@
-<script setup>
-// import PromotInput from '../components/PromotInput.vue'
-import PromotInputMain from '../components/PromotInputMain.vue'
-import ControlNet from '../components/ControlNet.vue'
-import ImageView from '../components/ImageView.vue'
-import '../assets/Main.vue.css'
-</script>
-
 <template>
     <div style="position: fixed; top: 100px; left: 0; bottom: 0; right: 0;">
         <div style="display: flex; flex-direction: column; height: 100%; width: 100%;">
@@ -49,44 +41,30 @@ import '../assets/Main.vue.css'
             </div>
 
             <div style="flex-direction: column; display: flex; padding: 1rem;">
-                <PromotInputMain @on-gen-img="OnGenImg"></PromotInputMain>
-                <div style="width: 700px; border-radius: 25px; background-color: #ccc; padding: 5px 5px 5px 25px; position: relative; margin: auto; display: flex;
-                    ">
-                    <div style="display: flex;">
-                        <div v-for="(src, idx) in CurrentGenImageList">
-                            <div :class="{'selectedImg': selectedCurrentImgIndex == idx, 'pointer': true}" 
-                            style="line-height: 0; padding: 5px; display: inline-block; display: flex;"
-                            @click="OnChangeSelectedImg(idx)">
-                                <img v-if="src.type == 'url'"
-                                    style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
-                                    :src="src.img">
-                                <img v-else style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
-                                    :src="'data:image/png;base64,' + src.img">
-                            </div>
-                        </div>
-                    </div>
-                    <div style=" min-height: 100px;">
-
-                    </div>
-                    <!-- TODO 溢出切换未处理 -->
-
-                    <div
-                        style="line-height: 0; position: absolute; right: 0px; top: 0px; height: 100%; display: inline-block; vertical-align: middle;">
-                        <div class="pointer"
-                            style="height: 100%; position: relative; background-color: #1113; border-radius: 0px 25px 25px 0px;">
-                            <div style=" top: calc(50% - 12px);  position: relative;">
-                                <el-icon :size="25">
-                                    <ArrowRightBold />
-                                </el-icon>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <PromotInputMain></PromotInputMain>
+                <ImgContainer></ImgContainer>
             </div>
         </div>
     </div>
 </template>
+
+
+<script setup>
+// import PromotInput from '../components/PromotInput.vue'
+import PromotInputMain from '../components/PromotInputMain.vue'
+import ImgContainer from '../components/ImgContainer.vue'
+import ControlNet from '../components/ControlNet.vue'
+import ImageView from '../components/ImageView.vue'
+import '../assets/Main.vue.css'
+
+import { ref, watch, computed, onMounted } from 'vue'
+
+import { onSubmit } from '@/assets/GenImage.js'
+import { CurrentGenImageList, CurrentSelectedImgURL, selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
+import { reflushImages } from '@/assets/ImgViewRoll.js'
+
+
+</script>
 
 
 <style scoped>
@@ -112,28 +90,8 @@ img.center {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 
 }
-</style>
-
-<script step>
-import { genPercentage, genState } from '@/assets/GlobalStatus.js'
-import { onSubmit } from '@/assets/GenImage.js'
-import { CurrentGenImageList, CurrentSelectedImgURL,selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
 
 
-
-function OnGenImg() {
-    console.log('回调 OnGenImg');
-}
-
-function OnChangeSelectedImg(idx) {
-    selectedCurrentImgIndex.value = idx;
-}
-
-
-</script>
-
-
-<style scoped>
 .selectedImg {
     background-color: #fffa;
     border-radius: 10px;

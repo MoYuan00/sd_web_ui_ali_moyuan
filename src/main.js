@@ -24,8 +24,6 @@ window.$axios = requests
 // app.config.globalProperties.$axios = requests;  //配置axios的全局引用
 
 
-
-
 app.use(router)
 
 // @element-plus/icons-vue

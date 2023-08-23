@@ -6,14 +6,13 @@
                 <div class="input" v-loading="genState" element-loading-text="正在生成...">
                     <textarea v-model="promt_input" style="width: 100%; height: 200px;"> </textarea>
                     <div style="position: absolute; bottom: 10px; right: 5px;">
-                        <button  class="submit pointer" @click="onSubmit(false)"
+                        <button class="submit pointer" @click="onClick"
                             style="height: 45px; width: 130px; background-color: #33d; border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
                             随机生成
                         </button>
                     </div>
                     <!-- ParamsPlane按钮 -->
-                    <div class="cursor-pointer params-plane-button"
-                        style="position: absolute; bottom: 10px; left: 5px;">
+                    <div class="cursor-pointer params-plane-button" style="position: absolute; bottom: 10px; left: 5px;">
                         <div style="border-radius: 30px; background-color: #3333; padding: 10px; line-height: 0;">
                             <el-icon :size="30" color="#3338">
                                 <Expand />
@@ -32,11 +31,17 @@ import $ from 'jquery'
 </script>
 
 <script setup>
-import {  genState,  ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
-import {   promt_input } from '@/assets/ImgParams'
-import {  onSubmit } from '@/assets/GenImage'
+import { genState, ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
+import { promt_input } from '@/assets/ImgParams'
+import { onSubmit } from '@/assets/GenImage'
+import {bus} from '@/assets/EventCenter'
 
-const emit = defineEmits(['on-gen-img'])
+
+function onClick() {
+    onSubmit(false, () => {
+        bus.emit('gen-img')
+    })
+}
 
 onMounted(() => {
     $("textarea").click(() => {
