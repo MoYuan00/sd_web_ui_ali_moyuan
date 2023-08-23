@@ -9,7 +9,7 @@ import '../assets/Main.vue.css'
 <template>
     <div style="position: fixed; top: 100px; left: 0; bottom: 0; right: 0;">
         <div style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-            
+
             <div
                 style="flex-direction: column; display: flex; flex: 1 1 0%; position: relative; width: 100%; height: 100%;">
                 <div style=" display: flex; margin: auto; width: 100%; height: 100%; position: relative;">
@@ -50,15 +50,19 @@ import '../assets/Main.vue.css'
 
             <div style="flex-direction: column; display: flex; padding: 1rem;">
                 <PromotInputMain @on-gen-img="OnGenImg"></PromotInputMain>
-                <div
-                    style="width: 700px; border-radius: 25px; background-color: #ccc; padding: 5px 5px 5px 25px; position: relative; margin: auto; display: flex;">
-                    <div v-for="src in CurrentGenImageList">
-                        <div style="line-height: 0; margin: 5px; display: inline-block; display: flex;">
-                            <img v-if="src.type == 'url'"
-                                style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
-                                :src="src.img">
-                            <img v-else style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
-                                :src="'data:image/png;base64,' + src.img">
+                <div style="width: 700px; border-radius: 25px; background-color: #ccc; padding: 5px 5px 5px 25px; position: relative; margin: auto; display: flex;
+                    ">
+                    <div style="display: flex;">
+                        <div v-for="(src, idx) in CurrentGenImageList">
+                            <div :class="{'selectedImg': selectedCurrentImgIndex == idx, 'pointer': true}" 
+                            style="line-height: 0; padding: 5px; display: inline-block; display: flex;"
+                            @click="OnChangeSelectedImg(idx)">
+                                <img v-if="src.type == 'url'"
+                                    style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
+                                    :src="src.img">
+                                <img v-else style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
+                                    :src="'data:image/png;base64,' + src.img">
+                            </div>
                         </div>
                     </div>
                     <div style=" min-height: 100px;">
@@ -111,17 +115,27 @@ img.center {
 </style>
 
 <script step>
-import { genPercentage, genState} from '@/assets/GlobalStatus.js'
+import { genPercentage, genState } from '@/assets/GlobalStatus.js'
 import { onSubmit } from '@/assets/GenImage.js'
-import {CurrentGenImageList, CurrentSelectedImgURL } from '@/assets/CurrentImg.js'
+import { CurrentGenImageList, CurrentSelectedImgURL,selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
 
 
 
 function OnGenImg() {
     console.log('回调 OnGenImg');
+}
 
-
+function OnChangeSelectedImg(idx) {
+    selectedCurrentImgIndex.value = idx;
 }
 
 
 </script>
+
+
+<style scoped>
+.selectedImg {
+    background-color: #fffa;
+    border-radius: 10px;
+}
+</style>
