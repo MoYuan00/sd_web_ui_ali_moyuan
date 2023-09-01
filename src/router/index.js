@@ -18,6 +18,12 @@ const router = createRouter({
       name: 'sd-history',
       component: () => import('../views/HistoryView.vue')
     }
+    ,
+    {
+      path: '/3D',
+      name: '3D',
+      component: () => import('../views/3D.vue')
+    }
     // {
     //   path: '/',
     //   name: 'sd-home',

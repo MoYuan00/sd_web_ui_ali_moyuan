@@ -16,6 +16,7 @@ import 'viewerjs/dist/viewer.css'
 
 
 
+
 const app = createApp(App)
 window.vue = app
 window.$axios = requests
