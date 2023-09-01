@@ -39,6 +39,21 @@ clear: both;
   border-image-outset: 0cm;
 }
 
+.align-center-v:after {
+  /* 帮助内容元素 上下居中对齐 */
+  display: inline-block;
+  content: "";
+  height: 100%;
+  vertical-align: middle;
+}
+
+.align-center-h {
+  /* 帮助内容元素 水平居中对齐 */
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
 
 
 /* 瀑布流布局 */

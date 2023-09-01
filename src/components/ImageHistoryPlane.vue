@@ -1,7 +1,7 @@
 <!-- 参数面板 -->
 <template>
     <div class="imageHistory" v-show="is_show">
-        <space style="height: 50px; display: block;"></space>
+        <div style="height: 50px; display: block;"></div>
         <div style="text-align: left;">历史画面</div>
         <div class="plane">
             <viewer style="width: 100%; height: 100%;" :images="HistoryGenImageInfoList">

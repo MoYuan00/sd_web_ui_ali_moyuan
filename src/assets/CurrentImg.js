@@ -11,7 +11,7 @@ export const CurrentSelectedImgURL = computed(()=>{
         return 'https://picsum.photos/1022/571';
     }
     let imgInfo = CurrentGenImageList.value[selectedCurrentImgIndex.value]
-    let img = CurrentGenImageList.value[selectedCurrentImgIndex.value].img
+    let img = imgInfo.img
     if(imgInfo.type == 'url') {
         return img;
     }

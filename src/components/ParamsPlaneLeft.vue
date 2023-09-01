@@ -1,31 +1,93 @@
 <!-- 参数面板 -->
 <template>
     <div class="params" v-show="ParamsPlaneIsShow" >
-        <space style="height: 10px; display: block;"></space>
-        <div style="background-color: #111a; color: #333f;
-            border-radius: 0px 30px 30px 0px; padding: 30px 30px; ">
-            <div :class="{'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1}"
-                @click="OnSizePickerClick(1, {'width': 512, 'height': 512})">
-                模型风格1
+        <div style="height: 10px; display: block;"></div>
+        <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 40px 0px;">
+            <div style="border-radius: 0px 30px 30px 0px;">
+                <div style="text-align: center; margin: 25px 0px 10px 0px">
+                    2D画面风格
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                    @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
+                    @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
+                    @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
+                    style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
             </div>
-            <div :class="{'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2}"
-                @click="OnSizePickerClick(2, {'width': 512, 'height': 512})">
-                模型风格1
+            <div style="border-radius: 0px 30px 30px 0px;">
+                <div style="text-align: center; margin: 25px 0px 10px 0px">
+                    3D画面风格
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                    @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
+                    @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
+                    @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
+                    style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
             </div>
-            <div :class="{'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3}"
-                @click="OnSizePickerClick(3, {'width': 512, 'height': 512})">
-                模型风格1
-            </div>
-            <div :class="{'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4}"
-                @click="OnSizePickerClick(4, {'width': 512, 'height': 512})">
-                模型风格1
+            <div style="border-radius: 0px 30px 30px 0px;">
+                <div style="text-align: center; margin: 25px 0px 10px 0px">
+                    氛围画面效果
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                    @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
+                    @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
+                    @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
+                <div class="bg-ui align-center-v align-center-h"
+                    :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
+                    style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
+                    模型风格1
+                </div>
             </div>
         </div>
 
+        
+
         <div style="margin: 5px;"> </div>
-        <div style="background-color: #111a; color: #333f;
-            border-radius: 0px 30px 0px 0px; padding: 30px 30px; position: relative; bottom: 0px;">
-            <ContolNet></ContolNet>
+        <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
+            position: relative;">
+            <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
+                <ContolNet :style_max_height="200"></ContolNet>
+            </div>
         </div>
     </div>
 </template>
@@ -35,12 +97,12 @@ import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 import { loras, txt2img_data } from '@/assets/ImgParams.js'
 import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
-import  ContolNet  from './ControlNet.vue'
+import ContolNet from './ControlNet.vue'
 import api from '../assets/request_api.js'
 
 const seedIsRandom = ref(false)
 
-let refushLoras = function() {
+let refushLoras = function () {
     api.reflush_loras()
 }
 refushLoras()
@@ -133,25 +195,36 @@ function OnSizePickerClick(idx, value) {
 
 
 .size-picker {
-    padding: 3px 25px;
-    margin: 0px 20px 20px 0px;
-    background-color: #fff3;
-    border-radius: 20px;
+    height: 32px;
+    width: 160px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
+    border-radius: 40px;
     display: inline-block;
 }
-.size-picker:hover{
+
+
+
+.size-picker:hover {
     background-color: #fff8;
-    border-radius: 10px;
+    border-radius: 40px;
     display: inline-block;
     cursor: pointer;
 }
 
 
 .size-picker-selected {
-    padding: 3px 25px;
-    margin: 0px 20px 20px 0px;
-    background-color: #ffff;
-    border-radius: 20px;
+    height: 32px;
+    cursor: pointer;
+    width: 160px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
+    background-color: var(--color-gray-ui-active);
+    color: var(--color-gray-font-white);
+
+    border-radius: 40px;
     display: inline-block;
 }
 </style>

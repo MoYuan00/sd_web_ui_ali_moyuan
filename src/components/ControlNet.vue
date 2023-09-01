@@ -37,7 +37,7 @@
             <!-- <img :src="selectedFile" style="max-height: 512px;" /> -->
             <!-- 显示绘制结果，可以控制 -->
             <div style="color: white;  background-color: #fffa; ">
-                <img id="canvas-event" :src="ControlNetImg_Base64" style="max-height: 300px;" draggable="false" />
+                <img id="canvas-event" :src="ControlNetImg_Base64" :style="{'max-height': style_max_height + 'px'}" draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
             <div style="position: absolute; right: 5px; top: 0px; z-index: 1000;">
@@ -55,10 +55,16 @@
 
 
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted, defineProps } from 'vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
 import { VerticalRotate, HorizontalRotate, imageShowSize, VerticalPosition, HorizontalPosition } from '@/assets/ImgParams'
-const selectedFile = ref('')
+
+const props = defineProps({
+    'style_max_height': {
+        type: Number,
+        default: 300
+    }
+})
 
 // 控制图片
 
@@ -222,22 +228,6 @@ onMounted(() => {
     };
 })
 
-watch(VerticalRotate, () => {
-    drawImg(selectedFile.value)
-})
-watch(HorizontalRotate, () => {
-    drawImg(selectedFile.value)
-})
-
-watch(imageShowSize, () => {
-    drawImg(selectedFile.value)
-})
-watch(VerticalPosition, () => {
-    drawImg(selectedFile.value)
-})
-watch(HorizontalPosition, () => {
-    drawImg(selectedFile.value)
-})
 </script>
 
 

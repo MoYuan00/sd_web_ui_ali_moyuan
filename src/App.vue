@@ -7,7 +7,7 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
 
 <template>
   <div style=" height: 100vh; position: relative;">
-    <header style="background-color: #fffd; width: 100%; height: 120px;  z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
+    <header class="bg-img" style="background-color: #fffd; width: 100%; height: 120px;  z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
       <div style="width: 75%; height: 100%; margin: auto;">
         <div style="position: fixed; width: 75%;">
           <el-row justify="space-between" style="padding: 40px 0px;">
@@ -45,10 +45,10 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
       
       <RouterView />
       <!-- plane -->
-      <div style="position: absolute; top: 200px; right: 0px; width: 400px; z-index: 2001;">
+      <div style="position: absolute; top: 200px; right: 0px; width: 468px; z-index: 2001;">
         <ParamsPlane></ParamsPlane>
       </div>
-      <div style="position: absolute; top: 200px; left: 0px; width: 400px; z-index: 2001;">
+      <div style="position: absolute; top: 200px; left: 0px; width: 468px; z-index: 2001;">
         <ParamsPlaneLeft></ParamsPlaneLeft>
       </div>
     </main>

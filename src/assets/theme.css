@@ -1,8 +1,81 @@
 .theme_1 {
-    --color-primary: rgb(255, 6, 45);
-    --color-secondary: rgb(59, 59, 59);
-    --color-backgrund: rgb(33, 33, 33);
+    --color-gray-font: #606060;
+    --color-gray-font-white: #fff;
+    
+    --color-gray-ui-bg: #cccccc;
+    --color-gray-ui-active: #9a9a9a;
+    --color-gray-ui-bg-contain: #e6e6e6;
 
-    --color-backgrund-transpent-top: rgba(255, 255, 255, .5);
+    --color-sp-01: #3a52ff;
+    --color-sp-02: #00d6f7;
+    --color-sp-03: #0000ff;
+
+
+    --font-size-title: 18;
+    --font-size-content: 20;
+    --font-size-key: 22;
+
+    --font-family-zh: 'Noto-Regular';
+    --font-family-zh-02: 'Noto-Medium';
+    --font-family-en: 'Rioma';
+    --font-family: 'Rioma', 'Noto-Medium';
 }
 
+@font-face {
+    font-family: 'Noto-Medium';
+    src: url('./font/Noto/NotoSansHans-Medium.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto-Regular';
+    src: url('./font/Noto/NotoSansHans-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rioma';
+    src: url('./font/Rioma-MediumNord.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* 通用 class */
+
+body{
+    font-family: var(--font-family);
+    font-size: 20px;
+    background: url(./png/bg.png) repeat center center;
+}
+.bg-img{
+    background: url(./png/bg.png) repeat center center;
+}
+
+.bg-ui{
+    background-color: var(--color-gray-ui-bg) ;
+    color: var(--color-gray-font);
+    font-size: 18px;
+}
+
+.bg-acitve{
+    background-color: var(--color-gray-ui-active);
+    color: var(--color-gray-font-white);
+    font-size: 18px;
+}
+
+.bg-contain{
+    background-color: var(--color-gray-ui-bg-contain);
+    color: var(--color-gray-font);
+    font-size: 20px;
+}
+
+.font-title{
+    font-size: 20;
+}
+
+.font-key{
+    font-size: 22;
+}
