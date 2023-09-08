@@ -7,14 +7,14 @@
         <div style="width: 100%; height: 30px; line-height: 0; border-radius: 20px;  overflow: hidden;  border: solid 1px; border-color: var(--color-gray-ui-bg);">
             <div class="process_right">
                 <div style="vertical-align: middle; display: inline-block; margin: 0px 8px; ">
-                    <span>
+                    <span style="user-select: none;">
                         {{ modelValue }}{{ val_suffix }}
                     </span>
                 </div>
             </div>
             <div class="process_left">
                 <div style="vertical-align: middle; display: inline-block; margin: 0px 8px; ">
-                    <span>
+                    <span style="user-select: none;">
                         {{title}}
                     </span>
                 </div>

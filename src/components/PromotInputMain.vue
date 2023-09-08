@@ -6,17 +6,17 @@
                 <div class="input" v-loading="genState" element-loading-text="正在生成...">
                     <textarea v-model="promt_input" style="width: 100%; height: 200px;"> </textarea>
                     <div style="position: absolute; bottom: 10px; right: 5px;">
-                        <button class="submit pointer" @click="onClick"
-                            style="height: 45px; width: 130px; background-color: #33d; border-style: solid; border-color: white; border-width: 1px; border-radius: 50px; color: white; font-size: 20px; font-weight: 600;">
-                            随机生成
+                        <button class="button font-key pointer" @click="onClick">
+                            生成渲染
                         </button>
                     </div>
                     <!-- ParamsPlane按钮 -->
                     <div class="cursor-pointer params-plane-button" style="position: absolute; bottom: 10px; left: 5px;">
-                        <div style="border-radius: 30px; background-color: #3333; padding: 10px; line-height: 0;">
-                            <el-icon :size="30" color="#3338">
+                        <div style="border-radius: 30px; background-color: #3333; padding: 0px; line-height: 0;">
+                            <img src="../assets/icon/icon1.png" style="height: 50px;">
+                            <!-- <el-icon :size="30" color="#3338">
                                 <Expand />
-                            </el-icon>
+                            </el-icon> -->
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ import $ from 'jquery'
 import { genState, ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import { promt_input } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
-import {bus} from '@/assets/EventCenter'
+import { bus } from '@/assets/EventCenter'
 
 
 function onClick() {
@@ -73,10 +73,18 @@ onMounted(() => {
 <style scoped>
 .input {
     position: relative;
-    width: 650px;
+    min-width: 800px;
     margin: auto;
 }
 
+.button {
+    height: 52px;
+    width: 187px;
+    border-width: 0px;
+    background: linear-gradient(to right,#009fff, #0000ff);
+    border-radius: 50px;
+    color: white;
+}
 
 textarea {
     width: 650px;
@@ -85,12 +93,13 @@ textarea {
     padding: 30px;
     border-radius: 30px;
     border-width: 0px;
-    background-color: #aaa5;
 
     resize: none;
 
     font-size: 15px;
     font-weight: bolder;
+
+    background-color: var(--color-gray-ui-bg-2);
 }
 
 div.params {
@@ -118,5 +127,4 @@ div.params {
     /* >>>被:deep()替代*/
     /* >>> 深度选择，覆盖element的样式*/
     color: black !important;
-}
-</style>
+}</style>

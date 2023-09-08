@@ -7,10 +7,11 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
 
 <template>
   <div style=" height: 100vh; position: relative;">
-    <header class="bg-img" style="background-color: #fffd; width: 100%; height: 120px;  z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
-      <div style="width: 75%; height: 100%; margin: auto;">
-        <div style="position: fixed; width: 75%;">
-          <el-row justify="space-between" style="padding: 40px 0px;">
+    <header class="bg-img"
+      style="background-color: #fffd; width: 100%;   z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
+      <div style="width: 90%; height: 100%; margin: auto;">
+        <div style=" width: 90%; height: 100%;">
+          <el-row justify="space-between" style="padding-top: 80px; padding-bottom: 20px;">
             <el-col :span="12">
               <h3 style="color: black; font-weight: bold;display: block; line-height: 40px;">AI Creative Engine</h3>
             </el-col>
@@ -18,21 +19,13 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
 
               <el-tooltip class="box-item" effect="dark" content="主页" placement="top">
                 <router-link to="/" style="display: inline-block; color: black;">
-                  <div class="icon-button" style="display: inline-block;">
-                    <el-icon :size="20">
-                      <House />
-                    </el-icon>
-                  </div>
+                  <img src="./assets/icon/icon2.png" style="width: 40px; margin-right: 10px;">
                 </router-link>
               </el-tooltip>
 
               <el-tooltip class="box-item" effect="dark" content="历史生成" placement="top">
                 <router-link to="/history" style="display: inline-block; color: black;">
-                  <div class="icon-button" style="display: inline-block;">
-                    <el-icon :size="20">
-                      <Stopwatch />
-                    </el-icon>
-                  </div>
+                  <img src="./assets/icon/icon3.png" style="width: 40px;">
                 </router-link>
               </el-tooltip>
             </el-col>
@@ -41,16 +34,12 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
       </div>
     </header>
 
-    <main style="width: 75%; padding: 200px 0px 0px 0px; margin: auto;">
-      
+    <main style="width: 100%; height: 100%; padding: 150px 0px 0px 0px; margin: auto; clear: both; position: relative;">
+
       <RouterView />
       <!-- plane -->
-      <div style="position: absolute; top: 200px; right: 0px; width: 468px; z-index: 2001;">
-        <ParamsPlane></ParamsPlane>
-      </div>
-      <div style="position: absolute; top: 200px; left: 0px; width: 468px; z-index: 2001;">
-        <ParamsPlaneLeft></ParamsPlaneLeft>
-      </div>
+      <ParamsPlane></ParamsPlane>
+      <ParamsPlaneLeft></ParamsPlaneLeft>
     </main>
   </div>
 </template>

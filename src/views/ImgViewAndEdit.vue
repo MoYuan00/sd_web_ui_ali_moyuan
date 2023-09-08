@@ -1,5 +1,5 @@
 <template>
-    <div style="position: fixed; top: 100px; left: 0; bottom: 0; right: 0;">
+    <div style="position: fixed; top: 0px; left: 0; bottom: 0; right: 0;">
         <div style="display: flex; flex-direction: column; height: 100%; width: 100%;">
 
             <div
@@ -38,10 +38,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>        
 
             <div style="flex-direction: column; display: flex; padding: 1rem;">
-                <PromotInputMain></PromotInputMain>
+                <div style="margin-bottom: 20px;">
+                    <PromotInputMain></PromotInputMain>
+                </div>
                 <ImgContainer></ImgContainer>
             </div>
         </div>

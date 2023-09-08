@@ -1,14 +1,14 @@
 <template>
     <div
-        style="width: 810px; border-radius: 25px; background-color: #ccc; 
-    padding: 5px 5px 5px 90px; position: relative; margin: auto; display: block; min-height: 120px; overflow-x: hidden;">
+        style="width: 650px; border-radius: 25px; background-color: #ccc; 
+    padding: 5px 5px 5px 90px; position: relative; margin: auto; display: block; min-height: 136px; overflow-x: hidden;">
 
 
         <div @click="rollLast"
         style="line-height: 0; position: absolute; left: 0px; top: 0px; height: 100%; display: inline-block;
              vertical-align: middle; z-index: 100;">
             <div class="pointer"
-                style="height: 100%; position: relative; background-color: #1113; border-radius: 25px 0px 0px 25px;">
+                style="height: 100%; position: relative; border-radius: 25px 0px 0px 25px;">
                 <div style=" top: calc(50% - 12px);  position: relative;">
                     <el-icon :size="25">
                         <ArrowLeftBold />
@@ -24,8 +24,8 @@
                 <div :class="{ 'selectedImg': selectedCurrentImgIndex == idx, 'pointer': true }"
                     style="line-height: 0; padding: 5px; display: inline-block;" @click="OnChangeSelectedImg(idx)">
                     <img v-if="src.type == 'url'"
-                        style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;" :src="src.img">
-                    <img v-else style="border-radius: 20px; width: 150px; height: 100px; object-fit: cover;"
+                        style="border-radius: 33px; width: 130px; height: 115px; object-fit: cover;" :src="src.img">
+                    <img v-else style="border-radius: 33px; width: 130px; height: 115px; object-fit: cover;"
                         :src="'data:image/png;base64,' + src.img">
                 </div>
             </div>
@@ -36,7 +36,7 @@
             style="line-height: 0; position: absolute; right: 0px; top: 0px; height: 100%; display: inline-block; 
             vertical-align: middle; z-index: 100;">
             <div class="pointer"
-                style="height: 100%; position: relative; background-color: #1113; border-radius: 0px 25px 25px 0px;">
+                style="height: 100%; position: relative;  border-radius: 0px 25px 25px 0px;">
                 <div style=" top: calc(50% - 12px);  position: relative;">
                     <el-icon :size="25">
                         <ArrowRightBold />
@@ -108,6 +108,6 @@ img.center {
 
 .selectedImg {
     background-color: #fffa;
-    border-radius: 10px;
+    border-radius: 33px;
 }
 </style>

@@ -187,7 +187,7 @@ function OnCanvasDrag() {
     let y_offset = (event.offsetY) - mouseDownY;
     // console.log('dir:' + x_dir + ", " + y_dir);
     // console.log('offset:' + x_offset + ", " + y_offset);
-    // console.log('event: ' + 'position' + movePositionState + " rotate " + moveRotationState); 
+    console.log('event: ' + 'position' + movePositionState + " rotate " + moveRotationState); 
     if (movePositionState) {
         VerticalPosition.update(VerticalPosition.value + y_dir * moveSpeed);
         HorizontalPosition.update(HorizontalPosition.value + x_dir * moveSpeed);
@@ -228,6 +228,21 @@ onMounted(() => {
     };
 })
 
+watch(VerticalRotate, ()=>{
+    drawImg()
+})
+watch(HorizontalRotate, ()=>{
+    drawImg()
+})
+watch(imageShowSize, ()=>{
+    drawImg()
+})
+watch(VerticalPosition, ()=>{
+    drawImg()
+})
+watch(HorizontalPosition, ()=>{
+    drawImg()
+})
 </script>
 
 

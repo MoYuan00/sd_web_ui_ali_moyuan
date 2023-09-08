@@ -3,8 +3,9 @@
     --color-gray-font-white: #fff;
     
     --color-gray-ui-bg: #cccccc;
+    --color-gray-ui-bg-2: #e0e0e0;
     --color-gray-ui-active: #9a9a9a;
-    --color-gray-ui-bg-contain: #e6e6e6;
+    --color-gray-ui-bg-contain: #e6e6e6b2;
 
     --color-sp-01: #3a52ff;
     --color-sp-02: #00d6f7;
@@ -72,10 +73,18 @@ body{
     font-size: 20px;
 }
 
+.font-normal{
+    font-size: 18px;
+    font-family: var(--font-family);
+}
+
+
 .font-title{
-    font-size: 20;
+    font-size: 20px;
+    font-family: var(--font-family);
 }
 
 .font-key{
-    font-size: 22;
+    font-size: 22px;
+    font-family: var(--font-family);
 }

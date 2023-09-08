@@ -1,8 +1,8 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 
-const width = 150
-const span = 10
+const width = 130  + 5
+const span = 5
 
 const bias_idx = 0
 

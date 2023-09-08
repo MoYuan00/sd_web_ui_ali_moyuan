@@ -1,92 +1,107 @@
 <!-- 参数面板 -->
 <template>
-    <div class="params" v-show="ParamsPlaneIsShow" >
-        <div style="height: 10px; display: block;"></div>
-        <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 40px 0px;">
-            <div style="border-radius: 0px 30px 30px 0px;">
-                <div style="text-align: center; margin: 25px 0px 10px 0px">
-                    2D画面风格
+    <div v-show="ParamsPlaneIsShow"
+     style="position: absolute; top: 150px; left: 0px; bottom: 0px; width: 468px; z-index: 2001;">
+        <div class="params"  style="height: 100%;">
+            <div style="height: 10px; display: block;"></div>
+            <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 40px 0px;">
+                <div style="border-radius: 0px 30px 30px 0px;">
+                    <div style="text-align: center; margin: 25px 0px 10px 0px">
+                        2D画面风格
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                        @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
+                        @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
+                        @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
+                        style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
                 </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                    @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                    模型风格1
+                <div style="border-radius: 0px 30px 30px 0px;">
+                    <div style="text-align: center; margin: 25px 0px 10px 0px">
+                        3D画面风格
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                        @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
+                        @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
+                        @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
+                        style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
                 </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
-                    @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
-                    @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
-                    style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
-                    模型风格1
+                <div style="border-radius: 0px 30px 30px 0px;">
+                    <div style="text-align: center; margin: 25px 0px 10px 0px">
+                        氛围画面效果
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                        @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
+                        @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
+                        @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
+                        style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
+                        模型风格1
+                    </div>
                 </div>
             </div>
-            <div style="border-radius: 0px 30px 30px 0px;">
-                <div style="text-align: center; margin: 25px 0px 10px 0px">
-                    3D画面风格
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                    @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
-                    @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
-                    @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
-                    style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-            </div>
-            <div style="border-radius: 0px 30px 30px 0px;">
-                <div style="text-align: center; margin: 25px 0px 10px 0px">
-                    氛围画面效果
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                    @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
-                    @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
-                    @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
-                    style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
-                    模型风格1
-                </div>
-            </div>
-        </div>
 
-        
-
-        <div style="margin: 5px;"> </div>
-        <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
-            position: relative;">
-            <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
-                <ContolNet :style_max_height="200"></ContolNet>
+            <div style="margin: 5px;"> </div>
+            <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
+            position: absolute; bottom: 0px;">
+                <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
+                    <ContolNet :style_max_height="200"></ContolNet>
+                </div>
+                <div style="margin-top: 20px; ">
+                    <span style="margin-right: 20px;">
+                        样板选择
+                    </span>
+                    <div
+                        style="display: inline-block; border-radius: 40px; background-color: white; padding: 8px 10px 8px 25px; line-height: 40px;">
+                        <span style="min-width: 220px; display: inline-block;">
+                            天猫模型12
+                        </span>
+                        <span class="pointer" style="float: right; line-height: 0;">
+                            <img src="../assets/icon/icon4.png" style="height: 40px;">
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
