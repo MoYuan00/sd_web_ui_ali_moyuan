@@ -1,84 +1,21 @@
 <!-- 参数面板 -->
 <template>
     <div v-show="ParamsPlaneIsShow"
-     style="position: absolute; top: 150px; left: 0px; bottom: 0px; width: 468px; z-index: 2001;">
-        <div class="params"  style="height: 100%;">
+        style="position: absolute; top: 150px; left: 0px; bottom: 0px; width: 468px; z-index: 2001;">
+        <div class="params" style="height: 100%;">
             <div style="height: 10px; display: block;"></div>
             <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 40px 0px;">
                 <div style="border-radius: 0px 30px 30px 0px;">
                     <div style="text-align: center; margin: 25px 0px 10px 0px">
                         2D画面风格
                     </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                        @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
-                        @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
-                        @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
-                        style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                </div>
-                <div style="border-radius: 0px 30px 30px 0px;">
-                    <div style="text-align: center; margin: 25px 0px 10px 0px">
-                        3D画面风格
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                        @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
-                        @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
-                        @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
-                        style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                </div>
-                <div style="border-radius: 0px 30px 30px 0px;">
-                    <div style="text-align: center; margin: 25px 0px 10px 0px">
-                        氛围画面效果
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                        @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
-                        @click="OnSizePickerClick(2, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
-                        @click="OnSizePickerClick(3, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
-                        style="" @click="OnSizePickerClick(4, { 'width': 512, 'height': 512 })">
-                        模型风格1
-                    </div>
+                    <template v-for="(item, idx) of modelList">
+                        <div class="bg-ui align-center-v align-center-h"
+                            :class="{ 'size-picker': sizePickerSelectedIdx != idx, 'size-picker-selected': sizePickerSelectedIdx == idx }"
+                            @click="OnSizePickerClick(idx, { 'width': 512, 'height': 512 })">
+                            {{ item.model_name }}
+                        </div>
+                    </template>
                 </div>
             </div>
 
@@ -110,7 +47,7 @@
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
-import { loras, txt2img_data } from '@/assets/ImgParams.js'
+import { loras, txt2img_data, modelList } from '@/assets/ImgParams.js'
 import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import ContolNet from './ControlNet.vue'
 import api from '../assets/request_api.js'
@@ -130,6 +67,16 @@ let getLoras = function () {
 }
 getLoras();
 
+let getModelList = function () {
+    api.reflush_model().then(data => {
+        api.model_list().then(data => {
+            modelList.value = data
+        })
+    })
+}
+getModelList()
+
+// reflushOptions()
 
 
 const getUsedLorasString = computed(() => {
@@ -178,7 +125,7 @@ onMounted(() => {
     $(".params").click(() => {
         console.log('.params click');
         // event.stopPropagation(); // 阻止事件冒泡
-        return false;
+        // return false;
     })
 
 

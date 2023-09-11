@@ -5,14 +5,15 @@ import utils from './utils'
 
 
 // 提示词
-export const promt_input = ref('good render, tmall logo, tmall circular,')
+export const promt_input = ref(`(kongtmall),(kong tmallcircle),good render,3d render,octane render, 
+A quilt floating in the air, feathers flying in the air, colorful light spots`)
 
 export const enable_hr = ref(false) // 高清修复 - 放大图片
 
 export const txt2img_data = ref({
     "denoising_strength": 0,
     "prompt": 'masterpiece, best quality, 8k, cinematic light, ultra high res, chibi, 1girl, child, pink hair, multicolored hair, long hair, solo, dress, star hair ornament, horns, blue hair, star \, (symbol\), bangs, gradient hair, artist name, gradient, smile, closed mouth, full body, pink background, gradient background',
-    "negative_prompt": "",
+    "negative_prompt": "EasyNegative",
     "seed": -1,
     "batch_size": 1,
     "n_iter": 1,
@@ -55,6 +56,11 @@ export const txt2img_alwayson_scripts = ref({
     }
 })
 
+export const options = ref({}) // 当前使用配置
+
+
+export const modelList = ref([]) // 模型列表
+
 export const loras = ref([]); // lora列表
 
 
@@ -92,8 +98,8 @@ export const VerticalPosition = ref(0.5)
 export const HorizontalPosition = ref(0.5)
 
 imageShowSize.update = (newVal) => {
-    newVal = newVal < 0.2 ? 0.2 : newVal;
-    newVal = newVal > 2 ? 2 : newVal;
+    newVal = newVal < 0.1 ? 0.1 : newVal;
+    newVal = newVal > 0.4 ? 0.4 : newVal;
     imageShowSize.value = newVal;
 }
 

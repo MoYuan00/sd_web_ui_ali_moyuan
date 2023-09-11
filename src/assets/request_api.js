@@ -22,6 +22,18 @@ api.reflush_loras = function () {
     return requests.post('sdapi/v1/refresh-loras');
 }
 
+api.model_list = function () {
+    return requests.get('sdapi/v1/sd-models')
+}
+
+api.reflush_model = function() {
+    return requests.post('sdapi/v1/refresh-checkpoints')
+}
+
+api.get_options = function() {
+    return requests.get('/sdapi/v1/options')
+}
+
 // ---------------------------- 文件浏览
 
 api.txt2imgFiles =

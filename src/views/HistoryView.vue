@@ -12,7 +12,7 @@ import '../assets/Main.vue.css'
         <el-col>
             <div style="text-align: center; margin-bottom: 3rem;">
                 <h1 style="font-weight: bold; color: gray;">
-                    Hsitory
+                    History
                 </h1>
             </div>
 
