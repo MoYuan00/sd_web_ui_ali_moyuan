@@ -1,42 +1,13 @@
 <template>
     <div style="text-align: center;">
-        <!-- <p style="color: white;">
-            {{ currentImgUrl }}
-            显示image base64 url: {{ selectedFile }}
-        </p> -->
-
-        <!-- <div style="width: 200px; display: inline-block; color: white;">
-            <div style="display: inline-block;">
-                <span>水平旋转</span>
-                <el-slider v-model="HorizontalRotate" :step="RotateHorizontalStep" :min="RotateHorizontalMin"
-                    :max="RotateHorizontalMax" />
-            </div>
-            <div>
-                <span>垂直旋转</span>
-                <el-slider v-model="VerticalRotate" :step="RotateVerticalStep" :min="RotateVerticalMin"
-                    :max="RotateVerticalMax" />
-            </div>
-
-            <div>
-                <span>大小</span>
-                <el-slider v-model="imageShowSize" :step="0.02" :min="0.05" :max="5" />
-            </div>
-            <div>
-                <span>水平位置</span>
-                <el-slider v-model="VerticalPosition" :step="0.02" :min="0" :max="1" />
-            </div>
-            <div>
-                <span>垂直位置</span>
-                <el-slider v-model="HorizontalPosition" :step="0.02" :min="0" :max="1" />
-            </div>
-        </div> -->
-        <div style="display: inline-block;">
+        <div style="background-color: var(--color-gray-ui-bg-2);">
             <!-- 画板， 绘制图片，隐藏 -->
             <canvas id="canvas" height="512" width="512" style="background-color: #fff2; display: none;"> </canvas>
             <!-- <img :src="selectedFile" style="max-height: 512px;" /> -->
             <!-- 显示绘制结果，可以控制 -->
-            <div style="color: white;  background-color: #fffa; ">
-                <img id="canvas-event" :src="ControlNetImg_Base64" :style="{ 'height': style_max_height + 'px' }"
+            <div class="align-center-v" style="color: white;  background-color: #fffa; position: relative; vertical-align: middle;"
+            :style="{ 'height': style_max_height + 'px' }">
+                <img id="canvas-event" :src="ControlNetImg_Base64" 
                     draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
@@ -57,10 +28,15 @@
 <script setup>
 import { ref, watch, computed, onMounted, defineProps } from 'vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
+import { txt2img_data } from '@/assets/ImgParams.js'
 import { VerticalRotate, HorizontalRotate, imageShowSize, VerticalPosition, HorizontalPosition } from '@/assets/ImgParams'
 
 const props = defineProps({
     'style_max_height': {
+        type: Number,
+        default: 300
+    },
+    'style_max_width': {
         type: Number,
         default: 300
     }
@@ -130,6 +106,7 @@ var light = function (imgData) {
         data[i] = data[i] > 0 ? 255 : 0; // red
         data[i + 1] = data[i + 1] > 0 ? 255 : 0; // green
         data[i + 2] = data[i + 2] > 0 ? 255 : 0; // blue
+        data[i + 3] = data[i + 3] > 0 ? 255 : 0; // blue
     }
 };
 let blur = function (imgData) {
@@ -180,7 +157,7 @@ let blur = function (imgData) {
 
 function postprocess(imgData) {
     light(imgData);
-    blur(imgData);
+    // blur(imgData);
     invert(imgData);
 }
 
@@ -199,9 +176,10 @@ function drawImgWorker(dataurl, downScale = 3, useProcess = false) {
         var start = new Date().getTime()
         // canvas.height = img.height / downScale;
         // canvas.width = img.width / downScale;
-        canvas.height = 512 / downScale;
-        canvas.width = 512 / downScale;
-        ctx.fillStyle = "black";
+        // 由于宽高是自定义的，这里只能去记录比例
+        canvas.height = txt2img_data.value.height / downScale;
+        canvas.width = txt2img_data.value.width / downScale;
+        ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
@@ -219,7 +197,6 @@ function drawImgWorker(dataurl, downScale = 3, useProcess = false) {
 
         const dataURL = canvas.toDataURL("image/jpeg", 1); //可选取多种模式
         ControlNetImg_Base64.value = dataURL
-        // callback.call(this, dataURL); //回掉函数获取Base64编码
         var end = new Date().getTime()
         console.log('cost is', `${end - start}ms`)
     };
@@ -317,7 +294,6 @@ onMounted(() => {
     canvas = document.getElementById("canvas");
     let canvasEvent = document.getElementById("canvas-event");
 
-    drawImg()
     canvasEvent.addEventListener('mousedown', OnCanvasDown, false);
     canvasEvent.addEventListener('mouseup', OnCanvasUp, false);
     canvasEvent.addEventListener('mousemove', OnCanvasDrag, false);
@@ -328,8 +304,13 @@ onMounted(() => {
         console.log('contextmenu');
         return false;
     };
+    drawImg()
 })
-
+watch(txt2img_data, () => {
+    drawImg()
+}, {
+    deep: true
+})
 watch(VerticalRotate, () => {
     drawImg()
 })
@@ -349,4 +330,12 @@ watch(HorizontalPosition, () => {
 
 
 
-<style></style>
+<style>
+#canvas-event{
+    object-fit:contain;
+    height: 100%;
+    width: 100%;
+    display: block;
+    padding: 3%;
+}
+</style>

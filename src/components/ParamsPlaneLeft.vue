@@ -1,8 +1,7 @@
 <!-- 参数面板 -->
 <template>
-    <div v-show="ParamsPlaneIsShow"
-        style="position: absolute; top: 150px; left: 0px; bottom: 0px; width: 468px; z-index: 2001;">
-        <div class="params" style="height: 100%;">
+    <div v-show="ParamsPlaneIsShow" style="position: absolute; top: 150px; left: 0px;  width: 468px; z-index: 2001;">
+        <div class="params">
             <div style="height: 10px; display: block;"></div>
             <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 40px 0px;">
                 <div style="border-radius: 0px 30px 30px 0px;">
@@ -18,26 +17,28 @@
                     </template>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div style="margin: 5px;"> </div>
-            <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
+    <div v-show="ParamsPlaneIsShow" class="params">
+        <div style="margin: 5px;"> </div>
+        <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
             position: absolute; bottom: 0px;">
-                <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
-                    <ContolNet :style_max_height="200"></ContolNet>
-                </div>
-                <div style="margin-top: 20px; ">
-                    <span style="margin-right: 20px;">
-                        样板选择
+            <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
+                <ContolNet :style_max_height="200"></ContolNet>
+            </div>
+            <div style="margin-top: 20px; ">
+                <span style="margin-right: 20px;">
+                    样板选择
+                </span>
+                <div
+                    style="display: inline-block; border-radius: 40px; background-color: white; padding: 8px 10px 8px 25px; line-height: 40px;">
+                    <span style="min-width: 220px; display: inline-block;">
+                        天猫模型12
                     </span>
-                    <div
-                        style="display: inline-block; border-radius: 40px; background-color: white; padding: 8px 10px 8px 25px; line-height: 40px;">
-                        <span style="min-width: 220px; display: inline-block;">
-                            天猫模型12
-                        </span>
-                        <span class="pointer" style="float: right; line-height: 0;">
-                            <img src="../assets/icon/icon4.png" style="height: 40px;">
-                        </span>
-                    </div>
+                    <span class="pointer" style="float: right; line-height: 0;">
+                        <img src="../assets/icon/icon4.png" style="height: 40px;">
+                    </span>
                 </div>
             </div>
         </div>
@@ -125,7 +126,7 @@ onMounted(() => {
     $(".params").click(() => {
         console.log('.params click');
         // event.stopPropagation(); // 阻止事件冒泡
-        // return false;
+        return false;
     })
 
 
