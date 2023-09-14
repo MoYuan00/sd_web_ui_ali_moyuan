@@ -12,7 +12,7 @@ export const enable_hr = ref(false) // 高清修复 - 放大图片
 
 export const txt2img_data = ref({
     "denoising_strength": 0,
-    "prompt": 'masterpiece, best quality, 8k, cinematic light, ultra high res, chibi, 1girl, child, pink hair, multicolored hair, long hair, solo, dress, star hair ornament, horns, blue hair, star \, (symbol\), bangs, gradient hair, artist name, gradient, smile, closed mouth, full body, pink background, gradient background',
+    "prompt": '',
     "negative_prompt": "EasyNegative",
     "seed": -1,
     "batch_size": 1,

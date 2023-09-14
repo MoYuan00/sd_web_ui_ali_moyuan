@@ -56,34 +56,3 @@ clear: both;
 
 
 
-/* 瀑布流布局 */
-.box-wrapper-0 {
-  width: 100%;
-}
-
-.box-wrapper {
-  width: 100%;
-  gap: 1rem;
-  display: flex;
-  box-sizing: border-box;
-}
-
-.box-col {
-  width: 25%;
-  gap: 1rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.box-item > div {
-  min-height: 110px;
-}
-
-.box-col img {
-  border-radius: 1rem;
-
-  cursor: pointer;
-  width: 100%;
-  position: relative;
-}
