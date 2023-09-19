@@ -10,7 +10,7 @@
                     </div>
                     <template v-for="(item, idx) of modelList">
                         <div class="bg-ui align-center-v align-center-h"
-                            :class="{ 'size-picker': sizePickerSelectedIdx != idx, 'size-picker-selected': sizePickerSelectedIdx == idx }"
+                            :class="{ 'size-picker': PickerSelectedIdx != idx, 'size-picker-selected': PickerSelectedIdx == idx }"
                             @click="OnSizePickerClick(idx, { 'width': 512, 'height': 512 })">
                             {{ item.model_name }}
                         </div>
@@ -49,7 +49,7 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 import { loras, txt2img_data, modelList } from '@/assets/ImgParams.js'
-import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
+import { ParamsPlaneIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
 import ContolNet from './ControlNet.vue'
 import api from '../assets/request_api.js'
 
@@ -136,12 +136,16 @@ onMounted(() => {
 
 // 选择面板
 
-let sizePickerSelectedIdx = ref(2)
+let PickerSelectedIdx = ref(2)
 function OnSizePickerClick(idx, value) {
-    sizePickerSelectedIdx.value = idx
-    console.log('OnSizePickerClick');
-    txt2img_data.value.width = value.width;
-    txt2img_data.value.height = value.height;
+    // 切换模型
+    loading('正在切换模型...')
+    api.change_model(modelList.value[idx].title).then(() => {
+        PickerSelectedIdx.value = idx
+        txt2img_data.value.width = value.width;
+        txt2img_data.value.height = value.height;
+        loadingEnd()
+    })
 }
 
 </script>

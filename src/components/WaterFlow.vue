@@ -21,7 +21,6 @@
 import { ref, watch, computed, onMounted, reactive, defineAsyncComponent, toRaw } from 'vue'
 import { FlushHistoryImages, HistoryGenImageInfoList } from '@/assets/GlobalStatus.js'
 import api from './../assets/request_api'
-import { OnReduce } from '@/assets/ReduceImg'
 import utils from '@/assets/utils.js'
 
 const ImgShow = defineAsyncComponent({
@@ -111,8 +110,6 @@ onMounted(() => {
         waterFlowData.value[colIdx].push(data)
     }
 
-
-
     function getLessHeightColIdx() {
         let t = 0;
         let tHeight = elHeights[0]
@@ -135,8 +132,6 @@ onMounted(() => {
             addToCol(colIdx.idx, data)
         }
     }
-
-
 
 
     FlushHistoryImages(() => {

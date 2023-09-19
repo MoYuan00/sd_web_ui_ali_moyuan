@@ -5,8 +5,9 @@ import utils from './utils'
 
 
 // 提示词
-export const promt_input = ref(`(kongtmall),(kong tmallcircle),good render,3d render,octane render, 
-A quilt floating in the air, feathers flying in the air, colorful light spots`)
+export const promt_input = ref(`粉丝的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
+
+export const promt_input_en = ref(`粉丝的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
 
 export const enable_hr = ref(false) // 高清修复 - 放大图片
 
@@ -136,6 +137,7 @@ export function GetImgData() {
             HorizontalPosition: HorizontalPosition.value
         },
         text2Img: {
+            input_en: promt_input_en.value,
             input: promt_input.value,
             data: txt2img
         },
@@ -191,6 +193,7 @@ export function DeCodeCustomInfo(ImgData) {
     VerticalPosition.value = custom_info.controlnet.VerticalPosition
     HorizontalPosition.value = custom_info.controlnet.HorizontalPosition
 
+    promt_input_en.value = custom_info.text2Img.input_en
     promt_input.value = custom_info.text2Img.input
     txt2img_data.value = custom_info.text2Img.data
     // 设置种子

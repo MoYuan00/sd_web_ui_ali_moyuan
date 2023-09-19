@@ -19,6 +19,13 @@
                             </el-icon> -->
                         </div>
                     </div>
+
+                </div>
+                
+            </el-row>
+            <el-row>
+                <div style="width: 650px; height: 50px; margin: auto; color: #3333; font-size: small;">
+                    {{ promt_input_en }}
                 </div>
             </el-row>
         </el-col>
@@ -32,15 +39,25 @@ import $ from 'jquery'
 
 <script setup>
 import { genState, ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
-import { promt_input } from '@/assets/ImgParams'
+import { promt_input,promt_input_en } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
 import { bus } from '@/assets/EventCenter'
-
+import api from '../assets/request_api.js'
 
 function onClick() {
     onSubmit(false, () => {
         bus.emit('gen-img')
     })
+}
+
+let translateTask = null;
+function updateTranaslate() {
+    clearTimeout(translateTask);
+    translateTask = setTimeout(() => {
+        api.translate(promt_input.value).then(data => {
+            promt_input_en.value = data.text
+        })
+    }, 2000);
 }
 
 onMounted(() => {
@@ -65,7 +82,11 @@ onMounted(() => {
         // ParamsPlaneIsShow.value =  (Number)(ParamsPlaneIsShow.value) + 1
         return false;
     })
+    updateTranaslate()
+})
 
+watch(promt_input, () => {
+    updateTranaslate()
 })
 
 </script>
@@ -81,15 +102,12 @@ onMounted(() => {
     height: 52px;
     width: 187px;
     border-width: 0px;
-    background: linear-gradient(to right,#009fff, #0000ff);
+    background: linear-gradient(to right, #009fff, #0000ff);
     border-radius: 50px;
     color: white;
 }
 
 textarea {
-    width: 650px;
-    height: 300px;
-
     padding: 30px;
     border-radius: 30px;
     border-width: 0px;
@@ -127,4 +145,5 @@ div.params {
     /* >>>被:deep()替代*/
     /* >>> 深度选择，覆盖element的样式*/
     color: black !important;
-}</style>
+}
+</style>

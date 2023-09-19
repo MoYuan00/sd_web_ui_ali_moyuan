@@ -3,10 +3,11 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import ParamsPlane from './components/ParamsPlane.vue'
 import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
+import { loadingState, loadingText } from '@/assets/GlobalStatus.js'
 </script>
 
 <template>
-  <div style=" height: 100vh; position: relative;">
+  <div style=" height: 100vh; position: relative;"  v-loading="loadingState" :element-loading-text="loadingText">
     <header class="bg-img"
       style="background-color: #fffd; width: 100%;   z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
       <div style="width: 90%; height: 100%; margin: auto;">
@@ -44,4 +45,8 @@ import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+div >>> .el-loading-mask{
+  z-index: 3000 !important;
+}
+</style>

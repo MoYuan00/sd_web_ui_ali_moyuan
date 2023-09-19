@@ -1,16 +1,19 @@
 <script setup>
 import PromotInput from '../components/PromotInput.vue'
 import ImageView from '../components/ImageView.vue'
+
 </script>
 
 <template>
-  <el-row style="height: 100vh;">
-    <PromotInput></PromotInput>
-    <!-- <div>
-      <input type='file'  webkitdirectory>
-    </div> -->
-    <!-- <ImageView></ImageView> -->
-  </el-row>
+  <div>
+    <el-row style="height: 100vh;">
+      <PromotInput></PromotInput>
+      <!-- <div>
+        <input type='file'  webkitdirectory>
+      </div> -->
+      <!-- <ImageView></ImageView> -->
+    </el-row>
+  </div>
 </template>
 
 <style>

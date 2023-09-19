@@ -1,5 +1,5 @@
 import { ControlNetImg_Base64, FlushHistoryImages, genState, genPercentage  } from '@/assets/GlobalStatus.js'
-import { GetImgData, loras, txt2img_data, promt_input, txt2img_alwayson_scripts, isUseControlNet } from '@/assets/ImgParams'
+import { GetImgData, loras, txt2img_data, promt_input, promt_input_en, txt2img_alwayson_scripts, isUseControlNet } from '@/assets/ImgParams'
 import { processTxt2ImgResponse } from '@/assets/CurrentImg'
 import utils from '@/assets/utils'
 import api from '@/assets/request_api.js'
@@ -36,7 +36,7 @@ export const onSubmit = function (enable_hr, callback) {
     genState.value = true;
 
     let data = utils.deepClone(txt2img_data.value)
-    data.prompt = promt_input.value + getUsedLorasString.value
+    data.prompt = promt_input_en.value + getUsedLorasString.value
     if (isUseControlNet.value) {
         txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ControlNetImg_Base64.value
     } else {

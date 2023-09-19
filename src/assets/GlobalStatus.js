@@ -40,5 +40,19 @@ export const genPercentage = ref(0.0); // 生成进度 0 ~ 1
 
 
 // params plane
-export const ParamsPlaneIsShow = ref(true)
+export const ParamsPlaneIsShow = ref(false)
 
+
+// v-loading="genState" element-loading-text="正在生成..."
+
+export const loadingState = ref(false)
+export const loadingText = ref('正在处理...')
+
+export function loading(text = '正在处理...') {
+    loadingText.value = text
+    loadingState.value = true
+}
+
+export function loadingEnd() {
+    loadingState.value = false
+}

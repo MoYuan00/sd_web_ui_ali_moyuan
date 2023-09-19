@@ -34,6 +34,19 @@ api.get_options = function() {
     return requests.get('/sdapi/v1/options')
 }
 
+api.change_model = function(model_title) {
+    return requests.post('/sdapi/v1/options', {
+        // "sd_model_checkpoint":"chosen Irises-mix.safetensors [684006e5fe]"
+        "sd_model_checkpoint":model_title
+    })
+}
+
+api.translate = function(text) {
+    return requests.post('/sdapi/v1/translate', {
+        text: text
+    })
+}
+
 // ---------------------------- 文件浏览
 
 api.txt2imgFiles =
@@ -85,12 +98,4 @@ api.downloadImage = (imageUrl, name) => {
 export default api
 
 
-/*
-阿里API
-请保存或发送 AccessKey 至对应用户。当前窗口关闭后，无法再次查询 Secret。如果您遗失这个 AccessKey，可以创建新的来替代。
-AccessKey ID
-LTAI5tP6BVS32ReEBojGRwMf
-AccessKey Secret
-iUZ9udccL1q5nJgkr2gBJNGrtu0BrN
-*/
 

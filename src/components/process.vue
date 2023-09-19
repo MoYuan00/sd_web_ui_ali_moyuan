@@ -72,12 +72,21 @@ let mouseDownX = -1;
 let mouseDownY = -1;
 let hold = false;
 
+function updateWidth() {
+    if(process_width <= 0) {
+        process = document.getElementById(uuid);
+        process_width = process.clientWidth;
+    }
+}
+
 function OnMouseDown() {
     mouseDownX = event.offsetX;
     mouseDownY = event.offsetY;
+    updateWidth()
 
     process_position = mouseDownX + 1;
     let val = Number.parseInt(((process_position / process_width).toFixed(2) * props.max).toFixed(0));
+    console.log(val);
     if(val < props.min) {
         val = props.min
     }
