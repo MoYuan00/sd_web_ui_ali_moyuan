@@ -4,7 +4,8 @@
         <div class="process_val" :style="{ 'width': process_graph_value + '%' }">
         </div>
 
-        <div style="width: 100%; height: 30px; line-height: 0; border-radius: 20px;  overflow: hidden;  border: solid 1px; border-color: var(--color-gray-ui-bg);">
+        <div
+            style="width: 100%; height: 30px; line-height: 0; border-radius: 20px;  overflow: hidden;  border: solid 1px; border-color: var(--color-gray-ui-bg);">
             <div class="process_right">
                 <div style="vertical-align: middle; display: inline-block; margin: 0px 8px; ">
                     <span style="user-select: none;">
@@ -15,7 +16,7 @@
             <div class="process_left">
                 <div style="vertical-align: middle; display: inline-block; margin: 0px 8px; ">
                     <span style="user-select: none;">
-                        {{title}}
+                        {{ title }}
                     </span>
                 </div>
             </div>
@@ -56,11 +57,11 @@ const props = defineProps({
 
 // 用不同的uuid区分不同的组件，放在事件重复 
 let uuid = utils.uuid()
-console.log(uuid);
+// console.log(uuid);
 
 const emits = defineEmits(['update:modelValue'])
 
-const process_graph_value = computed(function() {
+const process_graph_value = computed(function () {
     return props.modelValue * (100 / props.max)
 })
 
@@ -72,8 +73,14 @@ let mouseDownX = -1;
 let mouseDownY = -1;
 let hold = false;
 
+// 记录全局状态，使得在鼠标移出组件时也能够正常运行
+let global_mouse_hold = false;
+let global_mouse_x = 0;
+let global_mouse_y = 0;
+let global_left = 0;
+
 function updateWidth() {
-    if(process_width <= 0) {
+    if (process_width <= 0) {
         process = document.getElementById(uuid);
         process_width = process.clientWidth;
     }
@@ -84,19 +91,19 @@ function OnMouseDown() {
     mouseDownY = event.offsetY;
     updateWidth()
 
+    global_left = utils.getElementLeft(event.target)
+
     process_position = mouseDownX + 1;
     let val = Number.parseInt(((process_position / process_width).toFixed(2) * props.max).toFixed(0));
-    console.log(val);
-    if(val < props.min) {
+    if (val < props.min) {
         val = props.min
     }
-    if(val > props.max) {
+    if (val > props.max) {
         val = props.max
     }
     emits('update:modelValue', val);
 
     hold = true;
-    console.log(mouseDownX + ',' + mouseDownY);
 }
 
 function OnMouseUp() {
@@ -105,19 +112,28 @@ function OnMouseUp() {
 }
 
 function OnMouseDrag() {
-    if(!hold) {
+    if (!hold) {
         return false;
     }
 
     mouseDownX = event.offsetX;
     mouseDownY = event.offsetY;
 
-    process_position = mouseDownX + 1;
+    global_mouse_x = event.x;
+    global_mouse_y = event.y;
+    let target = event.target;
+    // utils.getElementTop(target)  + event.offsetY)  ==  (global_mouse_y)
+    // console.log((utils.getElementTop(target)  + event.offsetY) + " ， " + (global_mouse_y));
+
+
+    process_position = global_mouse_x - global_left + 1;
+
+
     let val = Number.parseInt(((process_position / process_width).toFixed(2) * props.max).toFixed(0));
-    if(val < props.min) {
+    if (val < props.min) {
         val = props.min
     }
-    if(val > props.max) {
+    if (val > props.max) {
         val = props.max
     }
     emits('update:modelValue', val);
@@ -132,8 +148,24 @@ onMounted(() => {
     process_width = process.clientWidth;
     process.addEventListener('mousedown', OnMouseDown, false);
 
-    process.addEventListener('mouseup', OnMouseUp, false);
+    process.addEventListener('mouseup', OnMouseUp, true);
     process.addEventListener('mousemove', OnMouseDrag);
+
+
+    document.addEventListener('mousedown', () => {
+        if(hold){
+            global_mouse_hold = true;
+        }
+    }, false);
+    document.addEventListener('mouseup', () => {
+        global_mouse_hold = false;
+        hold = false;
+    }, true);
+    document.addEventListener('mousemove', () => {
+        if(global_mouse_hold){
+            OnMouseDrag()
+        }
+    }, true);
 })
 
 
@@ -163,7 +195,7 @@ onMounted(() => {
     vertical-align: middle;
 }
 
-.process_left{
+.process_left {
     top: 0%;
     left: 0%;
     height: 100%;
@@ -171,6 +203,7 @@ onMounted(() => {
     z-index: 500;
     vertical-align: middle;
 }
+
 .process_right::after,
 .process_left::after,
 .process_val::after {

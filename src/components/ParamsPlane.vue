@@ -1,9 +1,8 @@
 <!-- 参数面板 -->
 <template>
-    <div  v-show="ParamsPlaneIsShow"
-     style="position: absolute; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
-        <div class="params bg-contain"
-            style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px; ">
+    <div v-show="ParamsPlaneIsShow"
+        style="position: absolute; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
+        <div class="params bg-contain" style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px; ">
             <div style="text-align: left;">画面大小</div>
             <div style="height: 10px; display: block;"></div>
             <div>
@@ -68,32 +67,51 @@
                     </div>
                 </div>
 
-                <!-- <div>默认参数</div>
-            <div>
-                <div>
-                    <process v-model="txt2img_data.steps" :title="'step(步数)'"></process>
-                </div>
-            </div> -->
-                <!-- <div>
-                <span>Seed:</span>
+                <div style="margin: 30px;"> </div>
 
-                <div>
-                    <el-switch v-model="seedIsRandom" active-text="随机" inactive-text="固定" />
-                    <span style="padding-left: 20px; color: white;">
-                        {{ txt2img_data.seed }}
-                    </span>
+                <div>默认参数控制</div>
+                <div style="max-height: 450px; overflow-y: scroll; scrollbar-color: var(--color-gray-ui-bg);">
+
+                    <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
+                        默认关键词：
+                        <input v-model="defautParams.prompt_pre">
+                    </div>
+                    <div style="margin: 10px;"> </div>
+                    <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
+                        Lora名称对应范围控制:
+                        <template v-for="item in defautParams.loras_control">
+                            <div>
+                                <div>
+                                    名称：
+                                    <input v-model="item.name">
+                                </div>
+                                <div>
+                                    默认值：
+                                    <input type="number" min="0" max="2" step="0.01" v-model="item.default">
+                                </div>
+                                <div>
+                                    最小值：
+                                    <input type="number" min="0" max="2" step="0.01" v-model="item.min">
+                                </div>
+                                <div>
+                                    最大值：
+                                    <input type="number" min="0" max="2" step="0.01" v-model="item.max">
+                                </div>
+                            </div>
+                            <div style="margin: 8px;">
+                                
+                            </div>
+                        </template>
+                    </div>
+                    <div style="margin: 10px;"> </div>
+
+                    <div class="bg-ui " style="border-radius: 10px; padding: 5px;">
+                        默认关键词：
+                        <input v-model="defautParams.prompt_pre">
+                    </div>
                 </div>
-            </div> -->
-                <!-- <div>
-                <span>高清修复:</span>
-                <div>
-                    <el-switch v-model="enable_hr" active-text="开启" inactive-text="关闭" />
-                    <span style="padding-left: 20px; color: white;">
-                        {{ enable_hr }}
-                    </span>
-                </div>
-            </div> -->
             </div>
+
             <div style=" position: absolute; bottom: 30px; left: calc(50% - 175px / 2);">
                 <div class="pointer font-normal"
                     style="width: 175px; height: 30px; border-radius: 40px; background-color: #e0e0e0 ; color: #adadad; text-align: center;">
@@ -110,6 +128,7 @@ import $ from 'jquery'
 import { loras, txt2img_data, enable_hr } from '@/assets/ImgParams.js'
 import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
+import { defautParams } from '../assets/DefaultConfig.js'
 
 import process from '@/components/process.vue'
 

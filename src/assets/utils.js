@@ -80,4 +80,30 @@ function uuid() {
 utils.uuid = uuid
 
 
+utils.getElementLeft = function (element) {
+    var actualLeft = element.offsetLeft;
+    var current = element.offsetParent;
+
+    while (current !== null) {
+        actualLeft += current.offsetLeft;
+        current = current.offsetParent;
+    }
+
+    return actualLeft;
+}
+utils.getElementTop = function (element) {
+    var actualTop = element.offsetTop;
+    var current = element.offsetParent;
+
+    while (current && current !== null) {
+        actualTop += current.offsetTop;
+        current = current.offsetParent;
+    }
+
+    return actualTop;
+}
+
+
+
+
 export default utils

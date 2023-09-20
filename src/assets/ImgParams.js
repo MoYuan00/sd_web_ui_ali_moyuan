@@ -5,7 +5,7 @@ import utils from './utils'
 
 
 // 提示词
-export const promt_input = ref(`粉丝的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
+export const promt_input = ref(`粉色的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
 
 export const promt_input_en = ref(`粉丝的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
 

@@ -4,8 +4,13 @@
         <img :src="api.image_file_url(path)">
 
         <div class="img-mask">
-            <span style="top: 50%; position: relative;color: white;">
-                描述词:
+            <span style="top: 50%; position: relative;color: white; line-height: 1;">
+                <span style="font-size: 15px; color: #fffa;">
+                    {{img_promot  }}
+                </span>
+                <div>
+                    
+                </div>
             </span>
             <el-tooltip class="box-item" effect="dark" content="下载" placement="top-start">
                 <div class="cursor-pointer"
@@ -38,6 +43,7 @@
 import { ref, watch, computed, onMounted, reactive, defineProps } from 'vue'
 import api from './../assets/request_api'
 import { OnReduce } from '@/assets/ReduceImg'
+import { DecodeImgData } from '@/assets/ImgParams'
 import $ from 'jquery'
 import utils from '@/assets/utils.js'
 let uuid = utils.uuid()
@@ -49,11 +55,22 @@ function onDownloadImg(url) {
 }
 
 const img_info = ref('')
+let img_promot = ref('')
 onMounted(() => {
     $('#' + uuid + ' .img-mask').on('mouseenter', () => {
         if (img_info.value == '')
             api.image_info(props.path).then(data => {
                 img_info.value = data
+
+                let img_data = DecodeImgData(data)
+
+
+                let custom_info_str = img_data.custom_info_str;
+                let custom_info = JSON.parse(custom_info_str)
+                custom_info = JSON.parse(custom_info)
+
+                console.log(custom_info);
+                img_promot.value = custom_info.text2Img.input
             })
     })
 })
