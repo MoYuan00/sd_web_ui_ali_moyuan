@@ -1,6 +1,6 @@
 <!-- 瀑布流 -->
 <template>
-    <div :id="uuid" style="width: 100%;">
+    <div :id="uuid" style="width: 75%; margin: auto;">
         <!-- 瀑布流 -->
         <div class="box-wrapper-0">
             <div class="box-wrapper">
@@ -38,8 +38,8 @@ function onDownloadImg(url) {
 }
 
 function getElWidth(gap, colCount) {
-
-    const el_width = (document.body.clientWidth - (colCount - 1) * gap) / colCount
+    let contain = document.getElementById(uuid)
+    const el_width = (contain.clientWidth - (colCount - 1) * gap) / colCount
     return el_width
 }
 
@@ -75,7 +75,7 @@ onMounted(() => {
 
     const gap = 15 // 缝隙的宽度
 
-    const colCount = 4
+    const colCount = 3
 
     // let rowCount = (arrLen / colCount).toFixed(0)
     // let divSubCount = arrLen % colCount // 余数
@@ -127,7 +127,7 @@ onMounted(() => {
         for (; idx < arrLen; idx++) {
             let colIdx = getLessHeightColIdx()
             if (colIdx.height > maxHeight) break;
-            console.log(colIdx.height);
+            // console.log(colIdx.height);
             let data = arr[idx]
             addToCol(colIdx.idx, data)
         }
@@ -214,7 +214,7 @@ function log(obj) {
 }
 
 .box-col {
-    width: 25%;
+    width: 33%;
     gap: 1rem;
     box-sizing: border-box;
     display: flex;

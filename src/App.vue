@@ -11,7 +11,7 @@ import { loadingState, loadingText } from '@/assets/GlobalStatus.js'
     <header class="bg-img"
       style="background-color: #fffd; width: 100%;   z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
       <div style="width: 90%; height: 100%; margin: auto;">
-        <div style=" width: 90%; height: 100%;">
+        <div style=" width: 100%; height: 100%;">
           <el-row justify="space-between" style="padding-top: 80px; padding-bottom: 20px;">
             <el-col :span="12">
               <h3 style="color: black; font-weight: bold;display: block; line-height: 40px;">AI Creative Engine</h3>

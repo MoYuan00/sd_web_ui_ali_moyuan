@@ -24,6 +24,12 @@ const router = createRouter({
       name: '3D',
       component: () => import('../views/3D.vue')
     }
+    ,
+    {
+      path: '/flex',
+      name: 'flex',
+      component: () => import('../views/flex.vue')
+    }
     // {
     //   path: '/',
     //   name: 'sd-home',
