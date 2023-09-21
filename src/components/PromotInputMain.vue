@@ -3,9 +3,9 @@
     <el-row justify="center" align="middle" style="width: 100%; height: 100%;">
         <el-col :span="24">
             <el-row>
-                <div class="textarea-close" v-loading="genState" element-loading-text="正在生成...">
+                <div class="textarea" v-loading="genState" element-loading-text="正在生成...">
                     <div >
-                        <textarea class="input-close" v-model="promt_input"> </textarea>
+                        <textarea class="input" v-model="promt_input"> </textarea>
 
 
                         <div style="position: absolute; bottom: 8px; right: 8px;">

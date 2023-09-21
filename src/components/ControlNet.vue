@@ -336,6 +336,5 @@ watch(HorizontalPosition, () => {
     height: 100%;
     width: 100%;
     display: block;
-    padding: 3%;
 }
 </style>
