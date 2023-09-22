@@ -8,7 +8,7 @@
             <!-- 显示绘制结果，可以控制 -->
             <div class="align-center-v" style="color: white; position: relative; vertical-align: middle;"
             :style="{ 'height': style_max_height + 'px' }">
-                <img id="canvas-event" :src="ControlNetImg_Base64" 
+                <img :id="uuid" class="canvas-event" :src="ControlNetImg_Base64" 
                     draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
@@ -31,7 +31,7 @@ import { ref, watch, computed, onMounted, defineProps } from 'vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
 import { txt2img_data } from '@/assets/ImgParams.js'
 import { VerticalRotate, HorizontalRotate, imageShowSize, VerticalPosition, HorizontalPosition } from '@/assets/ImgParams'
-
+import utils from '@/assets/utils.js'
 const props = defineProps({
     'style_max_height': {
         type: Number,
@@ -70,6 +70,8 @@ const currentImgUrl = computed(() => {
 //     // reader.readAsText(files[0]);
 // }
 let canvas = {};
+
+let uuid = utils.uuid()
 
 let dir = [
     [0, 1],
@@ -236,6 +238,7 @@ let rotateStartValY = 0;
 function OnCanvasDown() {
     console.log('down canvas')
     event.preventDefault(); // 让浏览器不要执行默认的鼠标按下事件，这会导致图片被拖动
+    event.stopPropagation()
     if (event.button == 0) {
         movePositionState = true;
     }
@@ -302,9 +305,14 @@ function OnMousewheel() {
 
 onMounted(() => {
     canvas = document.getElementById("canvas");
-    let canvasEvent = document.getElementById("canvas-event");
+    let canvasEvent = document.getElementById(uuid);
 
-    canvasEvent.addEventListener('mousedown', OnCanvasDown, false);
+    canvasEvent.addEventListener('mousedown', OnCanvasDown, true);
+    canvasEvent.addEventListener('click', ()=> {
+        console.log(' canvasEvent click');
+        event.stopPropagation()
+        return false;
+    }, false);
     canvasEvent.addEventListener('mouseup', OnCanvasUp, false);
     canvasEvent.addEventListener('mousemove', OnCanvasDrag, false);
     canvasEvent.addEventListener('mousewheel', OnMousewheel, false);
@@ -341,7 +349,7 @@ watch(HorizontalPosition, () => {
 
 
 <style>
-#canvas-event{
+.canvas-event{
     object-fit:contain;
     height: 100%;
     width: 100%;

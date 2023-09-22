@@ -45,7 +45,7 @@ import $ from 'jquery'
 </script>
 
 <script setup>
-import { genState, ParamsPlaneIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
+import { genState, ControlNetIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
 import { promt_input, promt_input_en, loras } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
 import { bus } from '@/assets/EventCenter'
@@ -133,20 +133,21 @@ onMounted(() => {
     $("body").click(() => {
         // 隐藏窗口
         console.log('body click');
-        ParamsPlaneIsShow.value = false
+        ControlNetIsShow.value = false
         textarea_anime(false)
     })
 
     $('.params-plane-button').click(() => {
         console.log('.params-plane-button click');
-        let t = !ParamsPlaneIsShow.value;
-        ParamsPlaneIsShow.value = t
+        let t = !ControlNetIsShow.value;
+        ControlNetIsShow.value = t
+        ControlNetIsShow.value = t
         // ParamsPlaneIsShow.value =  (Number)(ParamsPlaneIsShow.value) + 1
         return false;
     })
     updateTranaslate()
 
-
+    textarea_anime(false)
 })
 
 watch(promt_input, () => {
@@ -177,7 +178,6 @@ const tags_sp = computed(() => {
     min-width: 800px;
     width: 800px;
     margin: auto;
-    padding: 30px 65px;
     border-radius: 30px;
     border-width: 0px;
 
@@ -187,6 +187,7 @@ const tags_sp = computed(() => {
 
     background-color: var(--color-gray-ui-bg-2);
 
+    padding: 20px 200px 20px 100px;
 }
 
 .input {
@@ -197,11 +198,12 @@ const tags_sp = computed(() => {
 
     outline: none;
     width: 100%;
-    height: 150px;
     resize: none;
 
+    height: 23px;
+
     overflow: hidden;
-    margin-bottom: 25px;
+    margin-bottom: 0px;
 }
 
 div.params {

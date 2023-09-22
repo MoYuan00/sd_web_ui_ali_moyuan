@@ -1,9 +1,7 @@
 <!-- 参数面板 -->
 <template>
-    <div v-show="ParamsPlaneIsShow" class="params">
-        <div style="margin: 5px;"> </div>
-        <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
-            position: absolute; bottom: 0px;">
+    <div v-show="ControlNetIsShow" style="position: fixed; left: 0px; bottom: 0px; ">
+        <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; ">
             <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
                 <ContolNet :style_max_height="200"></ContolNet>
             </div>
@@ -29,7 +27,7 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 import { loras, txt2img_data, modelList } from '@/assets/ImgParams.js'
-import { ParamsPlaneIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
+import { ControlNetIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
 import ContolNet from './ControlNet.vue'
 import api from '../assets/request_api.js'
 

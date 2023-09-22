@@ -1,7 +1,7 @@
 <!-- 参数面板 -->
 <template>
     <div v-show="ParamsPlaneIsShow"
-        style="position: absolute; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
+        style="position: fixed; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
         <div class="params bg-contain" style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px; ">
 
             <div style="border-radius: 0px 30px 30px 0px;">
@@ -84,7 +84,7 @@
                 <div style="margin: 30px;"> </div>
 
                 <div>默认参数控制</div>
-                <div style="max-height: 450px; overflow-y: scroll; scrollbar-color: var(--color-gray-ui-bg);">
+                <div style="max-height: 100px; overflow-y: scroll; scrollbar-color: var(--color-gray-ui-bg);">
 
                     <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
                         默认关键词：

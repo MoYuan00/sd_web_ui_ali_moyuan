@@ -35,7 +35,7 @@ import { loadingState, loadingText } from '@/assets/GlobalStatus.js'
       </div>
     </header>
 
-    <main style="width: 100%; height: 100%; padding: 150px 0px 0px 0px; margin: auto; clear: both; position: relative;">
+    <main style="width: 100%; height: 100%; padding: 150px 0px 0px 0px;  position: relative;">
 
       <RouterView />
       <!-- plane -->

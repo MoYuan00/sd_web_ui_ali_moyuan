@@ -41,6 +41,7 @@ export const genPercentage = ref(0.0); // 生成进度 0 ~ 1
 
 // params plane
 export const ParamsPlaneIsShow = ref(false)
+export const ControlNetIsShow = ref(false)
 
 
 // v-loading="genState" element-loading-text="正在生成..."
