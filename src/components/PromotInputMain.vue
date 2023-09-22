@@ -1,42 +1,39 @@
 <template>
     <!-- <el-input v-model="input_value" maxlength="30" placeholder="Please input" show-word-limit type="textarea" /> -->
-    <el-row justify="center" align="middle" style="width: 100%; height: 100%;">
+    <el-row justify="center" style="width: 100%; height: 100%;">
         <el-col :span="24">
             <el-row>
                 <div class="textarea" v-loading="genState" element-loading-text="正在生成...">
-                    <div >
-                        <textarea class="input" v-model="promt_input"> </textarea>
+                    <textarea class="input" v-model="promt_input"> </textarea>
 
 
-                        <div style="position: absolute; bottom: 8px; right: 8px;">
-                            <span style="height: 50px; position: absolute;left: -100px; line-height: 50px; width: 100px; display: inline-block; background: linear-gradient(to right, rgba(255, 255, 255, 0),  var(--color-gray-ui-bg-2));">
-                            </span>
-                            <button class="button font-key pointer" @click="onClick">
-                                生成渲染
-                            </button>
+                    <div style="position: absolute; bottom: 8px; right: 8px;">
+                        <button class="button font-key pointer" @click="onClick">
+                            生成渲染
+                        </button>
+                    </div>
+                    <!-- ParamsPlane按钮 -->
+                    <div class="cursor-pointer params-plane-button" style="position: absolute; bottom: 8px; left: 8px;">
+                        <div style="border-radius: 30px; background-color: #3333; padding: 0px; line-height: 0;">
+                            <img src="../assets/icon/icon1.png" style="height: 50px;">
                         </div>
-                        <!-- ParamsPlane按钮 -->
-                        <div class="cursor-pointer params-plane-button" style="position: absolute; bottom: 8px; left: 8px;">
-                            <div style="border-radius: 30px; background-color: #3333; padding: 0px; line-height: 0;">
-                                <img src="../assets/icon/icon1.png" style="height: 50px;">
-                            </div>
+                    </div>
+
+                    <div class="info" style="position: absolute;  bottom: 8px; left: 80px;">
+                        <div style="width: 450px; height: 30px;  color: #3333; font-size: small; overflow: hidden;">
+                            {{ promt_input_en }}
+                        </div>
+                        <div style="width: 450px; height: 20px;  color: #3333; font-size: small;">
+                            <template v-for="item in loras">
+                                <span style=" margin-right: 10px; font-size: 10px;">
+                                    {{ item.name }} : {{ item.weight }}
+                                </span> |
+                            </template>
                         </div>
                     </div>
                 </div>
+            </el-row>
 
-            </el-row>
-            <el-row>
-                <div style="width: 650px; height: 50px; margin: auto; color: #3333; font-size: small;">
-                    {{ promt_input_en }}
-                </div>
-            </el-row>
-            <div style="width: 650px; height: 50px; margin: auto; color: #3333; font-size: small;">
-                <template v-for="item in loras">
-                    <span style="color: gray; margin-right: 10px; font-size: 10px;">
-                        {{ item.name }} : {{ item.weight }}
-                    </span> |
-                </template>
-            </div>
         </el-col>
     </el-row>
 </template>
@@ -53,6 +50,8 @@ import { promt_input, promt_input_en, loras } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
 import { bus } from '@/assets/EventCenter'
 import api from '../assets/request_api.js'
+import { anime } from '../assets/animejs.js'
+import $ from 'jquery'
 
 function onClick() {
     onSubmit(false, () => {
@@ -70,9 +69,56 @@ function updateTranaslate() {
     }, 2000);
 }
 
+
+const textarea_anime = function (open) {
+    let px = 23
+    let padding_v = 20
+    let padding_h = 100
+    let padding_right = 200
+    let info = $('.info')
+    if (open) {
+        px = 150
+        padding_v = 30
+        padding_right = padding_h = 65
+        info.css('display', 'block')
+    } else {
+        info.css('display', 'none')
+
+    }
+    let el = document.querySelector('.input')
+    let el_textarea = document.querySelector('.textarea')
+    anime.remove(el_textarea)
+    anime.remove(el)
+    let a = anime({
+        targets: el,
+        height: function (el, i) { return px  }, // -> from '28px' to '100%',
+        easing: 'easeInOutExpo',
+        duration: 500,
+        autoplay: false
+    })
+    let b = anime({
+        targets: el_textarea,
+        easing: 'easeInOutExpo',
+        'padding-top': function () { return padding_v },
+        'padding-bottom': function () { return padding_v  },
+        'padding-left': function () { return padding_h },
+        'padding-right': function () { return padding_right },
+        duration: 500,
+        autoplay: false
+    })
+    a.play()
+    b.play()
+}
+
 onMounted(() => {
+
+
+
     $("textarea").click(() => {
         console.log('textarea click');
+        if (promt_input.value.length > 20) {
+            textarea_anime(true)
+        }
         return false;
     })
     $("button").click(() => {
@@ -83,6 +129,7 @@ onMounted(() => {
         // 隐藏窗口
         console.log('body click');
         ParamsPlaneIsShow.value = false
+        textarea_anime(false)
     })
 
     $('.params-plane-button').click(() => {
@@ -93,10 +140,15 @@ onMounted(() => {
         return false;
     })
     updateTranaslate()
+
+
 })
 
 watch(promt_input, () => {
     updateTranaslate()
+    if (promt_input.value.length > 20) {
+        textarea_anime(true)
+    }
 })
 
 const tags_sp = computed(() => {
@@ -120,7 +172,7 @@ const tags_sp = computed(() => {
     min-width: 800px;
     width: 800px;
     margin: auto;
-    padding: 30px;
+    padding: 30px 65px;
     border-radius: 30px;
     border-width: 0px;
 
@@ -129,61 +181,21 @@ const tags_sp = computed(() => {
     font-weight: bolder;
 
     background-color: var(--color-gray-ui-bg-2);
-}
 
-.textarea-close {
-    position: relative;
-    min-width: 800px;
-    width: 800px;
-    margin: auto;
-    padding: 0px;
-    border-radius: 40px;
-    border-width: 0px;
-
-    min-height: 66px;
-
-
-    font-size: 15px;
-    font-weight: bolder;
-
-
-    background-color: var(--color-gray-ui-bg-2);
-}
-
-.input-close {
-    background-color: #0000;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-
-    outline: none;
-    width: 500px;
-    
-    position: relative;
-    left: 100px;
-    top: 25px;
-
-    display: block;
-    resize: none;
-
-
-    display: inline-block;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow:ellipsis;
 }
 
 .input {
     background-color: #0000;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     border: none;
 
     outline: none;
     width: 100%;
     height: 150px;
-    margin-top: 20px;
     resize: none;
+
+    overflow: hidden;
 }
 
 div.params {
