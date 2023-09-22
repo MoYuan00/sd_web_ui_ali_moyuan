@@ -8,7 +8,8 @@ import '../assets/Main.vue.css'
 </script>
 
 <template>
-    <el-row style="text-align: center;">
+    <div style="height: 150px;"></div>
+    <el-row style="text-align: center; margin-bottom: 50px;">
         <el-col>
             <h1 style="color: black; font-weight: bold;display: block;">AI Creative Engine</h1>
         </el-col>
@@ -18,8 +19,8 @@ import '../assets/Main.vue.css'
     <el-row>
         <el-col>
             <div style="margin: 20px; ">
-                <div class="four-corners-border" style="width: 600px; margin: auto; position: relative;">
-                    <ControlNet>
+                <div class="four-corners-border" style="width: 480px; margin: auto; position: relative;">
+                    <ControlNet :style_max_height="260">
                         <div v-if="genState"
                             style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: var(--el-mask-color);">
                             <div style="position: relative; width: 100%; top: 50%; margin-top: calc((0px - 126px)/ 2);">

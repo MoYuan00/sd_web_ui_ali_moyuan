@@ -45,7 +45,7 @@ import $ from 'jquery'
 </script>
 
 <script setup>
-import { genState, ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
+import { genState, ParamsPlaneIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
 import { promt_input, promt_input_en, loras } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
 import { bus } from '@/assets/EventCenter'
@@ -54,8 +54,12 @@ import { anime } from '../assets/animejs.js'
 import $ from 'jquery'
 
 function onClick() {
+    loading('正在生成')
     onSubmit(false, () => {
         bus.emit('gen-img')
+        console.log('window.router')
+        window.router.push({ name: 'sd-view' })
+        loadingEnd()
     })
 }
 
@@ -72,6 +76,7 @@ function updateTranaslate() {
 
 const textarea_anime = function (open) {
     let px = 23
+    let input_bottom = 0
     let padding_v = 20
     let padding_h = 100
     let padding_right = 200
@@ -80,6 +85,7 @@ const textarea_anime = function (open) {
         px = 150
         padding_v = 30
         padding_right = padding_h = 65
+        input_bottom = 25
         info.css('display', 'block')
     } else {
         info.css('display', 'none')
@@ -87,11 +93,10 @@ const textarea_anime = function (open) {
     }
     let el = document.querySelector('.input')
     let el_textarea = document.querySelector('.textarea')
-    anime.remove(el_textarea)
-    anime.remove(el)
     let a = anime({
         targets: el,
         height: function (el, i) { return px  }, // -> from '28px' to '100%',
+        'margin-bottom': function (el, i) { return input_bottom  }, // -> from '28px' to '100%',
         easing: 'easeInOutExpo',
         duration: 500,
         autoplay: false
@@ -196,6 +201,7 @@ const tags_sp = computed(() => {
     resize: none;
 
     overflow: hidden;
+    margin-bottom: 25px;
 }
 
 div.params {

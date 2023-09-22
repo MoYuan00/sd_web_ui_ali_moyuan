@@ -3,6 +3,20 @@
     <div v-show="ParamsPlaneIsShow"
         style="position: absolute; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
         <div class="params bg-contain" style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px; ">
+
+            <div style="border-radius: 0px 30px 30px 0px;">
+                <div style="text-align: center; margin: 25px 0px 10px 0px">
+                    2D画面风格
+                </div>
+                <template v-for="(item, idx) of modelList">
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'model-picker': PickerModelSelectedIdx != idx, 'model-picker-selected': PickerModelSelectedIdx == idx }"
+                        @click="OnModelPickerClick(idx, { 'width': 512, 'height': 512 })">
+                        {{ item.model_name }}
+                    </div>
+                </template>
+            </div>
+
             <div style="text-align: left;">画面大小</div>
             <div style="height: 10px; display: block;"></div>
             <div>
@@ -99,7 +113,7 @@
                                 </div>
                             </div>
                             <div style="margin: 8px;">
-                                
+
                             </div>
                         </template>
                     </div>
@@ -125,8 +139,8 @@
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
-import { loras, txt2img_data, enable_hr } from '@/assets/ImgParams.js'
-import { ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
+import { loras, txt2img_data, enable_hr, modelList } from '@/assets/ImgParams.js'
+import { ParamsPlaneIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
 import { defautParams } from '../assets/DefaultConfig.js'
 
@@ -214,19 +228,18 @@ function OnSizePickerClick(idx, value) {
     txt2img_data.value.height = value.height;
 }
 
+let PickerModelSelectedIdx = ref(2)
+function OnModelPickerClick(idx, value) {
+    // 切换模型
+    loading('正在切换模型...')
+    api.change_model(modelList.value[idx].title).then(() => {
+        PickerModelSelectedIdx.value = idx
+        loadingEnd()
+    })
+}
 </script>
 
 <style scoped>
-:deep().el-switch__label {
-    color: white !important;
-}
-
-:deep().el-switch__label.is-active {
-    color: var(--el-color-primary) !important;
-}
-
-
-
 .size-picker {
     height: 52px;
 
@@ -252,6 +265,41 @@ function OnSizePickerClick(idx, value) {
     color: var(--color-gray-font-white);
 
     border-radius: 10px;
+    display: inline-block;
+}
+
+
+.model-picker {
+    height: 32px;
+    width: 170px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
+    border-radius: 40px;
+    display: inline-block;
+}
+
+
+
+.model-picker:hover {
+    background-color: #fff8;
+    border-radius: 40px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.model-picker-selected {
+    height: 32px;
+    cursor: pointer;
+    width: 170px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+
+    background-color: var(--color-gray-ui-active);
+    color: var(--color-gray-font-white);
+
+    border-radius: 40px;
     display: inline-block;
 }
 </style>

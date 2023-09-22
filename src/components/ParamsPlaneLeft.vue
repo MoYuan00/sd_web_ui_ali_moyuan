@@ -1,25 +1,5 @@
 <!-- 参数面板 -->
 <template>
-    <div v-show="ParamsPlaneIsShow" style="position: absolute; top: 150px; left: 0px;  width: 468px; z-index: 2001;">
-        <div class="params">
-            <div style="height: 10px; display: block;"></div>
-            <div class=" bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 40px 0px;">
-                <div style="border-radius: 0px 30px 30px 0px;">
-                    <div style="text-align: center; margin: 25px 0px 10px 0px">
-                        2D画面风格
-                    </div>
-                    <template v-for="(item, idx) of modelList">
-                        <div class="bg-ui align-center-v align-center-h"
-                            :class="{ 'size-picker': PickerSelectedIdx != idx, 'size-picker-selected': PickerSelectedIdx == idx }"
-                            @click="OnSizePickerClick(idx, { 'width': 512, 'height': 512 })">
-                            {{ item.model_name }}
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div v-show="ParamsPlaneIsShow" class="params">
         <div style="margin: 5px;"> </div>
         <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; 
@@ -136,14 +116,12 @@ onMounted(() => {
 
 // 选择面板
 
-let PickerSelectedIdx = ref(2)
-function OnSizePickerClick(idx, value) {
+let PickerModelSelectedIdx = ref(2)
+function OnModelPickerClick(idx, value) {
     // 切换模型
     loading('正在切换模型...')
     api.change_model(modelList.value[idx].title).then(() => {
-        PickerSelectedIdx.value = idx
-        txt2img_data.value.width = value.width;
-        txt2img_data.value.height = value.height;
+        PickerModelSelectedIdx.value = idx
         loadingEnd()
     })
 }
@@ -151,17 +129,10 @@ function OnSizePickerClick(idx, value) {
 </script>
 
 <style scoped>
-:deep().el-switch__label {
-    color: white !important;
-}
-
-:deep().el-switch__label.is-active {
-    color: var(--el-color-primary) !important;
-}
 
 
 
-.size-picker {
+.model-picker {
     height: 32px;
     width: 160px;
     margin-right: 30px;
@@ -173,7 +144,7 @@ function OnSizePickerClick(idx, value) {
 
 
 
-.size-picker:hover {
+.model-picker:hover {
     background-color: #fff8;
     border-radius: 40px;
     display: inline-block;
@@ -181,7 +152,7 @@ function OnSizePickerClick(idx, value) {
 }
 
 
-.size-picker-selected {
+.model-picker-selected {
     height: 32px;
     cursor: pointer;
     width: 160px;

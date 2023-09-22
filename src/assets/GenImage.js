@@ -51,8 +51,6 @@ export const onSubmit = function (enable_hr, callback) {
     api.txt2img(data).then((response) => {
         processTxt2ImgResponse(response, isUseControlNet.value)
         FlushHistoryImages()
-        console.log('window.router')
-        window.router.push({ name: 'sd-view' })
         genState.value = false;
         if(callback) callback()
     }).catch(function (err) {

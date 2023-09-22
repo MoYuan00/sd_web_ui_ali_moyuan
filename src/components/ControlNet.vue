@@ -1,11 +1,12 @@
 <template>
     <div style="text-align: center;">
-        <div style="background-color: var(--color-gray-ui-bg-2);">
+        <div>
+        <!-- <div style="background-color: var(--color-gray-ui-bg-2);"> -->
             <!-- 画板， 绘制图片，隐藏 -->
-            <canvas id="canvas" height="512" width="512" style="background-color: #fff2; display: none;"> </canvas>
+            <canvas id="canvas" height="512" width="512" style=" display: none;"> </canvas>
             <!-- <img :src="selectedFile" style="max-height: 512px;" /> -->
             <!-- 显示绘制结果，可以控制 -->
-            <div class="align-center-v" style="color: white;  background-color: #fffa; position: relative; vertical-align: middle;"
+            <div class="align-center-v" style="color: white; position: relative; vertical-align: middle;"
             :style="{ 'height': style_max_height + 'px' }">
                 <img id="canvas-event" :src="ControlNetImg_Base64" 
                     draggable="false" />
@@ -109,6 +110,14 @@ var light = function (imgData) {
         data[i + 3] = data[i + 3] > 0 ? 255 : 0; // blue
     }
 };
+var fixbgroundcolor = function (imgData) {
+    const data = imgData.data;
+    for (let i = 0; i < data.length; i += 4) {
+        data[i] = data[i] == 255 ? 245 : 0; // red
+        data[i + 1] = data[i + 1] == 255 ? 245 : 0; // green
+        data[i + 2] = data[i + 2] == 255 ? 245 : 0; // blue
+    }
+};
 let blur = function (imgData) {
     const data = imgData.data;
     const width = imgData.width;
@@ -159,6 +168,7 @@ function postprocess(imgData) {
     light(imgData);
     // blur(imgData);
     invert(imgData);
+    fixbgroundcolor(imgData);
 }
 
 const img = new Image(); // 只需要创建一次，及其耗时
