@@ -3,20 +3,25 @@
         <div class="flex-contain-img">
             <div class="flex-img shrink glow ">
                 <div style="display: flex; margin: 0 auto; position: relative; max-height: 100%;">
-                    <div style="display: flex ;  position: relative; max-height: 100%; max-width: 100%;">
-                            <img :src="CurrentSelectedImgURL">
+                    <div id="img-parent" style="display: flex ;  position: relative; max-height: 100%; max-width: 100%;">
+                        <img :src="CurrentSelectedImgURL">
                         <!-- <img src="../assets/png/769x960.png" > -->
                         <!-- <img src="../assets/png/1022x571.jpg" > -->
 
-                        <div class="tools" style="position: absolute; bottom: 0px; right: 0px; height: 100%; width: 100%;">
+                        <div class="tools" @click="gallery.view(0)"
+                            style="position: absolute; bottom: 0px; right: 0px; height: 100%; width: 100%;">
                             <div style="position: absolute; bottom: 10px; right: 10px;">
                                 <div class="cursor-pointer tools-item"
                                     style="display: inline-block; background-color: #333d; margin: 0 10px; padding: 8px; line-height: 0; border-radius: 30px;">
                                     <a :href="CurrentSelectedImgURL" download="AI creative engine">
 
-                                        <el-icon color="#fffd" :size="25">
-                                            <Download />
-                                        </el-icon>
+
+                                        <el-tooltip effect="dark" content="下载图片" placement="top" style="font-size: 20px;">
+                                            <el-icon color="#fffd" :size="25">
+                                                <Download />
+                                            </el-icon>
+                                        </el-tooltip>
+
                                     </a>
                                 </div>
 
@@ -52,19 +57,22 @@ import ImgContainer from '../components/ImgContainer.vue'
 import ControlNet from '../components/ControlNet.vue'
 import ImageView from '../components/ImageView.vue'
 import '../assets/Main.vue.css'
-
+import Viewer from 'viewerjs';
 import { ref, watch, computed, onMounted } from 'vue'
 
 import { onSubmit } from '@/assets/GenImage.js'
 import { CurrentGenImageList, CurrentSelectedImgURL, selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
 import { reflushImages } from '@/assets/ImgViewRoll.js'
 
+let gallery = null
+onMounted(() => {
+    gallery = new Viewer(document.getElementById('img-parent'));
+})
 
 </script>
 
 
 <style scoped>
-
 .selectedImg {
     background-color: #fffa;
     border-radius: 10px;
