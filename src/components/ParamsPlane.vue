@@ -1,7 +1,6 @@
 <!-- 参数面板 -->
 <template>
-    <div v-show="ParamsPlaneIsShow"
-        style="position: fixed; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
+    <div id="right-plane" style="position: fixed; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
         <div class="params bg-contain" style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px; ">
 
             <div style="border-radius: 0px 30px 30px 0px;">
@@ -65,7 +64,6 @@
                         <process v-model="item.weight" :min="0" :max="100" :title="item.name" :val_suffix="'%'"></process>
                     </div>
                     <!-- <div>
-                <span>输出lora：{{ getUsedLorasString }}</span>
             </div> -->
                 </div>
                 <div style="margin: 30px;"> </div>
@@ -145,6 +143,7 @@ import api from '../assets/request_api.js'
 import { defautParams } from '../assets/DefaultConfig.js'
 
 import process from '@/components/process.vue'
+import { anime } from '../assets/animejs'
 
 
 const seedIsRandom = ref(false)
@@ -161,35 +160,6 @@ let getLoras = function () {
     })
 }
 getLoras();
-
-
-
-const getUsedLorasString = computed(() => {
-
-    // 功能 对lora进行权重再分配，让lora总和不超过1
-    let weightSum = 0;
-    for (const item of loras.value) {
-        if (item.weight > 0) {
-            weightSum += item.weight;
-        }
-    }
-    console.log('LORA weight sum:' + weightSum)
-
-
-    let loraStr = ""
-    for (const item of loras.value) {
-        let weight = item.weight;
-        if (weightSum > 100) {
-            weight = weight * (100 / weightSum);
-        }
-        weight = (weight / 100).toFixed(2);
-        if (weight > 0) {
-            loraStr = loraStr + "<lora:" + item.name + ":" + (weight);
-            loraStr += ">";
-        }
-    }
-    return loraStr
-})
 
 let seedCache = "-1"
 watch(seedIsRandom, (newVal, oldVal) => {
@@ -212,7 +182,34 @@ onMounted(() => {
         // event.stopPropagation(); // 阻止事件冒泡
         return false;
     })
+    $("body").click(() => {
+        // 隐藏窗口
+        ParamsPlaneIsShow.value = false
+    })
 
+    watch(ParamsPlaneIsShow, (newVal, oldVal) => {
+        if (newVal) {
+            anime({
+                targets: '#right-plane',
+                translateX: 0,
+                easing: 'easeInOutExpo',
+                duration: 300
+            })
+        } else {
+            anime({
+                targets: '#right-plane',
+                translateX: 500,
+                easing: 'easeInOutExpo',
+                duration: 300
+            })
+        }
+        
+    })
+    anime({
+            targets: '#right-plane',
+            translateX: 500,
+            duration: 0
+        })
 
 })
 

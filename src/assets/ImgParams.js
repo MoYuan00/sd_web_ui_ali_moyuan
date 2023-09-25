@@ -50,6 +50,7 @@ export const txt2img_alwayson_scripts = ref({
         "args": [
             {
                 "input_image": "",
+                "enabled": true,
                 // "model": "control_v11p_sd15_canny [d14c016b]"
                 "model": "control_v11p_sd15_lineart [43d4be0d]",
             }

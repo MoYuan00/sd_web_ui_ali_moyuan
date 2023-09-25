@@ -1,14 +1,15 @@
 <template>
     <div
-        style="width: 650px; border-radius: 25px; background-color: #ccc; 
-    padding: 5px 5px 5px 90px; position: relative; margin: auto; display: block; min-height: 136px; overflow-x: hidden;">
+        style="width: 650px; border-radius: 25px; background-color: var(--color-gray-ui-bg-2); 
+    padding: 5px 5px 5px 20px; position: relative; margin: auto; display: block; min-height: 136px; overflow-x: hidden;">
 
 
         <div @click="rollLast"
-        style="line-height: 0; position: absolute; left: 0px; top: 0px; height: 100%; display: inline-block;
+        style="line-height: 0; position: absolute; left: -0px; top: 0px; height: 100%; display: inline-block;
              vertical-align: middle; z-index: 100;">
             <div class="pointer"
-                style="height: 100%; position: relative; border-radius: 25px 0px 0px 25px;">
+                style="height: 100%; width: 40px; text-align: center; position: relative; border-radius: 25px 0px 0px 25px;
+                background: linear-gradient(to left, #fff0 ,var(--color-gray-ui-bg-2));">
                 <div style=" top: calc(50% - 12px);  position: relative;">
                     <el-icon :size="25">
                         <ArrowLeftBold />
@@ -19,7 +20,7 @@
         </div>
 
         <!-- 显示图片 -->
-        <div style="position: relative;">
+        <div style="position: relative; height: 100%;">
             <div v-for="(src, idx) in CurrentGenImageList" class="img-container-item" style="position:absolute;">
                 <div :class="{ 'selectedImg': selectedCurrentImgIndex == idx, 'pointer': true }"
                     style="line-height: 0; padding: 5px; display: inline-block;" @click="OnChangeSelectedImg(idx)">
@@ -36,7 +37,8 @@
             style="line-height: 0; position: absolute; right: 0px; top: 0px; height: 100%; display: inline-block; 
             vertical-align: middle; z-index: 100;">
             <div class="pointer"
-                style="height: 100%; position: relative;  border-radius: 0px 25px 25px 0px;">
+                style="height: 100%; width: 40px; text-align: center; position: relative;  border-radius: 0px 25px 25px 0px;
+                background: linear-gradient(to right, #fff0 ,var(--color-gray-ui-bg-2));">
                 <div style=" top: calc(50% - 12px);  position: relative;">
                     <el-icon :size="25">
                         <ArrowRightBold />
@@ -54,15 +56,45 @@ import '../assets/Main.vue.css'
 
 import { ref, watch, computed, onMounted } from 'vue'
 import { CurrentGenImageList, CurrentSelectedImgURL, selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
-import { reflushImages,rollNext, rollLast } from '@/assets/ImgViewRoll.js'
+import { reflushImages,rollNext, rollLast, rollIdx } from '@/assets/ImgViewRoll.js'
 import { bus } from '@/assets/EventCenter.js'
+
+
+function  selectLast() {
+    if(selectedCurrentImgIndex.value > 0) {
+        selectedCurrentImgIndex.value--
+        console.log(selectedCurrentImgIndex.value);
+        rollIdx(selectedCurrentImgIndex.value)
+    }
+}
+
+function selectNext() {
+    if(selectedCurrentImgIndex.value < CurrentGenImageList.value.length - 1) {
+        selectedCurrentImgIndex.value++
+        console.log(selectedCurrentImgIndex.value);
+        rollIdx(selectedCurrentImgIndex.value)
+    }
+}
 
 onMounted(() => {
     // bus.on('gen-img', () => {
     //     console.log('gen-img 事件触发');
     //     reflushImages()
     // })
-    reflushImages()
+    reflushImages(0)
+
+    // 左右按键可以滚动
+
+    document.addEventListener('keydown', (e)=>{
+        if(e.repeat) return
+        if(e.key == 'ArrowRight') {
+            selectNext()
+        } else if(e.key == 'ArrowLeft') {
+            selectLast()
+        }
+        console.log('keydown');
+    });
+
 })
 
 watch(CurrentGenImageList, async (newVal, oldVal) => {
@@ -75,6 +107,8 @@ watch(CurrentGenImageList, async (newVal, oldVal) => {
 function OnChangeSelectedImg(idx) {
     selectedCurrentImgIndex.value = idx;
 }
+
+
 
 
 

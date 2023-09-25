@@ -30,7 +30,7 @@ export const reflushImages = function (length) {
     for (const i in $(".img-container-item")) {
         let idx = i
         // console.log(idx + ' - ' + getImagePositionX(idx));
-        $(".img-container-item").eq(idx).animate({ 'left': getImagePositionX(idx) + 'px' })
+        $(".img-container-item").eq(idx).animate({ 'left': getImagePositionX(idx) + 'px', speed: 200 })
     }
 }
 
@@ -48,4 +48,14 @@ export const rollLast = function () {
     if (kIndex.value <= 0) kIndex.value = 0
     reflushImages(ImgViewRollLength.value)
 }
+
+export const rollIdx = function (idx) {
+    if(idx >= 0 && idx <= ImgViewRollLength.value - 1) {
+        kIndex.value = idx
+        if (kIndex.value <= 0) kIndex.value = 0
+        reflushImages(ImgViewRollLength.value)
+    }
+}
+
+
 

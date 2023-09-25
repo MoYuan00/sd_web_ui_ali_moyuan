@@ -54,8 +54,6 @@
 // import PromotInput from '../components/PromotInput.vue'
 import PromotInputMain from '../components/PromotInputMain.vue'
 import ImgContainer from '../components/ImgContainer.vue'
-import ControlNet from '../components/ControlNet.vue'
-import ImageView from '../components/ImageView.vue'
 import '../assets/Main.vue.css'
 import Viewer from 'viewerjs';
 import { ref, watch, computed, onMounted } from 'vue'
@@ -63,7 +61,8 @@ import { ref, watch, computed, onMounted } from 'vue'
 import { onSubmit } from '@/assets/GenImage.js'
 import { CurrentGenImageList, CurrentSelectedImgURL, selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
 import { reflushImages } from '@/assets/ImgViewRoll.js'
-
+import { paramButtonIsShow } from '@/assets/GlobalStatus.js'
+paramButtonIsShow.value = true
 let gallery = null
 onMounted(() => {
     gallery = new Viewer(document.getElementById('img-parent'));

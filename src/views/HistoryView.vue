@@ -33,8 +33,8 @@ import '../assets/Main.vue.css'
 <style scoped></style>
 
 <script>
-import { genPercentage, genState } from '@/assets/GlobalStatus.js'
-
+import { genPercentage, genState,paramButtonIsShow } from '@/assets/GlobalStatus.js'
+paramButtonIsShow.value = false
 function OnGenImg() {
     console.log('回调 OnGenImg');
 }

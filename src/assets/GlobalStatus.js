@@ -37,7 +37,7 @@ export const genPercentage = ref(0.0); // 生成进度 0 ~ 1
 
 
 
-
+export const paramButtonIsShow = ref(false)
 
 // params plane
 export const ParamsPlaneIsShow = ref(false)

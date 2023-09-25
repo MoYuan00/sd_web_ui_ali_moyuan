@@ -2,6 +2,9 @@
 <template>
     <div id="plane" style="position: fixed; left: 0px; bottom: 0px; ">
         <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; ">
+            <div>
+                风格参考
+            </div>
             <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
                 <ContolNet :style_max_height="200"></ContolNet>
             </div>
