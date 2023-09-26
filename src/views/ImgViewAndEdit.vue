@@ -28,9 +28,11 @@
                                 <div class="cursor-pointer tools-item"
                                     style="display: inline-block; background-color: #333d; margin: 0; padding: 8px; line-height: 0; border-radius: 30px;">
                                     <div @click="onSubmit(true)">
-                                        <el-icon color="#fffd" :size="25">
-                                            <Search />
-                                        </el-icon>
+                                        <el-tooltip effect="dark" content="高清放大" placement="top" style="font-size: 20px;">
+                                            <el-icon color="#fffd" :size="25">
+                                                <Search />
+                                            </el-icon>
+                                        </el-tooltip>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +59,7 @@ import ImgContainer from '../components/ImgContainer.vue'
 import '../assets/Main.vue.css'
 import Viewer from 'viewerjs';
 import { ref, watch, computed, onMounted } from 'vue'
-
+import $ from 'jquery'
 import { onSubmit } from '@/assets/GenImage.js'
 import { CurrentGenImageList, CurrentSelectedImgURL, selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
 import { reflushImages } from '@/assets/ImgViewRoll.js'
@@ -66,6 +68,9 @@ paramButtonIsShow.value = true
 let gallery = null
 onMounted(() => {
     gallery = new Viewer(document.getElementById('img-parent'));
+    $('.tools-item').click(()=>{
+        event.stopPropagation()
+    })
 })
 
 </script>

@@ -3,7 +3,7 @@
     <el-row justify="center" style="width: 100%; height: 100%;">
         <el-col :span="24">
             <el-row>
-                <div class="textarea" v-loading="genState" element-loading-text="正在生成...">
+                <div class="textarea" >
                     <textarea class="input" v-model="promt_input"> </textarea>
 
 
@@ -54,12 +54,11 @@ import { anime } from '../assets/animejs.js'
 import $ from 'jquery'
 
 function onClick() {
-    loading('正在生成')
     onSubmit(false, () => {
         bus.emit('gen-img')
         console.log('window.router')
         window.router.push({ name: 'sd-view' })
-        loadingEnd()
+        
     })
 }
 

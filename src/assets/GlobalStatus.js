@@ -53,7 +53,9 @@ export function loading(text = '正在处理...') {
     loadingText.value = text
     loadingState.value = true
 }
-
+export function loadingTextTo(text = '正在处理...') {
+    loadingText.value = text
+}
 export function loadingEnd() {
     loadingState.value = false
 }

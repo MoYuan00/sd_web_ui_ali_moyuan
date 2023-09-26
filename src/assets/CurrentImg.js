@@ -26,7 +26,7 @@ function parseImg(imgs, imgNames, isUseControlNet) {
         count++;
         // 如果生成多个图片会第一张返回多个图片的预览，如果开启control会额外返回一个image
         // if (data.batch_size > 1 && count == 1) return;
-        if (isUseControlNet && count == length) return;
+        // if (isUseControlNet && count == length) return;
 
         newImgs.unshift({ img: imgs[count - 1], name: imgNames[count - 1] })
     });

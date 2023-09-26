@@ -51,12 +51,18 @@ export const txt2img_alwayson_scripts = ref({
             {
                 "input_image": "",
                 "enabled": true,
-                // "model": "control_v11p_sd15_canny [d14c016b]"
-                "model": "control_v11p_sd15_lineart [43d4be0d]",
+                "model": "control_v11p_sd15_canny [d14c016b]"
+            },
+            {
+                "input_image": "",
+                "enabled" : true,
+                "model": "control_v11e_sd15_shuffle [526bfdae]"
             }
         ]
     }
 })
+
+export const shuffle_img = ref('')
 
 export const options = ref({}) // 当前使用配置
 

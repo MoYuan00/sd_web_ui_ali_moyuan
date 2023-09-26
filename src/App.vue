@@ -6,7 +6,7 @@ import { loadingState, loadingText,ParamsPlaneIsShow,paramButtonIsShow  } from '
 </script>
 
 <template>
-  <div style=" height: 100vh; position: relative;" v-loading="loadingState" :element-loading-text="loadingText">
+  <div style=" height: 100vh; position: relative;" v-loading.fullscreen.lock="loadingState" :element-loading-text="loadingText">
     <header class="header" style="width: 100%; z-index: 2000; position: fixed; left: 0; right: 0; top: 0;">
       <div style="width: 90%; height: 100%; margin: auto;">
         <div style=" width: 100%; height: 100%;">
