@@ -18,7 +18,7 @@ export const CurrentSelectedImgURL = computed(()=>{
     return 'data:image/png;base64, ' + img;
 })
 
-function parseImg(imgs, imgNames, isUseControlNet, size) {
+function parseImg(imgs, imgNames, all_seeds, isUseControlNet, size) {
     let newImgs = []
     let count = 0
     let length = imgs.length;
@@ -29,21 +29,22 @@ function parseImg(imgs, imgNames, isUseControlNet, size) {
         // if (isUseControlNet && count == length) return;
         if(count > size) return
 
-        newImgs.unshift({ img: imgs[count - 1], name: imgNames[count - 1] })
+        newImgs.unshift({ img: imgs[count - 1], name: imgNames[count - 1], seed: all_seeds[count - 1] })
     });
     return newImgs
 }
 
 export function processTxt2ImgResponse(data, isUseControlNet, size) {
+    selectedCurrentImgIndex.value = 0
     let imgs = data.images;
     let infoJson = data.info;
     let info = JSON.parse(infoJson)
     let all_img_name = info.all_img_name; // array str
+    let all_seeds = info.all_seeds; // array str
 
     CurrentGenImageList.value.splice(0, CurrentGenImageList.value.length)
-    parseImg(imgs, all_img_name, isUseControlNet, size).forEach(element => {
+    parseImg(imgs, all_img_name, all_seeds, isUseControlNet, size).forEach(element => {
         CurrentGenImageList.value.unshift(element)
     });
 
 }
-

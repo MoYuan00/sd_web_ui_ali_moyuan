@@ -31,7 +31,7 @@ const getUsedLorasString = () => {
     return loraStr
 }
 
-export async function onSubmit(enable_hr, callback) {
+export async function onSubmit(enable_hr, callback, seed = -1) {
     loading('正在生成')
     genState.value = true;
 
@@ -65,6 +65,8 @@ export async function onSubmit(enable_hr, callback) {
     if(enable_hr) // 高清放大一张
     {
         // 获取种子 - 锁定种子
+        data.seed = seed
+        data.batch_size = 1
     }
 
     
