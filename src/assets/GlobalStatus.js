@@ -4,6 +4,7 @@ import { isUseControlNet } from './ImgParams'
 
 
 
+
 export const ControlNetImg_Base64 = ref('')
 
 
@@ -17,7 +18,7 @@ export function FlushHistoryImages(callback = null) {
             HistoryGenImageInfoList.value.unshift(image);
         }
         console.log(HistoryGenImageInfoList.value);
-        if(callback && callback != null) {
+        if (callback && callback != null) {
             callback()
         }
     })
@@ -58,4 +59,19 @@ export function loadingTextTo(text = '正在处理...') {
 }
 export function loadingEnd() {
     loadingState.value = false
+}
+
+
+
+
+
+
+// sd 目前的配置
+export const sd_options = ref({})
+
+export async function reflush_options () {
+    
+    await api.get_options().then(data => {
+        sd_options.value = data
+    })
 }

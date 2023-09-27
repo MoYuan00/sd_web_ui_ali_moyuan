@@ -48,7 +48,10 @@ import { loadingState, loadingText,ParamsPlaneIsShow,paramButtonIsShow  } from '
 
       <RouterView />
       <!-- plane -->
-      <ParamsPlane></ParamsPlane>
+      <Suspense>
+        <ParamsPlane></ParamsPlane>
+      </Suspense>
+
       <ParamsPlaneLeft></ParamsPlaneLeft>
     </main>
   </div>

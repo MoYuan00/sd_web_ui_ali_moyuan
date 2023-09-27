@@ -7,7 +7,7 @@
                 <div style="text-align: center; margin: 25px 0px 10px 0px">
                     2D画面风格
                 </div>
-                <template v-for="(item, idx) of modelList">
+                <template v-for="(item, idx) of modelList" :key="item.model_name">
                     <div class="bg-ui align-center-v align-center-h"
                         :class="{ 'model-picker': PickerModelSelectedIdx != idx, 'model-picker-selected': PickerModelSelectedIdx == idx }"
                         @click="OnModelPickerClick(idx, { 'width': 512, 'height': 512 })">
@@ -138,7 +138,7 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 import { loras, txt2img_data, enable_hr, modelList } from '@/assets/ImgParams.js'
-import { ParamsPlaneIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
+import { ParamsPlaneIsShow, loading, loadingEnd, reflush_options,sd_options } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
 import { defautParams } from '../assets/DefaultConfig.js'
 
@@ -147,6 +147,36 @@ import { anime } from '../assets/animejs'
 
 
 const seedIsRandom = ref(false)
+
+await reflush_options()
+
+let PickerModelSelectedIdx = ref(2)
+function OnModelPickerClick(idx, value) {
+    // 切换模型
+    loading('正在切换模型...')
+    api.change_model(modelList.value[idx].title).then(() => {
+        PickerModelSelectedIdx.value = idx
+        loadingEnd()
+    })
+}
+
+let model_list = function () {
+    api.model_list().then(data=>{
+        data = data.sort((p1, p2) =>{ // 对数据排序 保证每次都顺序相同
+            return p1.title.localeCompare( p2.title)
+        })
+        modelList.value = data
+
+        // 匹配选项
+        for(let i = 0; i < modelList.value.length; i++) {
+            if(modelList.value[i].title == sd_options.value.sd_model_checkpoint) {
+                PickerModelSelectedIdx.value = i
+                break;
+            }
+        }
+    })
+}
+model_list()
 
 let refushLoras = function () {
     api.reflush_loras()
@@ -225,15 +255,7 @@ function OnSizePickerClick(idx, value) {
     txt2img_data.value.height = value.height;
 }
 
-let PickerModelSelectedIdx = ref(2)
-function OnModelPickerClick(idx, value) {
-    // 切换模型
-    loading('正在切换模型...')
-    api.change_model(modelList.value[idx].title).then(() => {
-        PickerModelSelectedIdx.value = idx
-        loadingEnd()
-    })
-}
+
 </script>
 
 <style scoped>

@@ -41,9 +41,10 @@ export const onSubmit = function (enable_hr, callback) {
         txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ControlNetImg_Base64.value
         txt2img_alwayson_scripts.value.controlnet.args[0].enabled = true
     } else {
+        txt2img_alwayson_scripts.value.controlnet.args[0].enabled = false
         txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ''
     }
-
+// 
     if(shuffle_img.value.length > 0) {
         txt2img_alwayson_scripts.value.controlnet.args[1].input_image = shuffle_img.value
         txt2img_alwayson_scripts.value.controlnet.args[1].enabled = true
