@@ -61,7 +61,7 @@
                 <div>画面参数微调</div>
                 <div>
                     <div v-for="item in loras" :key="item.name" style="margin-top: 10px; position: relative;">
-                        <process v-model="item.weight" :min="item.min" :max="item.max" :title="item.name" :val_suffix="'%'"></process>
+                        <process v-model="item.weight" :min="item.min" :max="item.max" :title="item.name" :val_suffix="'%'" :is_scale_value="false"></process>
                     </div>
                     <!-- <div>
             </div> -->

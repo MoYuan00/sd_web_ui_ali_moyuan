@@ -53,21 +53,29 @@ const props = defineProps({
     'val_suffix': {
         type: String,
         default: ''
-    }
+    },
+    'is_scale_value': {
+        type: Boolean,
+        default: true
+    },
 })
 let max = 100
 let min = 0
+if(props.is_scale_value) {
+    max = props.max
+    min = props.min
+}
 let interVal = ref(0)
 function ToOuterVal() {
-    let val = (interVal.value - min) / (min + max) * (props.max - props.min) + props.min
-    return val
+    let val = (interVal.value - min) / (max - min) * (props.max - props.min) + props.min
+    return val.toFixed(1)
 }
 
 function ToInnerVal() {
-    let val = (props.modelValue - props.min) / (props.max + props.min) * (max - min) + min
-    return val
+    let val = (props.modelValue - props.min) / (props.max - props.min) * (max - min) + min
+    return val.toFixed(1)
 }
-interVal.val = ToInnerVal()
+interVal.value = ToInnerVal()
 // 用不同的uuid区分不同的组件，放在事件重复 
 let uuid = utils.uuid()
 // console.log(uuid);
@@ -75,7 +83,7 @@ let uuid = utils.uuid()
 const emits = defineEmits(['update:modelValue'])
 
 const process_graph_value = computed(function () {
-    return interVal.value 
+    return (interVal.value - min) * (100 / (max - min))
 })
 
 let process;
