@@ -9,7 +9,8 @@
             <div class="process_right">
                 <div style="vertical-align: middle; display: inline-block; margin: 0px 8px; ">
                     <span style="user-select: none;">
-                        {{ modelValue }}{{ val_suffix }}
+                        {{ interVal }}{{ val_suffix }} 
+                        ({{ props.min }}-{{ props.max }})
                     </span>
                 </div>
             </div>
@@ -54,7 +55,19 @@ const props = defineProps({
         default: ''
     }
 })
+let max = 100
+let min = 0
+let interVal = ref(0)
+function ToOuterVal() {
+    let val = (interVal.value - min) / (min + max) * (props.max - props.min) + props.min
+    return val
+}
 
+function ToInnerVal() {
+    let val = (props.modelValue - props.min) / (props.max + props.min) * (max - min) + min
+    return val
+}
+interVal.val = ToInnerVal()
 // 用不同的uuid区分不同的组件，放在事件重复 
 let uuid = utils.uuid()
 // console.log(uuid);
@@ -62,7 +75,7 @@ let uuid = utils.uuid()
 const emits = defineEmits(['update:modelValue'])
 
 const process_graph_value = computed(function () {
-    return props.modelValue * (100 / props.max)
+    return interVal.value 
 })
 
 let process;
@@ -72,6 +85,8 @@ let process_position = 0;
 let mouseDownX = -1;
 let mouseDownY = -1;
 let hold = false;
+
+
 
 // 记录全局状态，使得在鼠标移出组件时也能够正常运行
 let global_mouse_hold = false;
@@ -94,13 +109,15 @@ function OnMouseDown() {
     global_left = utils.getElementLeft(event.target)
 
     process_position = mouseDownX + 1;
-    let val = Number.parseInt(((process_position / process_width).toFixed(2) * props.max).toFixed(0));
-    if (val < props.min) {
-        val = props.min
+    interVal.value = Number.parseInt(((process_position / process_width).toFixed(2) * max).toFixed(0));
+    if (interVal.value < min) {
+        interVal.value = min
     }
-    if (val > props.max) {
-        val = props.max
+    if (interVal.value > max) {
+        interVal.value = max
     }
+
+    let val = ToOuterVal()
     emits('update:modelValue', val);
 
     hold = true;
@@ -129,13 +146,15 @@ function OnMouseDrag() {
     process_position = global_mouse_x - global_left + 1;
 
 
-    let val = Number.parseInt(((process_position / process_width).toFixed(2) * props.max).toFixed(0));
-    if (val < props.min) {
-        val = props.min
+    interVal.value = Number.parseInt(((process_position / process_width).toFixed(2) * max).toFixed(0));
+    if (interVal.value < min) {
+        interVal.value = min
     }
-    if (val > props.max) {
-        val = props.max
+    if (interVal.value > max) {
+        interVal.value = max
     }
+    let val = ToOuterVal()
+    console.log(val + " | " + interVal.value);
     emits('update:modelValue', val);
 }
 
@@ -153,7 +172,7 @@ onMounted(() => {
 
 
     document.addEventListener('mousedown', () => {
-        if(hold){
+        if (hold) {
             global_mouse_hold = true;
         }
     }, false);
@@ -162,7 +181,7 @@ onMounted(() => {
         hold = false;
     }, true);
     document.addEventListener('mousemove', () => {
-        if(global_mouse_hold){
+        if (global_mouse_hold) {
             OnMouseDrag()
         }
     }, true);

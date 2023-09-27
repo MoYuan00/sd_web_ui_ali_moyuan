@@ -58,16 +58,16 @@
             <div>
 
 
-                <div>画面变化参数微调</div>
+                <div>画面参数微调</div>
                 <div>
                     <div v-for="item in loras" :key="item.name" style="margin-top: 10px; position: relative;">
-                        <process v-model="item.weight" :min="0" :max="100" :title="item.name" :val_suffix="'%'"></process>
+                        <process v-model="item.weight" :min="item.min" :max="item.max" :title="item.name" :val_suffix="'%'"></process>
                     </div>
                     <!-- <div>
             </div> -->
                 </div>
                 <div style="margin: 30px;"> </div>
-                <div>画面参数微调</div>
+                <div>其他参数</div>
                 <div style="margin: 10px;"> </div>
                 <div>
                     <process v-model="txt2img_data.cfg_scale" :min="1" :max="30" :title="'文字随机性(CFG)'"></process>
@@ -81,47 +81,10 @@
 
                 <div style="margin: 30px;"> </div>
 
-                <div>默认参数控制</div>
-                <div style="max-height: 100px; overflow-y: scroll; scrollbar-color: var(--color-gray-ui-bg);">
+                <div @click.stop="dialogVisible = true" class="pointer" style="margin: auto; display: inline-block; padding: 5px 15px; border-radius: 25px; background-color: var(--color-gray-ui-bg);">默认参数控制</div>
 
-                    <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
-                        默认关键词：
-                        <input v-model="defautParams.prompt_pre">
-                    </div>
-                    <div style="margin: 10px;"> </div>
-                    <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
-                        Lora名称对应范围控制:
-                        <template v-for="item in defautParams.loras_control">
-                            <div>
-                                <div>
-                                    名称：
-                                    <input v-model="item.name">
-                                </div>
-                                <div>
-                                    默认值：
-                                    <input type="number" min="0" max="2" step="0.01" v-model="item.default">
-                                </div>
-                                <div>
-                                    最小值：
-                                    <input type="number" min="0" max="2" step="0.01" v-model="item.min">
-                                </div>
-                                <div>
-                                    最大值：
-                                    <input type="number" min="0" max="2" step="0.01" v-model="item.max">
-                                </div>
-                            </div>
-                            <div style="margin: 8px;">
 
-                            </div>
-                        </template>
-                    </div>
-                    <div style="margin: 10px;"> </div>
 
-                    <div class="bg-ui " style="border-radius: 10px; padding: 5px;">
-                        默认关键词：
-                        <input v-model="defautParams.prompt_pre">
-                    </div>
-                </div>
             </div>
 
             <div style=" position: absolute; bottom: 30px; left: calc(50% - 175px / 2);">
@@ -132,20 +95,65 @@
             </div>
         </div>
     </div>
+
+    <el-dialog v-model="dialogVisible" title="默认参数控制" width="30%" @click.stop="1">
+        <div>
+            <div style="scrollbar-color: var(--color-gray-ui-bg);">
+
+                <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
+                    默认关键词：
+                    <div></div>
+                    <textarea v-model="defautParams.prompt_pre" style="width: 100%;"></textarea>
+                </div>
+                <div style="margin: 10px;"> </div>
+                <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
+                    Lora名称对应范围控制:
+                    <template v-for="(item, idx) in defautParams.loras_control">
+                        <div>
+                            <div>
+                                名称：
+                                <select v-model="item.name">
+                                    <template v-for="lo in loras" >
+                                        <option :value="lo.name">{{ lo.name }}</option>
+                                    </template>
+                                </select>
+                            </div>
+                            <div>
+                                默认值：
+                                <input type="number" :min="item.min" :max="item.max" step="0.01" v-model="item.default">
+                            </div>
+                            <div>
+                                最小值：
+                                <input type="number" min="0" :max="item.max" step="0.01" v-model="item.min">
+                            </div>
+                            <div>
+                                最大值：
+                                <input type="number" :min="item.min" max="2" step="0.01" v-model="item.max">
+                            </div>
+                        </div>
+                        <div style="margin: 8px;">
+
+                        </div>
+                    </template>
+                </div>
+                <div style="margin: 10px;"></div>
+            </div>
+        </div>
+    </el-dialog>
 </template>
 
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
 import $ from 'jquery'
 import { loras, txt2img_data, enable_hr, modelList } from '@/assets/ImgParams.js'
-import { ParamsPlaneIsShow, loading, loadingEnd, reflush_options,sd_options } from '@/assets/GlobalStatus.js'
+import { ParamsPlaneIsShow, loading, loadingEnd, reflush_options, sd_options } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
 import { defautParams } from '../assets/DefaultConfig.js'
 
 import process from '@/components/process.vue'
 import { anime } from '../assets/animejs'
 
-
+const dialogVisible = ref(true)
 const seedIsRandom = ref(false)
 
 await reflush_options()
@@ -161,15 +169,15 @@ function OnModelPickerClick(idx, value) {
 }
 
 let model_list = function () {
-    api.model_list().then(data=>{
-        data = data.sort((p1, p2) =>{ // 对数据排序 保证每次都顺序相同
-            return p1.title.localeCompare( p2.title)
+    api.model_list().then(data => {
+        data = data.sort((p1, p2) => { // 对数据排序 保证每次都顺序相同
+            return p1.title.localeCompare(p2.title)
         })
         modelList.value = data
 
         // 匹配选项
-        for(let i = 0; i < modelList.value.length; i++) {
-            if(modelList.value[i].title == sd_options.value.sd_model_checkpoint) {
+        for (let i = 0; i < modelList.value.length; i++) {
+            if (modelList.value[i].title == sd_options.value.sd_model_checkpoint) {
                 PickerModelSelectedIdx.value = i
                 break;
             }
@@ -186,6 +194,17 @@ refushLoras()
 let getLoras = function () {
     api.loras().then((response) => {
         loras.value = response;
+        window.loras = loras
+        // 将loras的min，max设置进行绑定
+        loras.value.forEach(element => {
+            defautParams.value.loras_control.forEach(setting=>{
+                if(setting.name == element.name){
+                    element.min = setting.min
+                    element.max = setting.max
+                    element.weight = setting.default
+                }
+            })
+        });
     }).catch(function (err) {
     })
 }
@@ -206,6 +225,7 @@ watch(() => txt2img_data, () => {
 })
 
 onMounted(() => {
+
 
     $(".params").click(() => {
         console.log('.params click');
@@ -233,13 +253,15 @@ onMounted(() => {
                 duration: 300
             })
         }
-        
+
     })
     anime({
-            targets: '#right-plane',
-            translateX: 500,
-            duration: 0
-        })
+        targets: '#right-plane',
+        translateX: 500,
+        duration: 0
+    })
+
+
 
 })
 
@@ -254,6 +276,16 @@ function OnSizePickerClick(idx, value) {
     txt2img_data.value.width = value.width;
     txt2img_data.value.height = value.height;
 }
+
+watch(defautParams, (newVal, oldVal)=>{
+    // 更新lora中的值
+    localStorage.setItem('defaultParams', JSON.stringify(newVal))
+
+    console.log('save defaultParams');
+
+}, {
+    deep: true
+})
 
 
 </script>
