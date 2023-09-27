@@ -47,6 +47,14 @@ api.translate = function(text) {
     })
 }
 
+api.controlnet_detect = function(img_base64, size = 512) {
+    return requests.post('/controlnet/detect', {
+        "controlnet_module": "shuffle",
+        "controlnet_input_images": [img_base64],
+        "controlnet_processor_res": size
+    })
+}
+
 // ---------------------------- 文件浏览
 
 api.txt2imgFiles =
@@ -76,7 +84,6 @@ api.image_file_url =
 api.image_info =
     function (filePath) {
         return requests.get('infinite_image_browsing/image_geninfo', { "path": filePath })
-
     }
 
 // api.translate_text = (text) =>{

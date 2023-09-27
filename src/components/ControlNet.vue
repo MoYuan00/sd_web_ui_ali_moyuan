@@ -1,6 +1,6 @@
 <template>
     <div style="text-align: center;">
-        <div>
+        <div class="pointer">
         <!-- <div style="background-color: var(--color-gray-ui-bg-2);"> -->
             <!-- 画板， 绘制图片，隐藏 -->
             <canvas id="canvas" height="512" width="512" style=" display: none;"> </canvas>
@@ -174,11 +174,14 @@ function postprocess(imgData) {
 }
 
 const img = new Image(); // 只需要创建一次，及其耗时
-
+let ctx = null
 function drawImgWorker(dataurl, downScale = 3, useProcess = false) {
     // let canvas = document.getElementById("canvas");
     // canvas.clearRect(0,0,canvas.width,canvas.height);  
-    const ctx = canvas.getContext("2d");
+    if(ctx == null) {
+        ctx = canvas.getContext("2d");
+    }
+    ctx["willReadFrequently"] = true
     img.crossOrigin = "Anonymous";
     // img.src = url; base64 和 url 都可以
 

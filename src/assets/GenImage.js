@@ -31,7 +31,7 @@ const getUsedLorasString = () => {
     return loraStr
 }
 
-export const onSubmit = function (enable_hr, callback) {
+export async function onSubmit(enable_hr, callback) {
     loading('正在生成')
     genState.value = true;
 
@@ -46,8 +46,11 @@ export const onSubmit = function (enable_hr, callback) {
     }
 // 
     if(shuffle_img.value.length > 0) {
-        txt2img_alwayson_scripts.value.controlnet.args[1].input_image = shuffle_img.value
         txt2img_alwayson_scripts.value.controlnet.args[1].enabled = true
+        await api.controlnet_detect(shuffle_img.value, Math.max(data.width, data.height)).then(data=>{
+            let img = data.images[0]
+            txt2img_alwayson_scripts.value.controlnet.args[1].input_image = shuffle_img.value
+        })
     } else{
         txt2img_alwayson_scripts.value.controlnet.args[1].input_image = ''
         txt2img_alwayson_scripts.value.controlnet.args[1].enabled = false
@@ -59,8 +62,15 @@ export const onSubmit = function (enable_hr, callback) {
     data.custom_info_str = GetImgData();
     data.enable_hr = (Boolean)(enable_hr)
 
+    if(enable_hr) // 高清放大一张
+    {
+        // 获取种子 - 锁定种子
+    }
+
+    
+
     api.txt2img(data).then((response) => {
-        processTxt2ImgResponse(response, isUseControlNet.value)
+        processTxt2ImgResponse(response, isUseControlNet.value, data.batch_size)
         FlushHistoryImages()
         genState.value = false;
         if(callback) callback()
