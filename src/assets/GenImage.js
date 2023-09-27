@@ -1,6 +1,7 @@
 import { ControlNetImg_Base64, FlushHistoryImages, genState, genPercentage, loading, loadingEnd,loadingTextTo  } from '@/assets/GlobalStatus.js'
 import { GetImgData, loras, txt2img_data, promt_input, promt_input_en, txt2img_alwayson_scripts, isUseControlNet, shuffle_img } from '@/assets/ImgParams'
 import { processTxt2ImgResponse } from '@/assets/CurrentImg'
+import { defautParams } from '@/assets/DefaultConfig'
 import utils from '@/assets/utils'
 import api from '@/assets/request_api.js'
 
@@ -36,7 +37,7 @@ export async function onSubmit(enable_hr, callback, seed = -1) {
     genState.value = true;
 
     let data = utils.deepClone(txt2img_data.value)
-    data.prompt = promt_input_en.value + getUsedLorasString.value
+    data.prompt = defautParams.value.prompt_pre + ',' + promt_input_en.value + getUsedLorasString.value
     if (isUseControlNet.value) {
         txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ControlNetImg_Base64.value
         txt2img_alwayson_scripts.value.controlnet.args[0].enabled = true

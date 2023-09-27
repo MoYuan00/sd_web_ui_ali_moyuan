@@ -1,4 +1,5 @@
 <script setup>
+import { ref, watch, computed, onMounted, defineEmits,onUnmounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import ParamsPlane from './components/ParamsPlane.vue'
 import ParamsPlaneLeft from './components/ParamsPlaneLeft.vue'
@@ -17,7 +18,7 @@ import { loadingState, loadingText,ParamsPlaneIsShow,paramButtonIsShow  } from '
 
             <el-col :span="6" v-show="paramButtonIsShow">
               <div style="display: flex; width: 100%;">
-                <div class="pointer"
+                <div ref="param_button" class="pointer"
                   style="margin: auto; padding: 10px 30px; background-color: var(--color-gray-ui-bg); border-radius: 40px;"
                   @click="OnClickParamChange">
                   参数调整
@@ -65,6 +66,12 @@ function OnClickParamChange() {
   return false
 }
 
+let param_button = ref(null)
+
+onUnmounted(() => {
+    console.log('App 组件销毁');
+    param_button. value.removeEventListener('click', OnClickParamChange);
+})
 </script>
 
 <style scoped>

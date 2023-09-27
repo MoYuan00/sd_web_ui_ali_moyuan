@@ -1,6 +1,6 @@
 <template>
     <div style="text-align: center;">
-        <div class="pointer">
+        <div style="cursor: move;">
         <!-- <div style="background-color: var(--color-gray-ui-bg-2);"> -->
             <!-- 画板， 绘制图片，隐藏 -->
             <canvas id="canvas" height="512" width="512" style=" display: none;"> </canvas>

@@ -153,7 +153,7 @@ import { defautParams } from '../assets/DefaultConfig.js'
 import process from '@/components/process.vue'
 import { anime } from '../assets/animejs'
 
-const dialogVisible = ref(true)
+const dialogVisible = ref(false)
 const seedIsRandom = ref(false)
 
 await reflush_options()

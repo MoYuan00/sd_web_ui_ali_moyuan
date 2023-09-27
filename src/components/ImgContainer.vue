@@ -4,11 +4,9 @@
     padding: 5px 5px 5px 20px; position: relative; margin: auto; display: block; min-height: 136px; overflow-x: hidden;">
 
 
-        <div @click="rollLast"
-        style="line-height: 0; position: absolute; left: -0px; top: 0px; height: 100%; display: inline-block;
+        <div @click="rollLast" style="line-height: 0; position: absolute; left: -0px; top: 0px; height: 100%; display: inline-block;
              vertical-align: middle; z-index: 100;">
-            <div class="pointer"
-                style="height: 100%; width: 40px; text-align: center; position: relative; border-radius: 25px 0px 0px 25px;
+            <div class="pointer" style="height: 100%; width: 40px; text-align: center; position: relative; border-radius: 25px 0px 0px 25px;
                 background: linear-gradient(to left, #fff0 ,var(--color-gray-ui-bg-2));">
                 <div style=" top: calc(50% - 12px);  position: relative;">
                     <el-icon :size="25">
@@ -32,12 +30,9 @@
             </div>
         </div>
 
-        <div
-            @click="rollNext"
-            style="line-height: 0; position: absolute; right: 0px; top: 0px; height: 100%; display: inline-block; 
+        <div @click="rollNext" style="line-height: 0; position: absolute; right: 0px; top: 0px; height: 100%; display: inline-block; 
             vertical-align: middle; z-index: 100;">
-            <div class="pointer"
-                style="height: 100%; width: 40px; text-align: center; position: relative;  border-radius: 0px 25px 25px 0px;
+            <div class="pointer" style="height: 100%; width: 40px; text-align: center; position: relative;  border-radius: 0px 25px 25px 0px;
                 background: linear-gradient(to right, #fff0 ,var(--color-gray-ui-bg-2));">
                 <div style=" top: calc(50% - 12px);  position: relative;">
                     <el-icon :size="25">
@@ -54,14 +49,14 @@
 <script setup>
 import '../assets/Main.vue.css'
 
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
 import { CurrentGenImageList, CurrentSelectedImgURL, selectedCurrentImgIndex } from '@/assets/CurrentImg.js'
-import { reflushImages,rollNext, rollLast, rollIdx } from '@/assets/ImgViewRoll.js'
+import { reflushImages, rollNext, rollLast, rollIdx } from '@/assets/ImgViewRoll.js'
 import { bus } from '@/assets/EventCenter.js'
 
 
-function  selectLast() {
-    if(selectedCurrentImgIndex.value > 0) {
+function selectLast() {
+    if (selectedCurrentImgIndex.value > 0) {
         selectedCurrentImgIndex.value--
         console.log(selectedCurrentImgIndex.value);
         rollIdx(selectedCurrentImgIndex.value)
@@ -69,36 +64,43 @@ function  selectLast() {
 }
 
 function selectNext() {
-    if(selectedCurrentImgIndex.value < CurrentGenImageList.value.length - 1) {
+    if (selectedCurrentImgIndex.value < CurrentGenImageList.value.length - 1) {
         selectedCurrentImgIndex.value++
         console.log(selectedCurrentImgIndex.value);
         rollIdx(selectedCurrentImgIndex.value)
     }
 }
 
+let target = null;
 onMounted(() => {
     // bus.on('gen-img', () => {
     //     console.log('gen-img 事件触发');
     //     reflushImages()
     // })
     reflushImages(0)
-
     // 左右按键可以滚动
+    console.log('注册事件');
 
-    document.addEventListener('keydown', (e)=>{
-        if(e.repeat) return
-        if(e.key == 'ArrowRight') {
+    target = (e) => {
+        if (e.repeat) return
+        if (e.key == 'ArrowRight') {
             selectNext()
-        } else if(e.key == 'ArrowLeft') {
+        } else if (e.key == 'ArrowLeft') {
             selectLast()
         }
         console.log('keydown');
-    });
+    }
+    document.addEventListener('keydown', target);
 
 })
 
+onUnmounted(() => {
+    console.log('组件销毁');
+    document.removeEventListener('keydown', target)
+})
+
 watch(CurrentGenImageList, async (newVal, oldVal) => {
-    console.log('watch(CurrentGenImageList' +  newVal.length);
+    console.log('watch(CurrentGenImageList' + newVal.length);
     reflushImages(newVal.length)
 },
     { deep: true, flush: 'post' }

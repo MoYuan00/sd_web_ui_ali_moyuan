@@ -21,7 +21,7 @@
 
                     <div class="info" style="position: absolute;  bottom: 8px; left: 80px;">
                         <div style="width: 450px; height: 30px;  color: #3333; font-size: small; overflow: hidden;">
-                            {{ promt_input_en }}
+                            {{ promt_input_en_show }}
                         </div>
                         <div style="width: 450px; height: 20px;  color: #3333; font-size: small;">
                             <template v-for="item in loras">
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { ref, watch, computed, onMounted, defineEmits } from 'vue'
+import { ref, watch, computed, onMounted, defineEmits,onUnmounted } from 'vue'
 import $ from 'jquery'
 
 </script>
@@ -52,7 +52,7 @@ import { bus } from '@/assets/EventCenter'
 import api from '../assets/request_api.js'
 import { anime } from '../assets/animejs.js'
 import $ from 'jquery'
-
+import { defautParams } from '@/assets/DefaultConfig'
 function onClick() {
     onSubmit(false, () => {
         bus.emit('gen-img')
@@ -71,6 +71,10 @@ function updateTranaslate() {
         })
     }, 2000);
 }
+
+let promt_input_en_show = computed(()=>{
+    return defautParams.value.prompt_pre + ', ' + promt_input_en.value
+})
 
 
 const textarea_anime = function (open) {
@@ -147,6 +151,14 @@ onMounted(() => {
     updateTranaslate()
 
     textarea_anime(false)
+})
+
+onUnmounted(() => {
+    console.log('promoinputmain 组件销毁');
+    $("textarea").prop("onclick",null);
+    $("button").prop("onclick",null);
+    $("body").prop("onclick",null);
+    $('.params-plane-button').prop("onclick",null);
 })
 
 watch(promt_input, () => {

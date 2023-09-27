@@ -28,7 +28,7 @@
                                 <div class="cursor-pointer tools-item"
                                     style="display: inline-block; background-color: #333d; margin: 0; padding: 8px; line-height: 0; border-radius: 30px;">
                                     <div @click="hr()">
-                                        <el-tooltip effect="dark" content="高清放大" placement="top" style="font-size: 20px;">
+                                        <el-tooltip effect="dark" content="高清放大此图" placement="top" style="font-size: 20px;">
                                             <el-icon color="#fffd" :size="25">
                                                 <Search />
                                             </el-icon>

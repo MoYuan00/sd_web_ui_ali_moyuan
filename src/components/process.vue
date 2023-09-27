@@ -68,12 +68,12 @@ if(props.is_scale_value) {
 let interVal = ref(0)
 function ToOuterVal() {
     let val = (interVal.value - min) / (max - min) * (props.max - props.min) + props.min
-    return val.toFixed(1)
+    return Number.parseFloat(val.toFixed(1))
 }
 
 function ToInnerVal() {
     let val = (props.modelValue - props.min) / (props.max - props.min) * (max - min) + min
-    return val.toFixed(1)
+    return Number.parseFloat(val.toFixed(1))
 }
 interVal.value = ToInnerVal()
 // 用不同的uuid区分不同的组件，放在事件重复 

@@ -5,9 +5,9 @@ import utils from './utils'
 
 
 // 提示词
-export const promt_input = ref(`粉色的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
+export const promt_input = ref(`水晶，冰，梦幻，雪花，雪花，白玫瑰，白色得荆棘，光，萤光，冰锥，冰天雪地的背景，没有人物`)
 
-export const promt_input_en = ref(`粉丝的耳朵，黑色长头发，丹凤眼，洛丽塔裙子，站在樱花树下，夜晚，圆月，全身，女孩，侧脸，精灵耳朵`)
+export const promt_input_en = ref(`Crystal, ice, dream, snowflake, snowflake, white rose, white thorns, light, fluorescent light, ice pick, ice background, no characters`)
 
 export const enable_hr = ref(false) // 高清修复 - 放大图片
 
@@ -16,12 +16,12 @@ export const txt2img_data = ref({
     "prompt": '',
     "negative_prompt": "EasyNegative",
     "seed": -1,
-    "batch_size": 1,
+    "batch_size": 3,
     "n_iter": 1,
     "steps": 20,
     "cfg_scale": 7,
-    "width": 512,
-    "height": 512,
+    "width": 768,
+    "height": 960,
     "restore_faces": false,
     "tiling": false,
     "sampler_index": "Euler",

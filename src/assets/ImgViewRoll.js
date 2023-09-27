@@ -14,6 +14,8 @@ export const ImgViewRollLength = ref(0)
 // 计算images的位置
 // 当前显示的是哪个image_name
 const getImagePositionX = (index) => {
+    if (kIndex.value >= ImgViewRollLength.value - 1) kIndex.value = ImgViewRollLength.value - 1
+    if (kIndex.value <= 0) kIndex.value = 0
 
     let index_offset = index - kIndex.value;
     let offsetX = (width + span) * index_offset;
@@ -26,7 +28,9 @@ export const reflushImages = function (length) {
 
     $(".img-container-item").stop();
     // console.log($(".normal"));
-    ImgViewRollLength.value = length
+    if(length && length > 0)
+        ImgViewRollLength.value = length
+    else ImgViewRollLength.value = 0
     for (const i in $(".img-container-item")) {
         let idx = i
         // console.log(idx + ' - ' + getImagePositionX(idx));
