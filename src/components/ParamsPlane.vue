@@ -1,30 +1,34 @@
 <!-- 参数面板 -->
 <template>
-    <div id="right-plane" style="position: fixed; top: 150px; right: 0px; bottom: 0px; width: 468px; z-index: 2001; ">
-        <div class="params bg-contain" style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px; ">
+    <div id="right-plane" class="bg-contain"
+        style="position: fixed; top: 150px; right: 0px; bottom: 0px; width: 468px; overflow-y: scroll; border-radius: 40px 0px 0px;">
 
-            <div style="border-radius: 0px 30px 30px 0px;">
-                <div style="text-align: center; margin: 25px 0px 10px 0px">
-                    2D画面风格
-                </div>
-                <template v-for="(item, idx) of modelList" :key="item.model_name">
-                    <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'model-picker': PickerModelSelectedIdx != idx, 'model-picker-selected': PickerModelSelectedIdx == idx }"
-                        @click="OnModelPickerClick(idx, { 'width': 512, 'height': 512 })">
-                        {{ item.model_name }}
+        <div style="height: 100%; z-index: 2001;  ">
+            <div class="params"
+                style="border-radius: 40px 0px 0px; height: 100%; padding: 30px 30px;  z-index: 2002; position: relative;   ">
+
+                <div style="border-radius: 0px 30px 30px 0px; ">
+                    <div style="text-align: center; margin: 15px 0px 10px 0px">
+                        2D画面风格
                     </div>
-                </template>
-            </div>
-
-            <div style="text-align: left;">画面大小</div>
-            <div style="height: 10px; display: block;"></div>
-            <div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
-                    style="width: 52px;" @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
-                    1:1
+                    <template v-for="(item, idx) of modelList" :key="item.model_name">
+                        <div class="bg-ui align-center-v align-center-h"
+                            :class="{ 'model-picker': PickerModelSelectedIdx != idx, 'model-picker-selected': PickerModelSelectedIdx == idx }"
+                            @click="OnModelPickerClick(idx)">
+                            {{ item.model_name }}
+                        </div>
+                    </template>
                 </div>
-                <div class="bg-ui align-center-v align-center-h"
+
+                <div style="text-align: left;">画面大小</div>
+                <div style="height: 10px; display: block;"></div>
+                <div>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 1, 'size-picker-selected': sizePickerSelectedIdx == 1 }"
+                        style="width: 52px;" @click="OnSizePickerClick(1, { 'width': 512, 'height': 512 })">
+                        1:1
+                    </div>
+                    <!-- <div class="bg-ui align-center-v align-center-h"
                     :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
                     style="width: 62px; margin-left: 30px;" @click="OnSizePickerClick(2, { 'width': 768, 'height': 512 })">
                     3:2
@@ -38,60 +42,71 @@
                     :class="{ 'size-picker': sizePickerSelectedIdx != 4, 'size-picker-selected': sizePickerSelectedIdx == 4 }"
                     style="width: 92px; margin-left: 30px;" @click="OnSizePickerClick(4, { 'width': 1024, 'height': 576 })">
                     16:9
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 5, 'size-picker-selected': sizePickerSelectedIdx == 5 }"
-                    style="width: 122px; margin-top: 10px;" @click="OnSizePickerClick(5, { 'width': 1024, 'height': 428 })">
-                    21:9
-                </div>
-                <div class="bg-ui align-center-v align-center-h"
-                    :class="{ 'size-picker': sizePickerSelectedIdx != 6, 'size-picker-selected': sizePickerSelectedIdx == 6 }"
-                    style="width: 222px; margin-left: 30px;  margin-top: 10px;" @click="OnSizePickerClick(6, txt2img_data)">
-                    自定义
-                    <input style="width: 50px;  border: 0px; padding: 1px;" v-model="txt2img_data.width" />
-                    x
-                    <input style="width: 50px; border: 0px; padding: 1px;" v-model="txt2img_data.height" />
-                </div>
-            </div>
-
-            <div style="margin: 30px;"> </div>
-            <div>
-
-
-                <div>画面参数微调</div>
-                <div>
-                    <div v-for="item in loras" :key="item.name" style="margin-top: 10px; position: relative;">
-                        <process v-model="item.weight" :min="item.min" :max="item.max" :title="item.name" :val_suffix="'%'" :is_scale_value="false"></process>
+                </div> -->
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 5, 'size-picker-selected': sizePickerSelectedIdx == 5 }"
+                        style="width: 80px; margin-left: 10px;"
+                        @click="OnSizePickerClick(2, { 'width': 1024, 'height': 512 })">
+                        2:1
                     </div>
-                    <!-- <div>
-            </div> -->
-                </div>
-                <div style="margin: 30px;"> </div>
-                <div>其他参数</div>
-                <div style="margin: 10px;"> </div>
-                <div>
-                    <process v-model="txt2img_data.cfg_scale" :min="1" :max="30" :title="'文字随机性(CFG)'"></process>
+                    <div class="bg-ui align-center-v align-center-h"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 6, 'size-picker-selected': sizePickerSelectedIdx == 6 }"
+                        style="width: 230px; margin-left: 10px;  margin-top: 10px; "
+                        @click="OnSizePickerClick(3, txt2img_data)">
+                        自定义
+                        <input style="width: 50px;  border: 0px; padding: 1px;" v-model="txt2img_data.width" />
+                        x
+                        <input style="width: 50px; border: 0px; padding: 1px;" v-model="txt2img_data.height" />
+                    </div>
                 </div>
 
-                <div style="margin-top: 10px;">
+                <div style="margin: 20px;"> </div>
+                <div>
+
+                    <div>画面参数微调</div>
                     <div>
-                        <process v-model="txt2img_data.batch_size" :max="20" :min="1" :title="'图片数量'"></process>
+                        <div v-for="item in loras" :key="item.name" style="margin-top: 10px; position: relative;">
+                            <process v-model="item.weight" :min="item.min" :max="item.max" :title="item.name"
+                                :val_suffix="'%'" :is_scale_value="false"></process>
+                        </div>
+                        <!-- <div>
+            </div> -->
                     </div>
+                    <div style="margin: 20px;"> </div>
+                    <div>其他参数</div>
+                    <div style="margin: 10px;"> </div>
+                    <div>
+                        <process v-model="txt2img_data.cfg_scale" :min="1" :max="30" :title="'文字随机性(CFG)'"></process>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <div>
+                            <process v-model="txt2img_data.batch_size" :max="20" :min="1" :title="'图片数量'"></process>
+                        </div>
+                    </div>
+
+                    <div>
+
+                        <ParamsPlaneLeft></ParamsPlaneLeft>
+                    </div>
+
+
+                    <div style="display: flex;">
+
+                        <div @click.stop="dialogVisible = true" class=" button_white "
+                            style=" margin: auto; display: flex; padding: 5px 15px; border-radius: 25px; background-color: var(--color-gray-ui-bg);">
+                            默认参数控制
+                        </div>
+                    </div>
+
                 </div>
 
-                <div style="margin: 30px;"> </div>
-
-                <div @click.stop="dialogVisible = true" class="pointer" style="margin: auto; display: inline-block; padding: 5px 15px; border-radius: 25px; background-color: var(--color-gray-ui-bg);">默认参数控制</div>
-
-
-
-            </div>
-
-            <div style=" position: absolute; bottom: 30px; left: calc(50% - 175px / 2);">
+                <!-- <div style="margin: auto; display: inline-block;">
                 <div class="pointer font-normal"
                     style="width: 175px; height: 30px; border-radius: 40px; background-color: #e0e0e0 ; color: #adadad; text-align: center;">
                     恢复默认
                 </div>
+            </div> -->
             </div>
         </div>
     </div>
@@ -113,7 +128,7 @@
                             <div>
                                 名称：
                                 <select v-model="item.name">
-                                    <template v-for="lo in loras" >
+                                    <template v-for="lo in loras">
                                         <option :value="lo.name">{{ lo.name }}</option>
                                     </template>
                                 </select>
@@ -149,6 +164,7 @@ import { loras, txt2img_data, enable_hr, modelList } from '@/assets/ImgParams.js
 import { ParamsPlaneIsShow, loading, loadingEnd, reflush_options, sd_options } from '@/assets/GlobalStatus.js'
 import api from '../assets/request_api.js'
 import { defautParams } from '../assets/DefaultConfig.js'
+import ParamsPlaneLeft from '@/components/ParamsPlaneLeft.vue'
 
 import process from '@/components/process.vue'
 import { anime } from '../assets/animejs'
@@ -197,8 +213,8 @@ let getLoras = function () {
         window.loras = loras
         // 将loras的min，max设置进行绑定
         loras.value.forEach(element => {
-            defautParams.value.loras_control.forEach(setting=>{
-                if(setting.name == element.name){
+            defautParams.value.loras_control.forEach(setting => {
+                if (setting.name == element.name) {
                     element.min = setting.min
                     element.max = setting.max
                     element.weight = setting.default
@@ -267,6 +283,38 @@ onMounted(() => {
 
 
 
+const img_file = ref(null)
+
+const selectedFileShow = ref({ display: 'none' })
+const img = ref(null)
+
+function clickSelectFile() {
+    console.log(img_file.value);
+    img_file.value.dispatchEvent(new MouseEvent("click"));
+}
+
+function getFileData() {
+    let file = img_file.value.files[0]
+    console.log(file);
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+        shuffle_img.value = reader.result
+        selectedFileShow.value.display = 'block'
+    }
+    reader.readAsDataURL(file)
+}
+
+
+function DeleteImg(e) {
+    e.stopPropagation()
+    shuffle_img.value = ''
+    selectedFileShow.value.display = 'none'
+}
+
+
+
 // 选择面板
 
 let sizePickerSelectedIdx = ref(6)
@@ -277,7 +325,7 @@ function OnSizePickerClick(idx, value) {
     txt2img_data.value.height = value.height;
 }
 
-watch(defautParams, (newVal, oldVal)=>{
+watch(defautParams, (newVal, oldVal) => {
     // 更新lora中的值
     localStorage.setItem('defaultParams', JSON.stringify(newVal))
 
@@ -322,7 +370,7 @@ watch(defautParams, (newVal, oldVal)=>{
 
 .model-picker {
     height: 32px;
-    width: 170px;
+    width: 160px;
     margin-right: 30px;
     margin-bottom: 10px;
 
@@ -352,5 +400,4 @@ watch(defautParams, (newVal, oldVal)=>{
 
     border-radius: 40px;
     display: inline-block;
-}
-</style>
+}</style>

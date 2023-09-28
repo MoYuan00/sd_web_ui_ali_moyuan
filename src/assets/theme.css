@@ -5,7 +5,8 @@
     --color-gray-ui-bg: #cccccc;
     --color-gray-ui-bg-2: #e0e0e0;
     --color-gray-ui-active: #9a9a9a;
-    --color-gray-ui-bg-contain: #e6e6e6b2;
+    --color-gray-ui-bg-contain: #e6e6e6d2;
+    /* --color-gray-ui-bg-contain: #e6e6e6b2; */
 
     --color-sp-01: #3a52ff;
     --color-sp-02: #00d6f7;
@@ -87,4 +88,10 @@ body{
 .font-key{
     font-size: 22px;
     font-family: var(--font-family);
+}
+
+
+.button_white:hover{
+    background: linear-gradient(to right bottom, white, var(--color-gray-ui-bg)) !important;
+    cursor: pointer;
 }

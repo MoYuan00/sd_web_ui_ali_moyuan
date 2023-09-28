@@ -1,48 +1,10 @@
 <!-- 参数面板 -->
 <template>
-    <div id="plane" style="position: fixed; left: 0px; bottom: 0px; ">
-        <div class="bg-contain" style="padding: 30px 30px; border-radius: 0px 40px 0px 0px; ">
-            <div>
-                风格参考
+    <div id="plane" style="">
+        <div class="" style=" ">
+            <div style="text-align: center; margin: 10px; margin-top: 30px;">
+                角度选择
             </div>
-
-            <div class="pointer" style="width: 100%; height: 200px; background-color: #f5f5f5; position: relative;; "
-                @click="clickSelectFile">
-                <div style="height: 100%; width: 100%;">
-                    <template v-if="shuffle_img.length <= 0">
-                        <div
-                            style="display: inline-flex; justify-content: center; align-items: center;  height: 100%; width: 100%;">
-                            <div style="display: flex;">
-                               选择一张图片作为画风参考
-                            </div>
-                        </div>
-                    </template>
-                    <div style="height: 100%; width: 100%;" :style="selectedFileShow">
-                        <img ref="img" style="height: 100%; width: 100%; object-fit: contain;" :src="shuffle_img" alt="" />
-                        <div id="img_mask">
-                            <div
-                                style="display: inline-flex; justify-content: center; align-items: center; height: 100%; width: 100%; cursor: default;">
-                                <span class="pointer" style="display: flex;" @click="DeleteImg">
-                                    <el-tooltip class="box-item" effect="dark" content="删除图片" placement="top">
-                                        <el-icon color="#ddd" size="30">
-                                            <Delete />
-                                        </el-icon>
-                                    </el-tooltip>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <input ref="img_file" type="file" style="display: none;" @click="e => { e.target.value = ''; }"
-                    @change="getFileData">
-                    <div style="font-size: small;">
-                        (推荐不要使用带透明像素的图片，透明像素将会被黑色像素填充)
-                    </div>
-            </div>
-            <div style="height: 50px;">
-            </div>
-
             <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
                 <ContolNet :style_max_height="200"></ContolNet>
             </div>
@@ -52,7 +14,7 @@
                 </span>
                 <div
                     style="display: inline-block; border-radius: 40px; background-color: white; padding: 8px 10px 8px 25px; line-height: 40px;">
-                    <span style="min-width: 220px; display: inline-block;">
+                    <span style="min-width: 200px; display: inline-block;">
                         天猫模型12
                     </span>
                     <span class="pointer" style="float: right; line-height: 0;">
@@ -60,6 +22,52 @@
                     </span>
                 </div>
             </div>
+            <div style="text-align: center; margin: 10px; margin-top: 30px;">
+                参考图添加
+            </div>
+            <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
+                <div class="pointer" style="width: 100%; height: 200px; background-color: #f5f5f5; position: relative;; "
+                    @click="clickSelectFile">
+                    <div style="height: 100%; width: 100%;">
+                        <template v-if="shuffle_img.length <= 0">
+                            <div
+                                style="display: inline-flex; justify-content: center; align-items: center;  height: 100%; width: 100%;">
+                                <div style="display: flex;">
+                                    <!-- 选择一张图片作为画风参考 -->
+                                    <el-icon :size="70" color="#cccc"><Plus /></el-icon>
+                                </div>
+                            </div>
+                        </template>
+                        <div style="height: 100%; width: 100%;" :style="selectedFileShow">
+                            <img ref="img" style="height: 100%; width: 100%; object-fit: contain;" :src="shuffle_img"
+                                alt="" />
+                            <div id="img_mask">
+                                <div
+                                    style="display: inline-flex; justify-content: center; align-items: center; height: 100%; width: 100%; cursor: default;">
+                                    <span class="pointer" style="display: flex;" @click="DeleteImg">
+                                        <el-tooltip class="box-item" effect="dark" content="删除图片" placement="top">
+                                            <el-icon color="#ddd" size="30">
+                                                <Delete />
+                                            </el-icon>
+                                        </el-tooltip>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input ref="img_file" type="file" style="display: none;" @click="e => { e.target.value = ''; }"
+                    @change="getFileData">
+                <!-- <div style="font-size: small;">
+                    (推荐不要使用带透明像素的图片，透明像素将会被黑色像素填充)
+                </div> -->
+            </div>
+            <div style="height: 50px;">
+            </div>
+
+
+            
         </div>
     </div>
 </template>
@@ -112,30 +120,6 @@ onMounted(() => {
         return false;
     })
 
-    watch(ControlNetIsShow, (newVal, oldVal) => {
-        if (newVal) {
-            // 显示，窗口，使用动画
-            anime({
-                targets: '#plane',
-                translateX: 0,
-                easing: 'easeInOutExpo',
-                duration: 300
-            })
-        } else {
-            anime({
-                targets: '#plane',
-                translateX: -500,
-                easing: 'easeInOutExpo',
-                duration: 300
-            })
-        }
-    })
-    anime({
-        targets: '#plane',
-        translateX: -500,
-        duration: 0
-    })
-
 })
 
 
@@ -170,4 +154,5 @@ function OnModelPickerClick(idx, value) {
 
 #img_mask:hover {
     opacity: 1;
-}</style>
+}
+</style>

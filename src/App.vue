@@ -16,15 +16,15 @@ import { loadingState, loadingText,ParamsPlaneIsShow,paramButtonIsShow  } from '
               <h3 style="color: black; font-weight: bold;display: block; line-height: 40px;">AI Creative Engine</h3>
             </el-col>
 
-            <el-col :span="6" v-show="paramButtonIsShow">
+            <!-- <el-col :span="6" v-show="paramButtonIsShow">
               <div style="display: flex; width: 100%;">
-                <div ref="param_button" class="pointer"
+                <div ref="param_button" class="button_white"
                   style="margin: auto; padding: 10px 30px; background-color: var(--color-gray-ui-bg); border-radius: 40px;"
                   @click="OnClickParamChange">
                   参数调整
                 </div>
               </div>
-            </el-col>
+            </el-col> -->
 
             <el-col :span="6" style="text-align: right;">
 
@@ -53,7 +53,6 @@ import { loadingState, loadingText,ParamsPlaneIsShow,paramButtonIsShow  } from '
         <ParamsPlane></ParamsPlane>
       </Suspense>
 
-      <ParamsPlaneLeft></ParamsPlaneLeft>
     </main>
   </div>
 </template>

@@ -45,7 +45,7 @@ import $ from 'jquery'
 </script>
 
 <script setup>
-import { genState, ControlNetIsShow, loading, loadingEnd,ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
+import { genState, ControlNetIsShow, loading, loadingEnd } from '@/assets/GlobalStatus.js'
 import { promt_input, promt_input_en, loras } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
 import { bus } from '@/assets/EventCenter'
@@ -142,8 +142,9 @@ onMounted(() => {
 
     $('.params-plane-button').click(() => {
         console.log('.params-plane-button click');
-        let t = !ParamsPlaneIsShow.value;
-        ParamsPlaneIsShow.value = t
+        let t = !ControlNetIsShow.value;
+        ControlNetIsShow.value = t
+        ControlNetIsShow.value = t
         // ParamsPlaneIsShow.value =  (Number)(ParamsPlaneIsShow.value) + 1
         return false;
     })
