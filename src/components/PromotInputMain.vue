@@ -45,7 +45,7 @@ import $ from 'jquery'
 </script>
 
 <script setup>
-import { genState, ControlNetIsShow, loading, loadingEnd,ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
+import { genState, ControlNetIsShow, loading, loadingEnd, ParamsPlaneIsShow } from '@/assets/GlobalStatus.js'
 import { promt_input, promt_input_en, loras } from '@/assets/ImgParams'
 import { onSubmit } from '@/assets/GenImage'
 import { bus } from '@/assets/EventCenter'
@@ -133,12 +133,12 @@ onMounted(() => {
         console.log('button click');
         return false;
     })
-    $("body").click(() => {
+    document.getElementById('body').addEventListener('click', () => {
         // 隐藏窗口
         console.log('body click');
         ControlNetIsShow.value = false
         textarea_anime(false)
-    })
+    }, true)
 
     $('.params-plane-button').click(() => {
         console.log('.params-plane-button click');

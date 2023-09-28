@@ -21,7 +21,7 @@ import '../assets/Main.vue.css'
             <div style="margin: 20px; ">
                 <div class="four-corners-border" style="width: 480px; margin: auto; position: relative;">
                     <ControlNet :style_max_height="260">
-                        <div v-if="genState"
+                        <!-- <div v-if="genState"
                             style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: var(--el-mask-color);">
                             <div style="position: relative; width: 100%; top: 50%; margin-top: calc((0px - 126px)/ 2);">
                                 <el-progress color="var(--el-color-primary)" :percentage="genPercentage" :show-text="true"
@@ -32,7 +32,7 @@ import '../assets/Main.vue.css'
                                     </template>
                                 </el-progress>
                             </div>
-                        </div>
+                        </div> -->
                     </ControlNet>
                 </div>
             </div>

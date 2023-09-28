@@ -2,7 +2,7 @@
 <template>
     <div id="plane" style="">
         <div class="" style=" ">
-            <div style="text-align: center; margin: 10px; margin-top: 30px;">
+            <div style="margin-bottom: 10px; margin-top: 30px;">
                 角度选择
             </div>
             <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">
@@ -13,16 +13,16 @@
                     样板选择
                 </span>
                 <div
-                    style="display: inline-block; border-radius: 40px; background-color: white; padding: 8px 10px 8px 25px; line-height: 40px;">
+                    style="display: inline-block; border-radius: 40px; background-color: white; padding: 8px 10px 8px 25px; line-height: 30px;">
                     <span style="min-width: 200px; display: inline-block;">
-                        天猫模型12
+                        模型类型
                     </span>
                     <span class="pointer" style="float: right; line-height: 0;">
-                        <img src="../assets/icon/icon4.png" style="height: 40px;">
+                        <img src="../assets/icon/icon4.png" style="height: 30px;">
                     </span>
                 </div>
             </div>
-            <div style="text-align: center; margin: 10px; margin-top: 30px;">
+            <div style="margin-bottom: 10px; margin-top: 30px;">
                 参考图添加
             </div>
             <div class="four-corners-border" style="width: 400px; margin: auto; position: relative;">

@@ -12,9 +12,9 @@
                     draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
-            <div style="position: absolute; right: 5px; top: 0px; z-index: 1000;">
+            <div style="position: absolute; right: 3px; top: 3px; z-index: 1000;">
                 <el-tooltip class="box-item" effect="dark" content="在画布上鼠标左键拖拽位置，右键拖拽切换视角，滚轮缩放" placement="top">
-                    <el-icon class="pointer">
+                    <el-icon class="pointer" color="#0006">
                         <InfoFilled />
                     </el-icon>
                 </el-tooltip>

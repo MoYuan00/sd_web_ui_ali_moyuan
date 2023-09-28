@@ -87,16 +87,12 @@ export async function onSubmit(enable_hr, callback, seed = -1) {
             api.progress().then((response) => {
                 genPercentage.value = (response.progress * 100).toFixed(1);
                 // loadingTextTo('正在生成...' + genPercentage.value + '%')
-                loadingEnd()
-                loading('正在生成...' + genPercentage.value + '%')
                 if (!genState.value) {
-                    loadingEnd()
                     clearInterval(t);
                 }
             }).catch(function (err) {
                 if (!genState.value) {
                     clearInterval(t);
-                    loadingEnd()
                 }
             })
         }, 1000, 1000)

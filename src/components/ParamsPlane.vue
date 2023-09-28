@@ -44,13 +44,13 @@
                     16:9
                 </div> -->
                     <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 5, 'size-picker-selected': sizePickerSelectedIdx == 5 }"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 2, 'size-picker-selected': sizePickerSelectedIdx == 2 }"
                         style="width: 80px; margin-left: 10px;"
                         @click="OnSizePickerClick(2, { 'width': 1024, 'height': 512 })">
                         2:1
                     </div>
                     <div class="bg-ui align-center-v align-center-h"
-                        :class="{ 'size-picker': sizePickerSelectedIdx != 6, 'size-picker-selected': sizePickerSelectedIdx == 6 }"
+                        :class="{ 'size-picker': sizePickerSelectedIdx != 3, 'size-picker-selected': sizePickerSelectedIdx == 3 }"
                         style="width: 230px; margin-left: 10px;  margin-top: 10px; "
                         @click="OnSizePickerClick(3, txt2img_data)">
                         自定义
@@ -317,7 +317,7 @@ function DeleteImg(e) {
 
 // 选择面板
 
-let sizePickerSelectedIdx = ref(6)
+let sizePickerSelectedIdx = ref(3)
 function OnSizePickerClick(idx, value) {
     sizePickerSelectedIdx.value = idx
     console.log('OnSizePickerClick');

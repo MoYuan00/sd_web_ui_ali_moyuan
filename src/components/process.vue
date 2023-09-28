@@ -10,7 +10,7 @@
                 <div style="vertical-align: middle; display: inline-block; margin: 0px 8px; ">
                     <span style="user-select: none;">
                         {{ interVal }}{{ val_suffix }} 
-                        ({{ props.min }}-{{ props.max }})
+                        <!-- ({{ props.min }}-{{ props.max }}) -->
                     </span>
                 </div>
             </div>
