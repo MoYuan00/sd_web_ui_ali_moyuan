@@ -32,7 +32,7 @@ export const txt2img_data = ref({
 
     // 高清修复
     "enable_hr": true,
-    "denoising_strength": 0.3,
+    "denoising_strength": 0.45,
     "firstphase_width": 0,
     "firstphase_height": 0,
     "hr_scale": 2,

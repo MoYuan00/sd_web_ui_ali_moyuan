@@ -1,23 +1,36 @@
 <template>
     <div style="text-align: center;">
         <div style="cursor: move;">
-        <!-- <div style="background-color: var(--color-gray-ui-bg-2);"> -->
+            <!-- <div style="background-color: var(--color-gray-ui-bg-2);"> -->
             <!-- 画板， 绘制图片，隐藏 -->
             <canvas id="canvas" height="512" width="512" style=" display: none;"> </canvas>
             <!-- <img :src="selectedFile" style="max-height: 512px;" /> -->
             <!-- 显示绘制结果，可以控制 -->
             <div class="align-center-v" style="color: white; position: relative; vertical-align: middle;"
-            :style="{ 'height': style_max_height + 'px' }">
-                <img :id="uuid" class="canvas-event" :src="ControlNetImg_Base64" 
-                    draggable="false" />
+                :style="{ 'height': style_max_height + 'px' }">
+                <img :id="uuid" class="canvas-event" :src="ControlNetImg_Base64" draggable="false" />
                 <!-- <a download="下载名称" :href="ControlNetImg_Base64">下载</a> -->
             </div>
-            <div style="position: absolute; right: 3px; top: 3px; z-index: 1000;">
-                <el-tooltip class="box-item" effect="dark" content="在画布上鼠标左键拖拽位置，右键拖拽切换视角，滚轮缩放" placement="top">
-                    <el-icon class="pointer" color="#0006">
-                        <InfoFilled />
-                    </el-icon>
-                </el-tooltip>
+            <div style="position: absolute; right: 3px; top: 3px; z-index: 1000; 
+                    display: flex; justify-content: center; align-items: center;">
+                
+                <div style="display: flex;">
+                    <el-tooltip class="box-item" effect="dark" content="打开或关闭线框图控制" placement="top">
+                        <el-switch v-model="isUseControlNet" size="small" width="35" inline-prompt active-text="开"
+                            inactive-text="关"
+                            style="--el-switch-on-color: #999 ; --el-switch-off-color: #999" />
+                    </el-tooltip>
+                </div>
+
+                <div style="display: flex; margin-left: 5px;">
+                    <el-tooltip class="box-item" effect="dark" content="在画布上鼠标左键拖拽位置，右键拖拽切换视角，滚轮缩放" placement="top">
+                        <el-icon class="pointer" color="#0006" size="18">
+                            <InfoFilled />
+                        </el-icon>
+                    </el-tooltip>
+                </div>
+
+
             </div>
             <slot></slot>
         </div>
@@ -30,7 +43,7 @@
 import { ref, watch, computed, onMounted, defineProps } from 'vue'
 import { ControlNetImg_Base64 } from '@/assets/GlobalStatus.js'
 import { txt2img_data } from '@/assets/ImgParams.js'
-import { VerticalRotate, HorizontalRotate, imageShowSize, VerticalPosition, HorizontalPosition } from '@/assets/ImgParams'
+import { VerticalRotate, HorizontalRotate, imageShowSize, VerticalPosition, HorizontalPosition, isUseControlNet } from '@/assets/ImgParams'
 import utils from '@/assets/utils.js'
 const props = defineProps({
     'style_max_height': {
@@ -178,7 +191,7 @@ let ctx = null
 function drawImgWorker(dataurl, downScale = 3, useProcess = false) {
     // let canvas = document.getElementById("canvas");
     // canvas.clearRect(0,0,canvas.width,canvas.height);  
-    if(ctx == null) {
+    if (ctx == null) {
         ctx = canvas.getContext("2d");
     }
     ctx["willReadFrequently"] = true
@@ -311,7 +324,7 @@ onMounted(() => {
     let canvasEvent = document.getElementById(uuid);
 
     canvasEvent.addEventListener('mousedown', OnCanvasDown, true);
-    canvasEvent.addEventListener('click', ()=> {
+    canvasEvent.addEventListener('click', () => {
         console.log(' canvasEvent click');
         event.stopPropagation()
         return false;
@@ -352,8 +365,8 @@ watch(HorizontalPosition, () => {
 
 
 <style>
-.canvas-event{
-    object-fit:contain;
+.canvas-event {
+    object-fit: contain;
     height: 100%;
     width: 100%;
     display: block;
