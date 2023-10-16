@@ -12,7 +12,6 @@ export const promt_input_en = ref(`Crystal, ice, dream, snowflake, snowflake, wh
 export const enable_hr = ref(false) // 高清修复 - 放大图片
 
 export const txt2img_data = ref({
-    "denoising_strength": 0,
     "prompt": '',
     "negative_prompt": "EasyNegative",
     "seed": -1,
@@ -24,15 +23,15 @@ export const txt2img_data = ref({
     "height": 512,
     "restore_faces": false,
     "tiling": false,
-    "sampler_index": "Euler",
+    "sampler_index": "DPM++ 2M SDE Karras",
     "save_images": true, // 生成后保持
     // "send_images": true, 
     "alwayson_scripts": {},
-
-
+    
+    
     // 高清修复
-    "enable_hr": true,
     "denoising_strength": 0.45,
+    "enable_hr": true,
     "firstphase_width": 0,
     "firstphase_height": 0,
     "hr_scale": 2,
@@ -87,6 +86,11 @@ VerticalRotate.update = (newVal) =>{
     newVal = Math.floor(newVal / step) * step
     newVal = newVal < min ? min : newVal;
     newVal = newVal > max ? max : newVal;
+
+    // 进行循环
+    // newVal = newVal > max ? min : newVal;
+    // newVal = newVal < min ? max : newVal;
+
     VerticalRotate.value = newVal;
 }
 
@@ -96,8 +100,20 @@ HorizontalRotate.update = (newVal) =>{
     let max = 175;
     let stepVal = Math.floor(newVal / step) * step
     // console.log('HorizontalRotate newval:' + newVal + ' stepVal:' + stepVal + ' floor:' + Math.floor(newVal / step));
-    stepVal = newVal < min ? min : stepVal;
-    stepVal = newVal > max ? max : stepVal;
+
+    // stepVal = newVal < min ? min : stepVal;
+    // stepVal = newVal > max ? max : stepVal;
+    // 进行循环
+    if(stepVal < min) {
+        let bias = min - stepVal;
+        while(bias > max) bias = bias - max;
+        stepVal = max - bias;
+    } else {
+        while(stepVal > max) stepVal = stepVal - max;
+    }
+    // stepVal = stepVal > max ? min : stepVal;
+    // stepVal = stepVal < min ? max : stepVal;
+
     HorizontalRotate.value = stepVal;
 }
 

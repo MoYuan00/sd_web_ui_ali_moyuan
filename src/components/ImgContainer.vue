@@ -26,7 +26,17 @@
                         style="border-radius: 33px; width: 130px; height: 115px; object-fit: cover;" :src="src.img">
                     <img v-else style="border-radius: 33px; width: 130px; height: 115px; object-fit: cover;"
                         :src="'data:image/png;base64,' + src.img">
+
+                    <!--  v-show="src.hr_enable_size > 1"  -->
+
+                    <div class="radius" style="height: 35px; width: 35px; background-color: #0000ff; position: absolute; top: 5px; right: 5px;
+                        border-radius: 0px 33px 0px 13px; display: flex;">
+                        <div style="display: flex; margin: auto; color: #fffd; font-size: 15px;">
+                            x {{ src.hr_enable_size }}
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -145,5 +155,34 @@ img.center {
 .selectedImg {
     background-color: #fffa;
     border-radius: 33px;
+}
+
+.radius{
+    background: linear-gradient(to bottom right,#00d6f7, #3a52ff, #0000ff) !important;
+}
+.radius::after {
+    position: absolute;
+    content: '';
+    width: 18px;
+    height: 18px;
+    line-height: 100px;
+    display: block;
+    text-align: center;
+    background-image: radial-gradient(100px at 0px 18px, #fff0 18px, #00d6f7 18px);
+    top: 0px;
+    right: 35px;
+}
+
+.radius::before {
+    position: absolute;
+    content: '';
+    width: 18px;
+    height: 18px;
+    line-height: 100px;
+    display: block;
+    text-align: center;
+    background-image:  radial-gradient(100px at 00px 18px, #fff0 18px, #0000ff 18px);
+    top: 35px;
+    right: 0px;
 }
 </style>

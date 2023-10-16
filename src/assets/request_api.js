@@ -47,6 +47,12 @@ api.translate = function(text) {
     })
 }
 
+api.ali_ai_temp = function(data){
+    let json = JSON.stringify(data)
+    return requests.post('/sdapi/v1/ali_ai_temp', { text: json})
+}
+
+
 api.controlnet_detect = function(img_base64, size = 512) {
     return requests.post('/controlnet/detect', {
         "controlnet_module": "shuffle",

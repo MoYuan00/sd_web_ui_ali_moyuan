@@ -145,6 +145,10 @@
                                 最大值：
                                 <input type="number" :min="item.min" max="2" step="0.01" v-model="item.max">
                             </div>
+                            <div>
+                                排序值：（越小越靠前）
+                                <input type="number" min="0" max="21" step="1" v-model="item.order">
+                            </div>
                         </div>
                         <div style="margin: 8px;">
 
@@ -218,9 +222,13 @@ let getLoras = function () {
                     element.min = setting.min
                     element.max = setting.max
                     element.weight = setting.default
+                    element.order = setting.order
                 }
             })
         });
+        loras.value.sort((o, oo)=>{ // 排序
+            return o.order - oo.order;
+        })
     }).catch(function (err) {
     })
 }

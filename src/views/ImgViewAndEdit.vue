@@ -1,10 +1,15 @@
 <template>
     <div style="position: relative; height: 100%; width: 100%;">
         <div class="flex-contain-img">
-            <div class="flex-img shrink glow ">
-                <div style="display: flex; margin: 0 auto; position: relative; max-height: 100%;">
+            <div class="flex-img shrink glow " style="max-width: 80%;">
+                <div ref="img_contain" style="display: flex; margin: 0 auto; position: relative; ">
                     <div id="img-parent" style="display: flex ;  position: relative; max-height: 100%; max-width: 100%;">
+                        <!-- <template v-if="CurrentGenImageList[selectedCurrentImgIndex].hr_enable_size == 1">
+                            <img :src="CurrentSelectedImgURL" style="position: relative; left: 0px; width: 700px; height: auto; object-fit: contain;">
+                        </template> -->
+                        <!-- <template v-else> -->
                         <img :src="CurrentSelectedImgURL">
+                        <!-- </template> -->
                         <!-- <img src="../assets/png/769x960.png" > -->
                         <!-- <img src="../assets/png/1022x571.jpg" > -->
 
@@ -68,14 +73,31 @@ paramButtonIsShow.value = true
 let gallery = null
 onMounted(() => {
     gallery = new Viewer(document.getElementById('img-parent'));
-    $('.tools-item').click(()=>{
+    $('.tools-item').click(() => {
         event.stopPropagation()
     })
 })
-
+let img_contain = ref(null)
 function hr() {
-    onSubmit(true, null, CurrentGenImageList.value[selectedCurrentImgIndex.value].seed)
+    onSubmit(true, null, CurrentGenImageList.value[selectedCurrentImgIndex.value].seed,
+        CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size)
 }
+
+// watch(CurrentGenImageList, (newVal, oldVal) => {
+//     if (CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size > 1) {
+//         img_contain.value.classList.add('img_contain_sm')
+//     } else {
+//         img_contain.value.classList.remove('img_contain_sm')
+//     }
+// })
+
+// watch(selectedCurrentImgIndex, (newVal, oldVal) => {
+//     if (CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size > 1) {
+//         img_contain.value.classList.add('img_contain_sm')
+//     } else {
+//         img_contain.value.classList.remove('img_contain_sm')
+//     }
+// })
 
 </script>
 
@@ -86,7 +108,10 @@ function hr() {
     border-radius: 10px;
 }
 
-
+.img_contain_sm {
+    max-height: 50%;
+    top: 20%;
+}
 
 .flex-contain-img {
     display: flex;

@@ -9,30 +9,35 @@ export const defautParams = ref({
             min: 0.2,
             max: 0.4,
             default: 0.3,
+            order: 1,
         },
         {
             name: 'blindbox_v1_mix',
             min: 0.2,
             max: 0.4,
             default: 0.3,
+            order: 2,
         },
         {
             name: 'others',
             min: 0.2,
             max: 0.4,
             default: 0.3,
+            order: 3,
         },
         {
             name: 'tmall4',
             min: 0.2,
             max: 0.4,
             default: 0.3,
+            order: 4,
         },
         {
             name: 'tmall4',
             min: 0.2,
             max: 0.4,
             default: 0.3,
+            order: 5,
         }
     ]
 })

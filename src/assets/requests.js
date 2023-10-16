@@ -3,7 +3,7 @@ import _ from "lodash"
 
 // axios.defaults.withCredentials = true// Cookie跨域
 
-const baseURL = 'http://30.13.113.44:7860/'
+const baseURL = 'http://30.13.114.5:7860/'
 const instance = axios.create({
     baseURL: baseURL,
     timeout: 1000,
@@ -15,7 +15,7 @@ const instance = axios.create({
     },
     // withCredentials: true,
     crossDomain: true,
-    timeout: 1000000
+    timeout: 100000000
 });
 
 

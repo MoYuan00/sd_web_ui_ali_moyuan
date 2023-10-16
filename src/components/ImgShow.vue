@@ -1,15 +1,14 @@
 <template>
     <div :id="uuid" style="width: 100%; position: relative; line-height: 0;">
+        <div  ref="img" v-viewer>
+                <img :src="api.image_file_url(path)">
+        </div>
 
-        <img :src="api.image_file_url(path)">
-
-        <div class="img-mask">
+        <div class="img-mask" @click="showImg">
             <div
                 style="bottom: 50px; height: 40px; width: 100%; position: absolute;color: white; line-height: 1; overflow: hidden;">
                 <div class="text-overflow" style="font-size: 15px; color: #fff; padding: 0px 20px; line-height: 20px;">
                     {{ img_promot }}
-                    生成完后搜索框是一行状态（如果输入框内容超过20个字在末尾加省略号或渐变隐去），一个干净的输入框和图片。
-                    生成完后搜索框是一行状态（如果输入框内容超过20个字在末尾加省略号或渐变隐去），一个干净的输入框和图片。
                 </div>
                 <div>
 
@@ -55,6 +54,11 @@ const props = defineProps(['path'])
 
 function onDownloadImg(url) {
     api.downloadImage(url, 'download');
+}
+
+let img = ref(null)
+function showImg() {
+    img.value.$viewer.show()
 }
 
 const img_info = ref('')

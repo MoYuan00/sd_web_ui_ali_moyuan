@@ -20,6 +20,12 @@ const router = createRouter({
     }
     ,
     {
+      path: '/Temp',
+      name: 'Temp',
+      component: () => import('../views/Temp.vue')
+    }
+    ,
+    {
       path: '/3D',
       name: '3D',
       component: () => import('../views/3D.vue')
