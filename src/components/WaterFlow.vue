@@ -153,7 +153,7 @@ onMounted(() => {
         // 2、网页窗口变动时
         // 3、刷新网页时
         console.log('刷新, idx:' + idx + ' len:' + arrLen);
-    })
+    }, true)
 
 
     // 浏览器大小变更事件进行监听

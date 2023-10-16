@@ -52,13 +52,13 @@ const coverFormData = (obj) => {
 
 function post(url, data) {
     // const { data, url } = coverFormData(obj);
-    console.log("post " + url);
+    // console.log("post " + url);
     return new Promise((resolve, reject) => {
         instance.post(url, data)
             .then(res => {
                 // obj.success ? obj.success(res) : null
-                console.group("post response " + url);
-                console.log(res.data);
+                // console.group("post response " + url);
+                // console.log(res.data);
                 console.groupEnd();
                 resolve(res.data);
             })
@@ -75,13 +75,13 @@ function post(url, data) {
 
 function get(url, data) {
     // const { data, url } = coverFormData(obj);
-    console.log("get " + url);
+    // console.log("get " + url);
     return new Promise((resolve, reject) => {
         instance.get(url, {params: data})
             .then(res => {
                 // obj.success ? obj.success(res) : null
-                console.group("get response " + url);
-                console.log(res.data);
+                // console.group("get response " + url);
+                // console.log(res.data);
                 console.groupEnd();
                 resolve(res.data);
             })

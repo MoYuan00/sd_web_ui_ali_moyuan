@@ -4,7 +4,7 @@
                 <img :src="api.image_file_url(path)">
         </div>
 
-        <div class="img-mask" @click="showImg">
+        <div class="img-mask" >
             <div
                 style="bottom: 50px; height: 40px; width: 100%; position: absolute;color: white; line-height: 1; overflow: hidden;">
                 <div class="text-overflow" style="font-size: 15px; color: #fff; padding: 0px 20px; line-height: 20px;">
@@ -56,10 +56,7 @@ function onDownloadImg(url) {
     api.downloadImage(url, 'download');
 }
 
-let img = ref(null)
-function showImg() {
-    img.value.$viewer.show()
-}
+
 
 const img_info = ref('')
 let img_promot = ref('')

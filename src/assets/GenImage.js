@@ -25,6 +25,7 @@ const getUsedLorasString = () => {
             weight = weight * (1 / weightSum);
         }
         weight = (weight / 1).toFixed(2);
+        item.weight_result = Number.parseFloat(weight)
         if (weight > 0) {
             loraStrList.push("<lora:" + item.name + ":" + (weight) + ">");
         }
@@ -98,7 +99,7 @@ export async function onSubmit(enable_hr, callback, seed = -1, hr_enable_size = 
     function queryProgress() {
         let t = setInterval(function () {
             api.progress().then((response) => {
-                genPercentage.value = (response.progress * 100).toFixed(1);
+                genPercentage.value = Number.parseFloat((response.progress * 100).toFixed(1));
                 // loadingTextTo('正在生成...' + genPercentage.value + '%')
                 if (!genState.value) {
                     clearInterval(t);

@@ -68,12 +68,15 @@ if(props.is_scale_value) {
 let interVal = ref(0)
 function ToOuterVal() {
     let val = (interVal.value - min) / (max - min) * (props.max - props.min) + props.min
-    return Number.parseFloat(val.toFixed(1))
+    return Number.parseFloat(val.toFixed(3))
 }
 
 function ToInnerVal() {
-    let val = (props.modelValue - props.min) / (props.max - props.min) * (max - min) + min
-    return Number.parseFloat(val.toFixed(1))
+    return ToInnerVal_(props.modelValue)
+}
+function ToInnerVal_(outerVal) {
+    let val = (outerVal - props.min) / (props.max - props.min) * (max - min) + min
+    return Number.parseFloat(val.toFixed(3))
 }
 interVal.value = ToInnerVal()
 // 用不同的uuid区分不同的组件，放在事件重复 
@@ -83,7 +86,11 @@ let uuid = utils.uuid()
 const emits = defineEmits(['update:modelValue'])
 
 const process_graph_value = computed(function () {
-    return (interVal.value - min) * (100 / (max - min))
+    let t = interVal.value
+    if(t < 0) { // 防止传入特别低的值，导致图像不移动
+        t = 0
+    }
+    return (t - min) * (100 / (max - min))
 })
 
 let process;
@@ -132,7 +139,8 @@ function OnMouseDown() {
 }
 
 function OnMouseUp() {
-
+    let val = ToOuterVal()
+    console.log(val + " | " + interVal.value);
     hold = false;
 }
 
@@ -162,10 +170,9 @@ function OnMouseDrag() {
         interVal.value = max
     }
     let val = ToOuterVal()
-    console.log(val + " | " + interVal.value);
+    
     emits('update:modelValue', val);
 }
-
 
 
 
@@ -195,6 +202,10 @@ onMounted(() => {
     }, true);
 })
 
+
+watch(()=> props.modelValue, (newVal, oldVal)=>{
+    interVal.value = ToInnerVal_(newVal)
+}, {immediate: true})
 
 
 </script>

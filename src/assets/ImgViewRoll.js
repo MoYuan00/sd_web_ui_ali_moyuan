@@ -19,7 +19,7 @@ const getImagePositionX = (index) => {
 
     let index_offset = index - kIndex.value;
     let offsetX = (width + span) * index_offset;
-    console.log('offset:' + index_offset + " - x:" + offsetX);
+    // console.log('offset:' + index_offset + " - x:" + offsetX);
     return offsetX;
 }
 
@@ -31,7 +31,8 @@ export const reflushImages = function (length) {
     if(length && length > 0)
         ImgViewRollLength.value = length
     else ImgViewRollLength.value = 0
-    for (const i in $(".img-container-item")) {
+    let len = $(".img-container-item").length
+    for (let i = 0; i <len; i++ ) {
         let idx = i
         // console.log(idx + ' - ' + getImagePositionX(idx));
         $(".img-container-item").eq(idx).animate({ 'left': getImagePositionX(idx) + 'px', speed: 200 })

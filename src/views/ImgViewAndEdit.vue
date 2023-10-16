@@ -1,9 +1,9 @@
 <template>
     <div style="position: relative; height: 100%; width: 100%;">
         <div class="flex-contain-img">
-            <div ref="img_contain"  class="flex-img shrink glow " style="max-width: 80%;">
-                <div  style="display: flex; margin: 0 auto; position: relative; ">
-                    <div  style="display: flex ;  position: relative; max-height: 100%; max-width: 100%;">
+            <div ref="img_contain" class="flex-img shrink glow " style="max-width: 80%;">
+                <div style="display: flex; margin: 0 auto; position: relative; ">
+                    <div style="display: flex ;  position: relative; max-height: 100%; max-width: 100%;">
 
                         <!-- <template v-if="CurrentGenImageList[selectedCurrentImgIndex].hr_enable_size == 1">
                             <img :src="CurrentSelectedImgURL" style="position: relative; left: 0px; width: 700px; height: auto; object-fit: contain;">
@@ -96,31 +96,37 @@ onMounted(() => {
         event.stopPropagation()
     })
     // 
-    
-})  
+    console.log('onMounted');
+
+
+    watch(CurrentGenImageList, (newVal, oldVal) => {
+        console.log('watch(CurrentGenImageList');
+        if (CurrentGenImageList.value[selectedCurrentImgIndex.value]) {
+            if (CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size > 1) {
+                img_contain.value.style["max-width"] = '70%';
+            } else {
+                if (img_contain.value && img_contain.value != null) {
+                    img_contain.value.style["max-width"] = '40%';
+                }
+            }
+        }
+        // gallery.update() // 可以更新组件
+    }, { deep: true, flush: 'post', immediate: true })
+
+    watch(selectedCurrentImgIndex, (newVal, oldVal) => {
+        if (CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size > 1) {
+            img_contain.value.style["max-width"] = '70%';
+        } else {
+            img_contain.value.style["max-width"] = '40%';
+        }
+        gallery.update()
+    }, { flush: 'post' })
+})
 function hr() {
     onSubmit(true, null, CurrentGenImageList.value[selectedCurrentImgIndex.value].seed,
         CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size)
 }
 
-watch(CurrentGenImageList, (newVal, oldVal) => {
-    if (CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size > 1) {
-        img_contain.value.style["max-width"] = '70%';
-    } else {
-        img_contain.value.style["max-width"] = '40%';
-    }
-    // gallery.update() // 可以更新组件
-
-}, {deep: true, flush: 'post'})
-
-watch(selectedCurrentImgIndex, (newVal, oldVal) => {
-    if (CurrentGenImageList.value[selectedCurrentImgIndex.value].hr_enable_size > 1) {
-        img_contain.value.style["max-width"] = '70%';
-    } else {
-        img_contain.value.style["max-width"] = '40%';
-    }
-    gallery.update()
-}, { flush: 'post'})
 
 </script>
 

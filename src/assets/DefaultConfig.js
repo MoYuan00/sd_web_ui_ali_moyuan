@@ -2,7 +2,6 @@ import { ref, watch, computed, onMounted } from 'vue'
 
 export const defautParams = ref({
     prompt_pre: 'tmall',
-
     loras_control: [
         {
             name: '3d_render',

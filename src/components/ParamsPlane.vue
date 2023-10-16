@@ -116,7 +116,7 @@
             <div style="scrollbar-color: var(--color-gray-ui-bg);">
 
                 <div class="bg-ui" style="border-radius: 10px; padding: 5px;">
-                    默认关键词：
+                    默认关键词前缀（会放在所有关键字前面：
                     <div></div>
                     <textarea v-model="defautParams.prompt_pre" style="width: 100%;"></textarea>
                 </div>

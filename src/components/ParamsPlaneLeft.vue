@@ -57,7 +57,7 @@
                     </div>
                 </div>
 
-                <input ref="img_file" type="file" style="display: none;" @click="e => { e.target.value = ''; }"
+                <input ref="img_file" type="file" accept="image/png,image/jpeg" style="display: none;" @click="e => { e.target.value = ''; }"
                     @change="getFileData">
                 <!-- <div style="font-size: small;">
                     (推荐不要使用带透明像素的图片，透明像素将会被黑色像素填充)
@@ -122,7 +122,12 @@ onMounted(() => {
 
 })
 
-
+watch(shuffle_img, (newVal, oldVal)=>{
+    console.log('watch(shuffle_img');
+    if(newVal.length > 0) {
+        selectedFileShow.value.display = 'block'
+    }
+})
 
 
 // 选择面板

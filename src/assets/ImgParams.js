@@ -63,6 +63,7 @@ export const txt2img_alwayson_scripts = ref({
 })
 
 export const shuffle_img = ref('')
+window.shuffle_img = shuffle_img
 
 export const options = ref({}) // 当前使用配置
 
@@ -70,6 +71,8 @@ export const options = ref({}) // 当前使用配置
 export const modelList = ref([]) // 模型列表
 
 export const loras = ref([]); // lora列表
+
+window.loras = loras
 
 
 //  -------------------------- controlnet 参数
@@ -145,6 +148,7 @@ export function GetImgData() {
     let lora_weight = {}
     for (const lora of loras.value) {
         lora_weight[lora.name] = lora.weight
+        // lora_weight[lora.name] = lora.weight_result // 平衡后的结果
     }
 
     let txt2img = utils.deepClone(txt2img_data.value);
@@ -165,7 +169,8 @@ export function GetImgData() {
             input: promt_input.value,
             data: txt2img
         },
-        lora_weight: lora_weight
+        lora_weight: lora_weight,
+        shuffle_img: shuffle_img.value
     }
     let jsonStr = JSON.stringify(json);
 
@@ -207,6 +212,7 @@ export function DeCodeCustomInfo(ImgData) {
     let custom_info = JSON.parse(custom_info_str)
     custom_info = JSON.parse(custom_info)
 
+    console.log(custom_info);
 
     let seed = ImgData.seed
 
@@ -222,6 +228,7 @@ export function DeCodeCustomInfo(ImgData) {
     txt2img_data.value = custom_info.text2Img.data
     // 设置种子
     txt2img_data.value.seed = seed
+    shuffle_img.value = custom_info.shuffle_img
 
     let lora_weight = custom_info.lora_weight
     for (const lora of loras.value) {

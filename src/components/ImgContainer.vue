@@ -29,9 +29,8 @@
 
                     <!--  v-show="src.hr_enable_size > 1"  -->
 
-                    <div class="radius" style="height: 35px; width: 35px; background-color: #0000ff; position: absolute; top: 5px; right: 5px;
-                        border-radius: 0px 33px 0px 13px; display: flex;">
-                        <div style="display: flex; margin: auto; color: #fffd; font-size: 15px;">
+                    <div class="radius" v-show="src.hr_enable_size > 1">
+                        <div style="display: flex; margin: auto; margin-top: 18px; margin-left: 15px; color: #fffd; font-size: 15px; ">
                             x {{ src.hr_enable_size }}
                         </div>
                     </div>
@@ -158,9 +157,17 @@ img.center {
 }
 
 .radius{
-    background: linear-gradient(to bottom right,#00d6f7, #3a52ff, #0000ff) !important;
+    /* background: linear-gradient(to bottom right,#00d6f7, #3a52ff, #0000ff) !important; */
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: flex;
+    height: 48px;
+    width: 43px;
+    background: url('./../assets/icon/corner.png') no-repeat;
+    background-size: contain;
 }
-.radius::after {
+/* .radius::after {
     position: absolute;
     content: '';
     width: 18px;
@@ -171,9 +178,9 @@ img.center {
     background-image: radial-gradient(100px at 0px 18px, #fff0 18px, #00d6f7 18px);
     top: 0px;
     right: 35px;
-}
+} */
 
-.radius::before {
+/* .radius::before {
     position: absolute;
     content: '';
     width: 18px;
@@ -184,5 +191,5 @@ img.center {
     background-image:  radial-gradient(100px at 00px 18px, #fff0 18px, #0000ff 18px);
     top: 35px;
     right: 0px;
-}
+} */
 </style>
