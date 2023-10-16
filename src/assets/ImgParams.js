@@ -229,6 +229,10 @@ export function DeCodeCustomInfo(ImgData) {
     // 设置种子
     txt2img_data.value.seed = seed
     shuffle_img.value = custom_info.shuffle_img
+    if(shuffle_img.value == null){
+        shuffle_img.value = ''
+    }
+
 
     let lora_weight = custom_info.lora_weight
     for (const lora of loras.value) {

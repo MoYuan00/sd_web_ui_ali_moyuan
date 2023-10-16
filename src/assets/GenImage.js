@@ -57,7 +57,7 @@ export async function onSubmit(enable_hr, callback, seed = -1, hr_enable_size = 
         txt2img_alwayson_scripts.value.controlnet.args[0].input_image = ''
     }
 // 
-    if(shuffle_img.value.length > 0) {
+    if(shuffle_img.value && shuffle_img.value.length > 0) {
         txt2img_alwayson_scripts.value.controlnet.args[1].enabled = true
         await api.controlnet_detect(shuffle_img.value, Math.max(data.width, data.height)).then(data=>{
             let img = data.images[0]

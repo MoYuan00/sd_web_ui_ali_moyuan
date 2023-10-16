@@ -124,7 +124,7 @@ onMounted(() => {
 
 watch(shuffle_img, (newVal, oldVal)=>{
     console.log('watch(shuffle_img');
-    if(newVal.length > 0) {
+    if(newVal && newVal.length > 0) {
         selectedFileShow.value.display = 'block'
     }
 })
